@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadoras Wi-Fi - Livro Diagnóstico e Planejamento de Redes Wi-Fi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0066cc; /* cor-primaria do livro */
+            --secondary: #e67e22; /* cor-laranja do livro */
+            --dark: #2c3e50;
+            --light-bg: #f4f7f6;
+            --white: #ffffff;
+            --gray: #7f8c8d;
+            --border: #e0e0e0;
+            --green: #2ecc71;
+            --red: #e74c3c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #0a1c3c; /* azul escuro profundo da capa */
+            color: var(--white);
+            padding: 3rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            border-bottom: 5px solid var(--secondary);
+        }
+
+        header h1 {
+            font-weight: 700;
+            font-size: 2.6rem;
+            color: var(--white);
+            margin-bottom: 0.3rem;
+        }
+
+        header .book-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--white);
+            opacity: 0.95;
+            margin-top: 0.5rem;
+        }
+
+        header .book-subtitle {
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: #a5b9d2; /* azul sutil */
+            margin-bottom: 0.8rem;
+        }
+
+        header .author {
+            display: inline-block;
+            background-color: rgba(230, 126, 34, 0.2);
+            border: 1px solid var(--secondary);
+            color: #ff9f43;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary);
+        }
+
+        .card-header {
+            margin-bottom: 1.2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.8rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .card-ref {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.3rem;
+            font-style: italic;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .unit {
+            margin-left: -45px;
+            width: 40px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        .result-box {
+            background: rgba(0, 102, 204, 0.04);
+            border: 1px dashed var(--primary);
+            border-radius: 8px;
+            padding: 1.2rem;
+            text-align: center;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .result-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .helper-text {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 0.2rem;
+        }
+
+        /* Bloco de Exemplos Práticos */
+        .example-box {
+            background-color: #fafbfc;
+            border-left: 4px solid var(--secondary);
+            padding: 0.8rem;
+            margin-top: 1rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.82rem;
+            color: #555;
+        }
+
+        .example-badge {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.72rem;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+        }
+
+        .btn-apply {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            font-size: 0.78rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-apply:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* GRÁFICOS E ANIMAÇÕES */
+        .animation-area {
+            height: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0.5rem;
+            position: relative;
+        }
+
+        .power-track { width: 100%; background: #eee; height: 16px; border-radius: 8px; overflow: hidden; }
+        .power-fill { height: 100%; background: var(--secondary); transition: width 0.3s, background-color 0.3s; }
+
+        .wave-container { position: relative; width: 60px; height: 60px; }
+        .antenna { width: 8px; height: 35px; background: var(--dark); border-radius: 4px; position: absolute; bottom: 0; left: 26px; z-index: 2; }
+        .antenna::after { content: ''; position: absolute; top: -5px; left: -2px; width: 12px; height: 12px; background: var(--secondary); border-radius: 50%; }
+        .wave { position: absolute; bottom: 25px; left: 30px; border: 2px solid var(--primary); border-radius: 50%; transform: translate(-50%, 50%); opacity: 0; animation: ripple 2s linear infinite; }
+        .wave:nth-child(2) { animation-delay: 0.6s; }
+        .wave:nth-child(3) { animation-delay: 1.2s; }
+        @keyframes ripple { 0% { width: 0; height: 0; opacity: 1; border-width: 3px; } 100% { width: 140px; height: 140px; opacity: 0; border-width: 1px; } }
+
+        .wall { width: 15px; height: 50px; background: var(--gray); margin: 0 20px; border-radius: 3px; transition: background 0.3s; }
+        .signal-arrow { height: 4px; background: var(--secondary); transition: width 0.3s; position: relative; }
+        .signal-arrow::after { content: ''; position: absolute; right: -5px; top: -4px; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 6px solid var(--secondary); }
+
+        .wifi-icon { width: 55px; height: 55px; fill: var(--green); transition: fill 0.3s ease; }
+
+        .snr-gauge { width: 110px; height: 55px; border-top-left-radius: 55px; border-top-right-radius: 55px; background: conic-gradient(from 180deg at 50% 100%, var(--red) 0deg, var(--secondary) 90deg, var(--green) 180deg); position: relative; overflow: hidden; }
+        .snr-needle { width: 3px; height: 45px; background: var(--dark); position: absolute; bottom: 0; left: 53.5px; transform-origin: bottom center; transition: transform 0.5s ease; border-radius: 2px; }
+        .snr-center { width: 16px; height: 8px; background: var(--white); position: absolute; bottom: 0; left: 47px; border-top-left-radius: 8px; border-top-right-radius: 8px; }
+
+        .bar-chart { display: flex; align-items: flex-end; justify-content: center; gap: 20px; height: 75px; width: 100%; padding-bottom: 5px; }
+        .bar { width: 45px; border-radius: 4px 4px 0 0; transition: height 0.5s ease; position: relative; display: flex; justify-content: center; }
+        .bar span { position: absolute; top: -22px; font-size: 0.85rem; font-weight: bold; color: var(--dark); }
+        .bar.cov { background: var(--primary); }
+        .bar.cap { background: var(--secondary); }
+        .bar-label { position: absolute; bottom: -20px; font-size: 0.72rem; color: var(--gray); white-space: nowrap;}
+        
+        .radar { width: 70px; height: 70px; border-radius: 50%; background: rgba(0, 102, 204, 0.15); border: 2px solid var(--primary); position: relative; transition: width 0.5s, height 0.5s; display: flex; align-items: center; justify-content: center;}
+        .radar-center { width: 8px; height: 8px; background: var(--secondary); border-radius: 50%; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Calculadoras Wi-Fi</h1>
+        <div class="book-title">Diagnóstico e Planejamento de Redes Wi-Fi</div>
+        <div class="book-subtitle">Troubleshooting, Cobertura e Otimização de Sinal</div>
+        <div class="author">Autor: Rodrigo Tertulino</div>
+    </header>
+
+    <div class="container">
+
+        <!-- 1. Conversão mW / dBm -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Conversão de Potência</div>
+                <div class="card-ref">Ref: Apêndice B.1 / Seção 4.1</div>
+            </div>
+            <div class="input-group">
+                <label>Potência em dBm</label>
+                <div class="input-wrapper">
+                    <input type="number" id="inp_dbm" value="20" step="1" oninput="calcPower('dbm')">
+                    <span class="unit">dBm</span>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Potência em mW</label>
+                <div class="input-wrapper">
+                    <input type="number" id="inp_mw" value="100" step="1" oninput="calcPower('mw')">
+                    <span class="unit">mW</span>
+                </div>
+            </div>
+            <div class="animation-area">
+                <div class="power-track">
+                    <div id="power_bar" class="power-fill" style="width: 50%;"></div>
+                </div>
+            </div>
+            <div class="example-box">
+                <span class="example-badge">Exemplo do Livro</span>
+                <p><strong>Cenário:</strong> Um rádio corporativo operando no teto está configurado para irradiar a 23 dBm brutos.</p>
+                <button class="btn-apply" onclick="applyExample1()">Carregar Valores (23 dBm)</button>
+            </div>
+        </div>
+
+        <!-- 2. Comprimento de Onda -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Comprimento de Onda (λ)</div>
+                <div class="card-ref">Ref: Apêndice B.2 / Seção 4.2</div>
+            </div>
+            <div class="input-group">
+                <label>Frequência (GHz)</label>
+                <div class="input-wrapper">
+                    <input type="number" id="inp_freq_lambda" value="5" step="0.1" oninput="calcLambda()">
+                    <span class="unit">GHz</span>
+                </div>
+            </div>
+            <div class="result-box">
+                <div class="result-value" id="res_lambda">6.00 <span style="font-size:1rem">cm</span></div>
+                <div class="result-label">Tamanho físico da oscilação no ar</div>
+            </div>
+            <div class="animation-area" style="overflow: hidden;">
+                <svg width="200" height="50" viewBox="0 0 200 50">
+                    <path id="sine_wave" d="M0,25 Q12.5,0 25,25 T50,25 T75,25 T100,25 T125,25 T150,25 T175,25 T200,25" fill="none" stroke="var(--primary)" stroke-width="3"/>
+                </svg>
+            </div>
+            <div class="example-box">
+                <span class="example-badge">Exemplo do Livro</span>
+                <p><strong>Cenário:</strong> Frequência clássica de 2.4 GHz usada em automação industrial e dispositivos IoT antigos.</p>
+                <button class="btn-apply" onclick="applyExample2()">Carregar Valores (2.4 GHz)</button>
+            </div>
+        </div>
+
+        <!-- 3. Perda de Espaço Livre (Friis) -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Espaço Livre (Friis)</div>
+                <div class="card-ref">Ref: Apêndice B.3 / Seção 4.2</div>
+            </div>
+            <div class="input-group">
+                <label>Frequência</label>
+                <select id="inp_freq_friis" onchange="calcFriis()">
+                    <option value="2.4">2.4 GHz</option>
+                    <option value="5" selected>5.0 GHz</option>
+                    <option value="6">6.0 GHz</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Distância (m)</label>
+                <div class="input-wrapper">
+                    <input type="number" id="inp_dist_friis" value="10" step="1" oninput="calcFriis()">
+                    <span class="unit">m</span>
+                </div>
+            </div>
+            <div class="result-box">
+                <div class="result-value" id="res_friis">66.43 <span style="font-size:1rem">dB</span></div>
+                <div class="result-label">Atenuação mínima sem obstáculos</div>
+            </div>
+            <div class="animation-area">
+                <div class="wave-container">
+                    <div class="antenna"></div>
+                    <div class="wave" id="w1"></div>
+                    <div class="wave" id="w2"></div>
+                    <div class="wave" id="w3"></div>
+                </div>
+            </div>
+            <div class="example-box">
+                <span class="example-badge">Exemplo do Livro</span>
+                <p><strong>Cenário:</strong> Enlace de rádio operando em 5 GHz com visada direta livre a uma distância exata de 10 metros.</p>
+                <button class="btn-apply" onclick="applyExample3()">Carregar Valores (5GHz / 10m)</button>
+            </div>
+        </div>
+
+        <!-- 4. Modelo Log-Distance -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Perda Log-Distance</div>
+                <div class="card-ref">Ref: Apêndice B.4 / Seção 4.3</div>
+            </div>
+            <div class="input-group">
+                <label>Perda a 1m (L0) [dB]</label>
+                <div class="input-wrapper">
+                    <input type="number" id="inp_l0_log" value="46" step="1" oninput="calcLogDist()">
+                    <span class="unit">dB</span>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Expoente (n)</label>
+                    <input type="number" id="inp_n_log" value="3.5" step="0.1" oninput="calcLogDist()">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Distância (m)</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="inp_dist_log" value="12" step="1" oninput="calcLogDist()">
+                        <span class="unit">m</span>
+                    </div>
+                </div>
+            </div>
+            <div class="result-box">
+                <div class="result-value" id="res_log">83.77 <span style="font-size:1rem">dB</span></div>
+                <div class="result-label">Atenuação estimada no ambiente indoor</div>
+            </div>
+            <div class="example-box">
+                <span class="example-badge">Exemplo do Livro</span>
+                <p><strong>Cenário:</strong> Cliente B afastado a 12m de um AP de 5 GHz (L0=46) em uma residência brasileira comum (n = 3.8).</p>
+                <button class="btn-apply" onclick="applyExample4()">Carregar Valores (n=3.8 / 12m)</button>
+            </div>
+        </div>
+        
+        <!-- 5. Modelo One-Slope (Obstáculos) -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">One-Slope (Com Obstáculos)</div>
+                <div class="card-ref">Ref: Seção 4.3</div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Perda 1m (L0)</label>
+                    <input type="number" id="inp_os_l0" value="46" step="1" oninput="calcOneSlope()">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Exp. (n)</label>
+                    <input type="number" id="inp_os_n" value="3" step="0.1" oninput="calcOneSlope()">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Dist. (m)</label>
+                    <input type="number" id="inp_os_d" value="10" step="1" oninput="calcOneSlope()">
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Drywall (+3dB)</label>
+                    <input type="number" id="inp_os_w1" value="2" step="1" min="0" oninput="calcOneSlope()">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Alvenaria (+8dB)</label>
+                    <input type="number" id="inp_os_w2" value="1" step="1" min="0" oninput="calcOneSlope()">
+                </div>
+            </div>
+            <div class="result-box">
+                <div class="result-value" id="res_os">90.00 <span style="font-size:1rem">dB</span></div>
+                <div class="result-label">Atenuação Combinada Final</div>
+            </div>
+            <div class="animation-area" style="justify-content: flex-start; padding-left: 20px;">
+                <div class="signal-arrow" id="os_arrow_1" style="width: 50px;"></div>
+                <div class="wall" id="os_wall"></div>
+                <div class="signal-arrow" id="os_arrow_2" style="width: 30px; opacity: 0.5;"></div>
+            </div>
+            <div class="example-box">
+                <span class="example-badge">Exemplo do Livro</span>
+                <p><strong>Cenário:</strong> AP em 5 GHz (L0=46, n=3.5) instalado no andar de cima tentando cobrir o andar térreo de um sobrado a 7m.</p>
+                <button class="btn-apply" onclick="applyExample5()">Carregar Valores (Sobrado Duplex)</button>
+            </div>
+        </div>
+
+        <!-- 6. Orçamento de Enlace -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Orçamento de Enlace (RSSI)</div>
+                <div class="card-ref">Ref: Apêndice B.5 / Seção 4.1</div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Potência TX</label>
+                    <input type="number" id="inp_ptx" value="20" step="1" oninput="calcRssi()">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Perda Caminho</label>
+                    <input type="number" id="inp_lpath" value="84" step="1" oninput="calcRssi()">
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Ganho Ant. TX</label>
+                    <input type="number" id="inp_gtx" value="4" step="1" oninput="calcRssi()">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Ganho Ant. RX</label>
+                    <input type="number" id="inp_grx" value="0" step="1" oninput="calcRssi()">
+                </div>
+            </div>
+            
+            <div class="result-box">
+                <div class="result-value" id="res_rssi">-60 <span style="font-size:1rem">dBm</span></div>
+                <div class="result-label" id="res_rssi_label">Qualidade: Muito Boa</div>
+            </div>
+            <div class="animation-area">
+                <svg class="wifi-icon" id="wifi_svg" viewBox="0 0 24 24">
+                    <path d="M12 21c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-4.6-5.6c2.5-2.5 6.6-2.5 9.2 0l1.4-1.4c-3.3-3.3-8.6-3.3-11.9 0l1.3 1.4zm-4.2-4.2c4.8-4.8 12.6-4.8 17.5 0l1.4-1.4c-5.6-5.6-14.7-5.6-20.3 0l1.4 1.4zm-4.3-4.3c7.1-7.1 18.6-7.1 25.7 0l1.4-1.4c-7.9-7.9-20.7-7.9-28.6 0l1.5 1.4z"/>
+                </svg>
+            </div>
+            <div class="example-box">
+                <span class="example-badge">Exemplo do Livro</span>
+                <p><strong>Cenário:</strong> AP de 20dBm com antena integrada de 4dBi. Cliente (0dBi) a 15m cercado de atenuações (Perda = 84dB).</p>
+                <button class="btn-apply" onclick="applyExample6()">Carregar Valores (RSSI -60dBm)</button>
+            </div>
+        </div>
+        
+        <!-- 7. Cálculo de SNR -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Relação Sinal-Ruído (SNR)</div>
+                <div class="card-ref">Ref: Apêndice D / Seção 4.4</div>
+            </div>
+            <div class="input-group">
+                <label>RSSI Medido (dBm)</label>
+                <div class="input-wrapper">
+                    <input type="number" id="inp_snr_rssi" value="-65" step="1" max="0" oninput="calcSnr()">
+                    <span class="unit">dBm</span>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Noise Floor (dBm)</label>
+                <div class="input-wrapper">
+                    <input type="number" id="inp_snr_noise" value="-90" step="1" max="-50" oninput="calcSnr()">
+                    <span class="unit">dBm</span>
+                </div>
+            </div>
+            <div class="result-box">
+                <div class="result-value" id="res_snr">25 <span style="font-size:1rem">dB</span></div>
+                <div class="result-label" id="res_snr_label">Qualidade: Boa (Streaming HD)</div>
+            </div>
+            <div class="animation-area" style="align-items: flex-end; padding-bottom: 15px;">
+                <div class="snr-gauge">
+                    <div class="snr-needle" id="snr_needle" style="transform: rotate(-45deg);"></div>
+                    <div class="snr-center"></div>
+                </div>
+            </div>
+            <div class="example-box">
+                <span class="example-badge">Exemplo do Livro</span>
+                <p><strong>Cenário:</strong> Escritório poluído com alto ruído eletromagnético (-72 dBm) degradando a conexão do usuário.</p>
+                <button class="btn-apply" onclick="applyExample7()">Carregar Valores (Ruído Crítico)</button>
+            </div>
+        </div>
+
+        <!-- 8. Raio de Cobertura Máximo -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Distância Máxima Estimada</div>
+                <div class="card-ref">Ref: Apêndice B.6 / Seção 4.6</div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="input-group" style="flex: 1;">
+                    <label>EIRP (TX+Ant.)</label>
+                    <input type="number" id="inp_rad_eirp" value="27" step="1" oninput="calcRadius()">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>RSSI Alvo</label>
+                    <input type="number" id="inp_rad_rssi" value="-65" step="1" max="-30" oninput="calcRadius()">
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Perda 1m (L0)</label>
+                    <input type="number" id="inp_rad_l0" value="46" step="1" oninput="calcRadius()">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Expoente (n)</label>
+                    <input type="number" id="inp_rad_n" value="3.2" step="0.1" oninput="calcRadius()">
+                </div>
+            </div>
+            <div class="result-box">
+                <div class="result-value" id="res_rad">29.5 <span style="font-size:1rem">m</span></div>
+                <div class="result-label">Raio Máximo Útil do Ponto de Acesso</div>
+            </div>
+            <div class="animation-area">
+                <div class="radar" id="radar_circle">
+                    <div class="radar-center"></div>
+                </div>
+            </div>
+            <div class="example-box">
+                <span class="example-badge">Exemplo do Livro</span>
+                <p><strong>Cenário:</strong> Escritório comercial (n=3.2), AP corporativo transmitindo em 5 GHz buscando videoconferência estável (-65 dBm).</p>
+                <button class="btn-apply" onclick="applyExample8()">Carregar Valores (Escritório Alvo)</button>
+            </div>
+        </div>
+
+        <!-- 9. Dimensionamento de APs -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Dimensionamento de APs</div>
+                <div class="card-ref">Ref: Apêndice B.7 / Seção 4.6</div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Área Total (m²)</label>
+                    <input type="number" id="inp_area" value="800" step="10" oninput="calcAps()">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Cobertura/AP</label>
+                    <input type="number" id="inp_areap" value="350" step="10" oninput="calcAps()">
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Usuários Totais</label>
+                    <input type="number" id="inp_users" value="120" step="5" oninput="calcAps()">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Capacidade/AP</label>
+                    <input type="number" id="inp_usersp" value="40" step="5" oninput="calcAps()">
+                </div>
+            </div>
+            
+            <div class="result-box">
+                <div class="result-value" id="res_aps">3 <span style="font-size:1rem">APs</span></div>
+                <div class="result-label">Mínimo necessário (Limitado por Cobertura)</div>
+            </div>
+            <div class="animation-area bar-chart">
+                <div class="bar cov" id="bar_cov" style="height: 60%;"><span id="lbl_cov">3</span><div class="bar-label">Cobertura</div></div>
+                <div class="bar cap" id="bar_cap" style="height: 60%;"><span id="lbl_cap">3</span><div class="bar-label">Capacidade</div></div>
+            </div>
+            <div class="example-box" style="margin-top: 1.5rem;">
+                <span class="example-badge">Exemplo do Livro</span>
+                <p><strong>Cenário:</strong> Planta de 800 m² e 120 usuários onde a cobertura e capacidade demandam o mesmo número de aparelhos.</p>
+                <button class="btn-apply" onclick="applyExample9()">Carregar Valores (Gargalo Misto)</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. Conversão de Potência
+        function calcPower(source) {
+            let dbmIn = document.getElementById('inp_dbm');
+            let mwIn = document.getElementById('inp_mw');
+            let bar = document.getElementById('power_bar');
+            
+            if (source === 'dbm') {
+                let dbm = parseFloat(dbmIn.value);
+                let mw = Math.pow(10, dbm / 10);
+                mwIn.value = mw.toFixed(1);
+            } else {
+                let mw = parseFloat(mwIn.value);
+                if (mw > 0) {
+                    let dbm = 10 * Math.log10(mw);
+                    dbmIn.value = dbm.toFixed(1);
+                }
+            }
+            
+            let val = Math.min(100, Math.max(5, (parseFloat(dbmIn.value) / 36) * 100));
+            bar.style.width = val + '%';
+            bar.style.backgroundColor = val > 80 ? 'var(--red)' : 'var(--secondary)';
+        }
+
+        // Ações de aplicação rápida para os exemplos do livro
+        function applyExample1() { document.getElementById('inp_dbm').value = 23; calcPower('dbm'); }
+        function applyExample2() { document.getElementById('inp_freq_lambda').value = 2.4; calcLambda(); }
+        function applyExample3() { document.getElementById('inp_freq_friis').value = "5"; document.getElementById('inp_dist_friis').value = 10; calcFriis(); }
+        function applyExample4() { document.getElementById('inp_l0_log').value = 46; document.getElementById('inp_n_log').value = 3.8; document.getElementById('inp_dist_log').value = 12; calcLogDist(); }
+        
+        function applyExample5() {
+            document.getElementById('inp_os_l0').value = 46;
+            document.getElementById('inp_os_n').value = 3.5;
+            document.getElementById('inp_os_d').value = 7;
+            document.getElementById('inp_os_w1').value = 1; 
+            document.getElementById('inp_os_w2').value = 3; 
+            calcOneSlope();
+        }
+        
+        function applyExample6() {
+            document.getElementById('inp_ptx').value = 20;
+            document.getElementById('inp_lpath').value = 84;
+            document.getElementById('inp_gtx').value = 4;
+            document.getElementById('inp_grx').value = 0;
+            calcRssi();
+        }
+        
+        function applyExample7() {
+            document.getElementById('inp_snr_rssi').value = -55;
+            document.getElementById('inp_snr_noise').value = -72;
+            calcSnr();
+        }
+
+        function applyExample8() {
+            document.getElementById('inp_rad_eirp').value = 27;
+            document.getElementById('inp_rad_rssi').value = -65;
+            document.getElementById('inp_rad_l0').value = 46;
+            document.getElementById('inp_rad_n').value = 3.2;
+            calcRadius();
+        }
+
+        function applyExample9() {
+            document.getElementById('inp_area').value = 800;
+            document.getElementById('inp_areap').value = 350;
+            document.getElementById('inp_users').value = 120;
+            document.getElementById('inp_usersp').value = 40;
+            calcAps();
+        }
+
+        // 2. Comprimento de Onda
+        function calcLambda() {
+            let f = parseFloat(document.getElementById('inp_freq_lambda').value);
+            if(f > 0) {
+                let lambda = (3e8 / (f * 1e9)) * 100;
+                document.getElementById('res_lambda').innerHTML = lambda.toFixed(2) + ' <span style="font-size:1rem">cm</span>';
+                
+                let path = document.getElementById('sine_wave');
+                if (f <= 2.4) {
+                    path.setAttribute('d', 'M0,25 Q25,0 50,25 T100,25 T150,25 T200,25');
+                } else if (f <= 5) {
+                    path.setAttribute('d', 'M0,25 Q12.5,0 25,25 T50,25 T75,25 T100,25 T125,25 T150,25 T175,25 T200,25');
+                } else {
+                    path.setAttribute('d', 'M0,25 Q8,0 16,25 T32,25 T48,25 T64,25 T80,25 T96,25 T112,25 T128,25 T144,25 T160,25 T176,25 T192,25 T208,25');
+                }
+            }
+        }
+
+        // 3. Friis
+        function calcFriis() {
+            let f = parseFloat(document.getElementById('inp_freq_friis').value);
+            let d = parseFloat(document.getElementById('inp_dist_friis').value);
+            if(d > 0) {
+                let lfs = 32.45 + 20 * Math.log10(d) + 20 * Math.log10(f);
+                document.getElementById('res_friis').innerHTML = lfs.toFixed(2) + ' <span style="font-size:1rem">dB</span>';
+                
+                let speed = Math.max(0.5, 3 - (d / 20));
+                document.getElementById('w1').style.animationDuration = speed + 's';
+                document.getElementById('w2').style.animationDuration = speed + 's';
+                document.getElementById('w3').style.animationDuration = speed + 's';
+            }
+        }
+
+        // 4. Log-Distance
+        function calcLogDist() {
+            let l0 = parseFloat(document.getElementById('inp_l0_log').value);
+            let n = parseFloat(document.getElementById('inp_n_log').value);
+            let d = parseFloat(document.getElementById('inp_dist_log').value);
+            if(d > 0) {
+                let l = l0 + 10 * n * Math.log10(d);
+                document.getElementById('res_log').innerHTML = l.toFixed(2) + ' <span style="font-size:1rem">dB</span>';
+            }
+        }
+
+        // 5. One-Slope (Obstáculos)
+        function calcOneSlope() {
+            let l0 = parseFloat(document.getElementById('inp_os_l0').value);
+            let n = parseFloat(document.getElementById('inp_os_n').value);
+            let d = parseFloat(document.getElementById('inp_os_d').value);
+            let w1 = parseFloat(document.getElementById('inp_os_w1').value) || 0;
+            let w2 = parseFloat(document.getElementById('inp_os_w2').value) || 0;
+            
+            if(d > 0) {
+                let pathLoss = l0 + 10 * n * Math.log10(d);
+                let obsLoss = (w1 * 3) + (w2 * 8); 
+                let l = pathLoss + obsLoss;
+                document.getElementById('res_os').innerHTML = l.toFixed(2) + ' <span style="font-size:1rem">dB</span>';
+                
+                let totalObs = w1 + w2;
+                let wall = document.getElementById('os_wall');
+                let arr2 = document.getElementById('os_arrow_2');
+                if (totalObs > 0) {
+                    wall.style.backgroundColor = w2 > w1 ? 'var(--dark)' : 'var(--gray)';
+                    wall.style.width = (15 + (totalObs * 4)) + 'px';
+                    arr2.style.opacity = Math.max(0.1, 0.8 - (obsLoss / 45));
+                } else {
+                    wall.style.backgroundColor = 'transparent';
+                    wall.style.width = '0px';
+                    arr2.style.opacity = 1;
+                }
+            }
+        }
+
+        // 6. Orçamento RSSI
+        function calcRssi() {
+            let ptx = parseFloat(document.getElementById('inp_ptx').value);
+            let lpath = parseFloat(document.getElementById('inp_lpath').value);
+            let gtx = parseFloat(document.getElementById('inp_gtx').value);
+            let grx = parseFloat(document.getElementById('inp_grx').value);
+            
+            let rssi = ptx + gtx + grx - lpath;
+            document.getElementById('res_rssi').innerHTML = rssi.toFixed(1) + ' <span style="font-size:1rem">dBm</span>';
+            
+            let icon = document.getElementById('wifi_svg');
+            let label = document.getElementById('res_rssi_label');
+            
+            if (rssi >= -60) {
+                icon.style.fill = 'var(--green)';
+                label.innerText = 'Qualidade: Excelente / Muito Boa';
+            } else if (rssi >= -70) {
+                icon.style.fill = 'var(--secondary)';
+                label.innerText = 'Qualidade: Boa / Regular (Limite p/ Voz)';
+            } else {
+                icon.style.fill = 'var(--red)';
+                label.innerText = 'Qualidade: Fraca / Ruim';
+            }
+        }
+
+        // 7. SNR
+        function calcSnr() {
+            let rssi = parseFloat(document.getElementById('inp_snr_rssi').value);
+            let noise = parseFloat(document.getElementById('inp_snr_noise').value);
+            
+            let snr = rssi - noise;
+            document.getElementById('res_snr').innerHTML = snr.toFixed(0) + ' <span style="font-size:1rem">dB</span>';
+            
+            let label = document.getElementById('res_snr_label');
+            let needle = document.getElementById('snr_needle');
+            
+            if (snr >= 30) { label.innerText = 'Qualidade: Ótima (Streaming 4K)'; }
+            else if (snr >= 20) { label.innerText = 'Qualidade: Boa (Streaming HD)'; }
+            else if (snr >= 10) { label.innerText = 'Qualidade: Aceitável (Navegação)'; }
+            else { label.innerText = 'Qualidade: Insuficiente (Instável)'; }
+            
+            let rotation = Math.min(90, Math.max(-90, -90 + (snr / 40) * 180));
+            needle.style.transform = `rotate(${rotation}deg)`;
+        }
+
+        // 8. Raio Máximo Estimado
+        function calcRadius() {
+            let eirp = parseFloat(document.getElementById('inp_rad_eirp').value);
+            let rssi = parseFloat(document.getElementById('inp_rad_rssi').value);
+            let l0 = parseFloat(document.getElementById('inp_rad_l0').value);
+            let n = parseFloat(document.getElementById('inp_rad_n').value);
+            
+            let lmax = eirp - rssi;
+            let exponent = (lmax - l0) / (10 * n);
+            let dist = Math.pow(10, exponent);
+            
+            document.getElementById('res_rad').innerHTML = dist.toFixed(1) + ' <span style="font-size:1rem">m</span>';
+            
+            let radar = document.getElementById('radar_circle');
+            let size = Math.min(100, Math.max(30, (dist / 45) * 100));
+            radar.style.width = size + 'px';
+            radar.style.height = size + 'px';
+        }
+
+        // 9. Dimensionamento de APs
+        function calcAps() {
+            let area = parseFloat(document.getElementById('inp_area').value);
+            let areap = parseFloat(document.getElementById('inp_areap').value);
+            let users = parseFloat(document.getElementById('inp_users').value);
+            let usersp = parseFloat(document.getElementById('inp_usersp').value);
+            
+            if(areap > 0 && usersp > 0) {
+                let nCov = Math.ceil(area / areap);
+                let nCap = Math.ceil(users / usersp);
+                let total = Math.max(nCov, nCap);
+                
+                let label = document.getElementById('res_aps_label');
+                document.getElementById('res_aps').innerHTML = total + ' <span style="font-size:1rem">APs</span>';
+                
+                if (nCov > nCap) { label.innerText = 'Requisito mínimo (Limitado por Cobertura)'; }
+                else if (nCap > nCov) { label.innerText = 'Requisito mínimo (Limitado por Capacidade)'; }
+                else { label.innerText = 'Requisito mínimo (Gargalo Equilibrado)'; }
+                
+                let maxH = Math.max(nCov, nCap) * 1.2;
+                document.getElementById('bar_cov').style.height = (nCov / maxH * 100) + '%';
+                document.getElementById('lbl_cov').innerText = nCov;
+                document.getElementById('bar_cap').style.height = (nCap / maxH * 100) + '%';
+                document.getElementById('lbl_cap').innerText = nCap;
+            }
+        }
+
+        window.onload = function() {
+            calcPower('dbm');
+            calcLambda();
+            calcFriis();
+            calcLogDist();
+            calcOneSlope();
+            calcRssi();
+            calcSnr();
+            calcRadius();
+            calcAps();
+        };
+    </script>
+</body>
+</html>
