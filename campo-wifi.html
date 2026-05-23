@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campo Wi-Fi — Ferramenta de Campo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c1422;
+  --surf: #111d2e;
+  --surf2: #162236;
+  --surf3: #1a2a42;
+  --border: #1e3050;
+  --border2: #253d63;
+  --primary: #1d6ef5;
+  --primary-dim: rgba(29,110,245,.14);
+  --accent: #f77f1a;
+  --accent-dim: rgba(247,127,26,.14);
+  --green: #12d580;
+  --green-dim: rgba(18,213,128,.12);
+  --red: #ff4040;
+  --red-dim: rgba(255,64,64,.12);
+  --yellow: #ffb020;
+  --yellow-dim: rgba(255,176,32,.12);
+  --text: #dde4f0;
+  --muted: #6b7fa3;
+  --dim: #94a3b8;
+  --sans: 'Syne', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
+/* HEADER */
+header{background:linear-gradient(135deg,#071020 0%,#0c1a30 60%,#0e2040 100%);padding:1.2rem 1.5rem;border-bottom:2px solid var(--accent);display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100}
+.logo-mark{width:36px;height:36px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;color:#fff;flex-shrink:0}
+header h1{font-size:1.1rem;font-weight:700;letter-spacing:.02em;line-height:1.2}
+header .sub{font-size:.72rem;color:var(--muted);font-weight:400;margin-top:.15rem}
+/* TAB NAV */
+.tab-nav{background:var(--surf);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none;position:sticky;top:73px;z-index:99}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;display:flex;align-items:center;gap:.5rem;padding:.75rem 1.2rem;font-family:var(--sans);font-size:.78rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all .2s;white-space:nowrap;letter-spacing:.03em}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-btn .icon{font-size:1rem}
+/* MAIN */
+main{padding:1.5rem;max-width:1280px;margin:0 auto}
+section.tab-section{display:none}
+section.tab-section.active{display:block}
+/* SECTION TITLE */
+.sec-title{font-size:1rem;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border)}
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem}
+/* CARD */
+.card{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:1.4rem;transition:border-color .25s}
+.card:hover{border-color:var(--border2)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.card-title{font-size:.88rem;font-weight:700;color:var(--text)}
+.card-ref{font-size:.68rem;color:var(--muted);font-family:var(--mono);margin-top:.25rem;background:var(--surf2);padding:.1rem .45rem;border-radius:4px;display:inline-block}
+.card-badge{font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.2rem .6rem;border-radius:4px;flex-shrink:0}
+.badge-blue{background:var(--primary-dim);color:var(--primary)}
+.badge-orange{background:var(--accent-dim);color:var(--accent)}
+/* INPUTS */
+.igroup{margin-bottom:.85rem}
+.igroup label{display:block;font-size:.75rem;font-weight:600;color:var(--dim);margin-bottom:.35rem;letter-spacing:.04em;text-transform:uppercase}
+.irow{display:flex;gap:.7rem}
+.irow .igroup{flex:1}
+input[type=number],select{width:100%;background:var(--surf2);border:1px solid var(--border);border-radius:7px;padding:.6rem .85rem;font-size:.9rem;font-family:var(--mono);color:var(--text);transition:border-color .2s;appearance:none}
+input[type=number]:focus,select:focus{outline:none;border-color:var(--primary)}
+select option{background:var(--surf2)}
+/* RESULT */
+.result{background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;margin:.8rem 0;position:relative;overflow:hidden}
+.result::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--primary),var(--accent))}
+.res-val{font-family:var(--mono);font-size:2rem;font-weight:700;color:var(--primary);line-height:1}
+.res-val span{font-size:1rem;font-weight:400;color:var(--muted);margin-left:.3rem}
+.res-label{font-size:.75rem;color:var(--muted);margin-top:.35rem}
+/* SNR QUALITY COLOR STATES */
+.res-val.q-ex{color:var(--green)}
+.res-val.q-vb{color:#7dd3a0}
+.res-val.q-ok{color:var(--yellow)}
+.res-val.q-low{color:var(--accent)}
+.res-val.q-bad{color:var(--red)}
+/* EXAMPLE BOX */
+.ex-box{background:var(--surf3);border-left:3px solid var(--accent);border-radius:0 7px 7px 0;padding:.75rem .9rem;margin-top:.8rem;font-size:.76rem;color:var(--dim)}
+.ex-box strong{color:var(--text)}
+.ex-btn{display:inline-flex;align-items:center;gap:.4rem;margin-top:.5rem;background:none;border:1px solid var(--border2);border-radius:5px;padding:.3rem .7rem;font-family:var(--sans);font-size:.73rem;font-weight:600;color:var(--primary);cursor:pointer;transition:all .2s}
+.ex-btn:hover{background:var(--primary-dim);border-color:var(--primary)}
+/* HELPER TEXT */
+.helper{font-size:.72rem;color:var(--muted);margin-top:.3rem;line-height:1.4}
+/* PROGRESS BAR */
+.pbar-track{background:var(--border);border-radius:6px;height:10px;overflow:hidden;margin:.5rem 0}
+.pbar-fill{height:100%;border-radius:6px;transition:width .4s,background .4s}
+/* REFERENCE TABLES */
+.ref-table-wrap{overflow-x:auto;margin-bottom:2rem}
+.ref-table{width:100%;border-collapse:collapse;font-size:.82rem}
+.ref-table th{background:var(--surf2);padding:.6rem .9rem;text-align:left;font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;border-bottom:2px solid var(--border)}
+.ref-table td{padding:.55rem .9rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4}
+.ref-table tr:hover td{background:var(--surf2)}
+.tag{display:inline-block;font-family:var(--mono);font-size:.7rem;padding:.1rem .4rem;border-radius:4px;font-weight:600}
+.tag-g{background:var(--green-dim);color:var(--green)}
+.tag-y{background:var(--yellow-dim);color:var(--yellow)}
+.tag-o{background:var(--accent-dim);color:var(--accent)}
+.tag-r{background:var(--red-dim);color:var(--red)}
+.tag-b{background:var(--primary-dim);color:var(--primary)}
+/* CHANNEL GRID */
+.ch-section{margin-bottom:2rem}
+.ch-title{font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem}
+.ch-band{font-size:.7rem;font-family:var(--mono);color:var(--muted)}
+.ch24-grid{display:flex;gap:0;background:var(--surf2);border-radius:8px;padding:.5rem;overflow-x:auto}
+.ch24-item{flex:1;min-width:36px;text-align:center;cursor:pointer;border-radius:5px;padding:.4rem .2rem;font-size:.72rem;font-family:var(--mono);transition:all .2s;position:relative}
+.ch24-item .cn{font-weight:700;font-size:.78rem}
+.ch24-item .cf{font-size:.6rem;color:var(--muted);margin-top:.1rem}
+.ch-non{background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent)}
+.ch-oth{color:var(--muted)}
+.ch-oth:hover{background:var(--surf3)}
+.ch5-grid{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem}
+.ch5-item{display:flex;flex-direction:column;align-items:center;background:var(--surf2);border-radius:6px;padding:.4rem .6rem;font-size:.7rem;font-family:var(--mono);cursor:pointer;border:1px solid var(--border);transition:all .2s;min-width:48px}
+.ch5-item:hover{border-color:var(--primary)}
+.ch5-item .cn{font-weight:700;color:var(--text)}
+.ch5-item .cband{font-size:.58rem;margin-top:.1rem}
+.ch-unii1{border-color:var(--green);background:var(--green-dim)}
+.ch-unii1 .cband{color:var(--green)}
+.ch-unii2{border-color:var(--yellow);background:var(--yellow-dim)}
+.ch-unii2 .cband{color:var(--yellow)}
+.ch-unii3{border-color:var(--primary);background:var(--primary-dim)}
+.ch-unii3 .cband{color:var(--primary)}
+.ch-legend{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.7rem;font-size:.72rem}
+.ch-leg-item{display:flex;align-items:center;gap:.4rem}
+.ch-leg-dot{width:10px;height:10px;border-radius:50%}
+/* DIAGNOSIS TOOLS */
+.diag-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:1.4rem;margin-bottom:1.2rem}
+.diag-title{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:1rem}
+.code-block{background:#060d16;border:1px solid var(--border);border-radius:7px;padding:.8rem 1rem;font-family:var(--mono);font-size:.82rem;color:var(--green);position:relative;margin:.6rem 0;word-break:break-all}
+.copy-btn{position:absolute;top:.5rem;right:.5rem;background:var(--surf2);border:1px solid var(--border);border-radius:5px;padding:.2rem .5rem;font-size:.68rem;font-family:var(--sans);font-weight:600;color:var(--dim);cursor:pointer;transition:all .2s}
+.copy-btn:hover{color:var(--text);border-color:var(--primary)}
+.copy-btn.copied{color:var(--green);border-color:var(--green)}
+.diag-note{font-size:.76rem;color:var(--dim);margin-top:.5rem;line-height:1.5;padding-left:.5rem;border-left:2px solid var(--border2)}
+/* CHECKLISTS */
+.check-group{margin-bottom:1.8rem}
+.check-group-title{font-size:.85rem;font-weight:700;color:var(--accent);margin-bottom:.7rem;letter-spacing:.04em}
+.check-item{display:flex;align-items:flex-start;gap:.75rem;padding:.6rem .75rem;border-radius:7px;margin-bottom:.3rem;cursor:pointer;transition:background .15s}
+.check-item:hover{background:var(--surf2)}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);flex-shrink:0;margin-top:.15rem;cursor:pointer}
+.check-item label{font-size:.82rem;cursor:pointer;line-height:1.45}
+.check-item.done label{text-decoration:line-through;color:var(--muted)}
+.check-progress{background:var(--surf2);border-radius:8px;padding:.75rem 1rem;margin-bottom:1rem;display:flex;align-items:center;gap:1rem;font-size:.8rem}
+.check-pct{font-family:var(--mono);font-size:1.4rem;font-weight:700;color:var(--accent);flex-shrink:0}
+.check-bar{flex:1}
+.check-reset{background:none;border:1px solid var(--border2);border-radius:5px;padding:.25rem .7rem;font-size:.72rem;font-family:var(--sans);font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;margin-left:auto}
+.check-reset:hover{color:var(--red);border-color:var(--red)}
+/* NOTES */
+.notes-form{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1.2rem}
+.notes-form .irow{align-items:flex-end}
+.notes-table-wrap{overflow-x:auto}
+.notes-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.notes-table th{background:var(--surf2);padding:.55rem .85rem;text-align:left;font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--border)}
+.notes-table td{padding:.5rem .85rem;border-bottom:1px solid var(--border);vertical-align:top}
+.del-btn{background:none;border:none;color:var(--red-dim);cursor:pointer;font-size:.9rem;transition:color .2s;padding:.1rem .3rem}
+.del-btn:hover{color:var(--red)}
+.notes-actions{display:flex;gap:.7rem;margin-bottom:1rem;flex-wrap:wrap}
+.action-btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--surf2);border:1px solid var(--border);border-radius:7px;padding:.5rem 1rem;font-family:var(--sans);font-size:.78rem;font-weight:600;color:var(--dim);cursor:pointer;transition:all .2s}
+.action-btn:hover{color:var(--text);border-color:var(--primary);background:var(--primary-dim)}
+.action-btn.danger:hover{color:var(--red);border-color:var(--red);background:var(--red-dim)}
+/* MCS indicator badge */
+.mcs-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--primary-dim);border:1px solid var(--primary);border-radius:6px;padding:.25rem .6rem;font-size:.74rem;font-family:var(--mono);font-weight:600;color:var(--primary);margin-top:.4rem}
+/* Responsive */
+@media(max-width:600px){
+  main{padding:1rem}
+  .grid{grid-template-columns:1fr}
+  .irow{flex-direction:column;gap:.5rem}
+}
+/* Animations */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.tab-section.active{animation:fadeIn .2s ease}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">W</div>
+  <div>
+    <h1>Campo Wi-Fi</h1>
+    <div class="sub">Ferramenta de Campo — Diagnóstico e Planejamento de Redes Wi-Fi · Rodrigo Tertulino</div>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('calc')"><span class="icon">⊞</span>Calculadoras</button>
+  <button class="tab-btn" onclick="showTab('ref')"><span class="icon">⊟</span>Referências</button>
+  <button class="tab-btn" onclick="showTab('channels')"><span class="icon">◈</span>Canais</button>
+  <button class="tab-btn" onclick="showTab('diag')"><span class="icon">⊕</span>Diagnóstico</button>
+  <button class="tab-btn" onclick="showTab('check')"><span class="icon">☑</span>Checklists</button>
+  <button class="tab-btn" onclick="showTab('notes')"><span class="icon">⊞</span>Anotações</button>
+</nav>
+
+<main>
+
+<!-- ═══════════════ TAB 1: CALCULADORAS ═══════════════ -->
+<section id="tab-calc" class="tab-section active">
+<div class="sec-title">Calculadoras</div>
+<div class="grid">
+
+<!-- 1. Conversão dBm/mW -->
+<div class="card">
+  <div class="card-top">
+    <div><div class="card-title">Conversão de Potência</div><div class="card-ref">Cap. 4 · Seção 4.1</div></div>
+    <span class="card-badge badge-blue">dBm ↔ mW</span>
+  </div>
+  <div class="igroup"><label>Potência em dBm</label>
+    <input type="number" id="c1_dbm" value="20" step="1" oninput="calc1('dbm')">
+  </div>
+  <div class="igroup"><label>Potência em mW</label>
+    <input type="number" id="c1_mw" value="100" step="0.1" oninput="calc1('mw')">
+  </div>
+  <div class="pbar-track"><div id="c1_bar" class="pbar-fill" style="width:55%;background:var(--accent)"></div></div>
+  <div class="ex-box"><strong>Referência:</strong> 0 dBm = 1 mW · 20 dBm = 100 mW · 30 dBm = 1 W · 36 dBm = 4 W (limite típico EIRP Anatel 2,4 GHz)
+    <br><button class="ex-btn" onclick="document.getElementById('c1_dbm').value=23;calc1('dbm')">Carregar 23 dBm (AP corporativo)</button>
+  </div>
+</div>
+
+<!-- 2. EIRP -->
+<div class="card">
+  <div class="card-top">
+    <div><div class="card-title">EIRP</div><div class="card-ref">Cap. 4 · Seção 4.1</div></div>
+    <span class="card-badge badge-orange">Regulatório</span>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>Potência TX (dBm)</label><input type="number" id="c2_ptx" value="23" step="1" oninput="calc2()"></div>
+    <div class="igroup"><label>Ganho Ant. (dBi)</label><input type="number" id="c2_g" value="4" step="0.5" oninput="calc2()"></div>
+  </div>
+  <div class="igroup"><label>Perda de cabo (dB)</label><input type="number" id="c2_cab" value="0" step="0.5" min="0" oninput="calc2()"></div>
+  <div class="result"><div class="res-val" id="c2_res">27.0 <span>dBm EIRP</span></div><div class="res-label" id="c2_lbl">Dentro do limite Anatel para 2,4 GHz (36 dBm)</div></div>
+  <div class="ex-box"><strong>Limites Anatel:</strong> 2,4 GHz → 36 dBm EIRP · 5 GHz → 30 dBm EIRP · 6 GHz → 30 dBm EIRP
+    <br><button class="ex-btn" onclick="setCalc2(23,4,0)">AP corporativo padrão (27 dBm)</button>
+  </div>
+</div>
+
+<!-- 3. Comprimento de onda -->
+<div class="card">
+  <div class="card-top">
+    <div><div class="card-title">Comprimento de Onda (λ)</div><div class="card-ref">Cap. 1 · Seção 1.1</div></div>
+    <span class="card-badge badge-blue">λ = c/f</span>
+  </div>
+  <div class="igroup"><label>Frequência (GHz)</label>
+    <input type="number" id="c3_f" value="5" step="0.1" min="0.1" oninput="calc3()">
+  </div>
+  <div class="result"><div class="res-val" id="c3_res">6.00 <span>cm</span></div><div class="res-label">Comprimento físico da oscilação no ar</div></div>
+  <svg id="c3_wave" viewBox="0 0 200 40" style="width:100%;height:45px;margin:.4rem 0">
+    <path id="c3_path" fill="none" stroke="var(--primary)" stroke-width="2.5"
+      d="M0,20 Q25,0 50,20 T100,20 T150,20 T200,20"/>
+  </svg>
+  <div class="ex-box">
+    <button class="ex-btn" onclick="document.getElementById('c3_f').value=2.4;calc3()">2,4 GHz (12,5 cm)</button>
+    <button class="ex-btn" onclick="document.getElementById('c3_f').value=5;calc3()">5 GHz (6 cm)</button>
+    <button class="ex-btn" onclick="document.getElementById('c3_f').value=6;calc3()">6 GHz (5 cm)</button>
+  </div>
+</div>
+
+<!-- 4. Friis -->
+<div class="card">
+  <div class="card-top">
+    <div><div class="card-title">Perda em Espaço Livre (Friis)</div><div class="card-ref">Cap. 4 · Seção 4.2</div></div>
+    <span class="card-badge badge-blue">Melhor caso</span>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>Frequência</label>
+      <select id="c4_f" onchange="calc4()">
+        <option value="2.4">2,4 GHz</option>
+        <option value="5" selected>5,0 GHz</option>
+        <option value="6">6,0 GHz</option>
+      </select>
+    </div>
+    <div class="igroup"><label>Distância (m)</label><input type="number" id="c4_d" value="10" step="1" min="0.1" oninput="calc4()"></div>
+  </div>
+  <div class="result"><div class="res-val" id="c4_res">66.43 <span>dB</span></div><div class="res-label">Piso mínimo de atenuação (sem obstáculos)</div></div>
+  <div class="ex-box"><strong>Regras:</strong> dobrar a distância = +6 dB · dobrar a frequência = +6 dB
+    <br><button class="ex-btn" onclick="document.getElementById('c4_f').value='5';document.getElementById('c4_d').value=10;calc4()">5 GHz / 10 m (Seção 4.2)</button>
+  </div>
+</div>
+
+<!-- 5. Log-Distance -->
+<div class="card">
+  <div class="card-top">
+    <div><div class="card-title">Perda Log-Distance</div><div class="card-ref">Cap. 4 · Seção 4.3</div></div>
+    <span class="card-badge badge-orange">Indoor</span>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>L₀ a 1 m (dB)</label><input type="number" id="c5_l0" value="46" step="1" oninput="calc5()"></div>
+    <div class="igroup"><label>Expoente n</label><input type="number" id="c5_n" value="3.5" step="0.1" min="1" oninput="calc5()"></div>
+  </div>
+  <div class="igroup"><label>Distância (m)</label><input type="number" id="c5_d" value="12" step="1" min="0.5" oninput="calc5()"></div>
+  <div class="result"><div class="res-val" id="c5_res">83.77 <span>dB</span></div><div class="res-label">Atenuação estimada no ambiente indoor</div></div>
+  <div class="ex-box"><strong>n típico:</strong> Corredor aberto 1,8–2,2 · Escritório drywall 2,8–3,2 · Residência brasileira 3,5–4,0 · Industrial 4,0–5,0
+    <br><button class="ex-btn" onclick="setCalc5(46,3.8,12)">Residência brasileira, n=3,8 (Seção 4.3)</button>
+  </div>
+</div>
+
+<!-- 6. One-Slope -->
+<div class="card">
+  <div class="card-top">
+    <div><div class="card-title">One-Slope com Obstáculos</div><div class="card-ref">Cap. 4 · Seção 4.3</div></div>
+    <span class="card-badge badge-orange">Com paredes</span>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>L₀ 1 m (dB)</label><input type="number" id="c6_l0" value="46" step="1" oninput="calc6()"></div>
+    <div class="igroup"><label>Exp. n</label><input type="number" id="c6_n" value="3" step="0.1" oninput="calc6()"></div>
+    <div class="igroup"><label>Dist. (m)</label><input type="number" id="c6_d" value="10" step="1" min="0.5" oninput="calc6()"></div>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>Drywall/Gesso (+3 dB)</label><input type="number" id="c6_w1" value="2" step="1" min="0" oninput="calc6()"></div>
+    <div class="igroup"><label>Alvenaria (+8 dB)</label><input type="number" id="c6_w2" value="1" step="1" min="0" oninput="calc6()"></div>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>Laje concreto (+20 dB)</label><input type="number" id="c6_laje" value="0" step="1" min="0" oninput="calc6()"></div>
+    <div class="igroup"><label>Porta madeira (+4 dB)</label><input type="number" id="c6_porta" value="0" step="1" min="0" oninput="calc6()"></div>
+  </div>
+  <div class="result"><div class="res-val" id="c6_res">90.00 <span>dB</span></div><div class="res-label">Atenuação combinada final</div></div>
+  <div class="helper">Atenuações: consulte a aba Referências → Materiais. Laje: 12–28 dB conforme tipo.</div>
+  <div class="ex-box"><button class="ex-btn" onclick="setCalc6(46,3.5,7,0,1,1,1)">Sobrado — laje+alvenaria+porta (Seção 4.3 → 107,6 dB)</button></div>
+</div>
+
+<!-- 7. RSSI / Link Budget -->
+<div class="card">
+  <div class="card-top">
+    <div><div class="card-title">Orçamento de Enlace (RSSI)</div><div class="card-ref">Cap. 4 · Seção 4.1 / 4.4</div></div>
+    <span class="card-badge badge-blue">Link Budget</span>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>P_TX (dBm)</label><input type="number" id="c7_ptx" value="20" step="1" oninput="calc7()"></div>
+    <div class="igroup"><label>G_TX (dBi)</label><input type="number" id="c7_gtx" value="4" step="0.5" oninput="calc7()"></div>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>G_RX (dBi)</label><input type="number" id="c7_grx" value="0" step="0.5" oninput="calc7()"></div>
+    <div class="igroup"><label>Perda caminho (dB)</label><input type="number" id="c7_lp" value="84" step="1" oninput="calc7()"></div>
+  </div>
+  <div class="result"><div class="res-val" id="c7_res">-60.0 <span>dBm</span></div><div class="res-label" id="c7_lbl">Muito Boa — Streaming HD, VoIP</div></div>
+  <div class="ex-box"><button class="ex-btn" onclick="setCalc7(20,4,0,84)">AP 20 dBm, ant 4 dBi, cliente 0 dBi, perda 84 dB → −60 dBm</button></div>
+</div>
+
+<!-- 8. SNR -->
+<div class="card">
+  <div class="card-top">
+    <div><div class="card-title">SNR e MCS Estimado</div><div class="card-ref">Cap. 4 · Seção 4.4 / Cap. 9</div></div>
+    <span class="card-badge badge-blue">Qualidade</span>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>RSSI (dBm)</label><input type="number" id="c8_rssi" value="-65" step="1" max="0" oninput="calc8()"></div>
+    <div class="igroup"><label>Noise Floor (dBm)</label><input type="number" id="c8_nf" value="-90" step="1" oninput="calc8()"></div>
+  </div>
+  <div class="result">
+    <div class="res-val" id="c8_res">25 <span>dB SNR</span></div>
+    <div class="res-label" id="c8_lbl">Boa — Streaming HD</div>
+    <div id="c8_mcs" class="mcs-badge" style="justify-content:center">MCS 7 · 64-QAM 5/6 · ≈ 72 Mbps (20 MHz)</div>
+  </div>
+  <div class="pbar-track"><div id="c8_bar" class="pbar-fill" style="width:62%;background:var(--primary)"></div></div>
+  <div class="ex-box"><button class="ex-btn" onclick="setCalc8(-55,-72)">Ruído crítico −72 dBm (Cap. 7 exemplo)</button>
+    <button class="ex-btn" onclick="setCalc8(-65,-90)">Cenário típico indoor</button>
+  </div>
+</div>
+
+<!-- 9. Raio de cobertura -->
+<div class="card">
+  <div class="card-top">
+    <div><div class="card-title">Raio de Cobertura</div><div class="card-ref">Cap. 4 · Seção 4.6</div></div>
+    <span class="card-badge badge-orange">Planejamento</span>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>EIRP (P_TX+G_TX) dBm</label><input type="number" id="c9_eirp" value="27" step="1" oninput="calc9()"></div>
+    <div class="igroup"><label>G_RX cliente (dBi)</label><input type="number" id="c9_grx" value="1" step="0.5" min="0" oninput="calc9()"></div>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>RSSI mín. alvo (dBm)</label><input type="number" id="c9_rssi" value="-65" step="1" max="-30" oninput="calc9()"></div>
+    <div class="igroup"><label>L₀ a 1 m (dB)</label><input type="number" id="c9_l0" value="46" step="1" oninput="calc9()"></div>
+  </div>
+  <div class="igroup"><label>Expoente n</label><input type="number" id="c9_n" value="3.2" step="0.1" min="1" oninput="calc9()"></div>
+  <div class="result"><div class="res-val" id="c9_res">29.5 <span>m</span></div><div class="res-label">Raio máximo útil do ponto de acesso</div></div>
+  <div class="ex-box"><button class="ex-btn" onclick="setCalc9(27,1,-65,46,3.2)">Escritório 5 GHz (Seção 4.6 → 29,5 m)</button>
+    <button class="ex-btn" onclick="setCalc9(23,0,-70,40,3.5)">Residência 2,4 GHz</button>
+  </div>
+</div>
+
+<!-- 10. Dimensionamento APs -->
+<div class="card">
+  <div class="card-top">
+    <div><div class="card-title">Dimensionamento de APs</div><div class="card-ref">Cap. 5 · Seção 5.3 / Cap. 6</div></div>
+    <span class="card-badge badge-orange">Quantidade</span>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>Área total (m²)</label><input type="number" id="c10_area" value="800" step="10" oninput="calc10()"></div>
+    <div class="igroup"><label>Cobertura/AP (m²)</label><input type="number" id="c10_ap_area" value="350" step="10" oninput="calc10()"></div>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>Usuários totais</label><input type="number" id="c10_users" value="120" step="5" oninput="calc10()"></div>
+    <div class="igroup"><label>Capacidade/AP</label><input type="number" id="c10_cap" value="40" step="5" oninput="calc10()"></div>
+  </div>
+  <div class="result"><div class="res-val" id="c10_res">3 <span>APs</span></div><div class="res-label" id="c10_lbl">Limitado por Cobertura</div></div>
+  <div style="display:flex;gap:1rem;height:70px;align-items:flex-end;margin:.6rem 0">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+      <span id="c10_lcov" style="font-size:.8rem;font-family:var(--mono);font-weight:700;color:var(--primary)">3</span>
+      <div id="c10_bcov" style="width:100%;background:var(--primary);border-radius:4px 4px 0 0;height:60%;transition:height .4s"></div>
+      <span style="font-size:.65rem;color:var(--muted);margin-top:.2rem">Cobertura</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+      <span id="c10_lcap" style="font-size:.8rem;font-family:var(--mono);font-weight:700;color:var(--accent)">3</span>
+      <div id="c10_bcap" style="width:100%;background:var(--accent);border-radius:4px 4px 0 0;height:60%;transition:height .4s"></div>
+      <span style="font-size:.65rem;color:var(--muted);margin-top:.2rem">Capacidade</span>
+    </div>
+  </div>
+  <div class="ex-box"><button class="ex-btn" onclick="setCalc10(800,350,120,40)">800 m² / 120 usuários (gargalo equilibrado)</button></div>
+</div>
+
+<!-- 11. Perda em cabo -->
+<div class="card">
+  <div class="card-top">
+    <div><div class="card-title">Perda em Cabo Coaxial</div><div class="card-ref">Cap. 11 · Seção 11.3</div></div>
+    <span class="card-badge badge-blue">Instalação</span>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>Tipo de cabo</label>
+      <select id="c11_cab" onchange="calc11()">
+        <option value="lmr400">LMR-400</option>
+        <option value="lmr195">LMR-195</option>
+        <option value="rg6">RG-6</option>
+        <option value="rg58">RG-58</option>
+      </select>
+    </div>
+    <div class="igroup"><label>Comprimento (m)</label><input type="number" id="c11_len" value="10" step="1" min="0.1" oninput="calc11()"></div>
+  </div>
+  <div class="igroup"><label>Frequência</label>
+    <select id="c11_f" onchange="calc11()">
+      <option value="2.4">2,4 GHz</option>
+      <option value="5">5,0 GHz</option>
+      <option value="6">6,0 GHz</option>
+    </select>
+  </div>
+  <div class="result"><div class="res-val" id="c11_res">0.40 <span>dB</span></div><div class="res-label" id="c11_lbl">Perda aceitável — inclua no orçamento de enlace</div></div>
+  <div class="ex-box"><strong>Regra:</strong> perdas de cabo &gt; 3 dB prejudicam o enlace. Use LMR-400 em instalações externas. RG-58 é inadequado acima de 5 m em 5 GHz.</div>
+</div>
+
+<!-- 12. Orçamento PoE -->
+<div class="card">
+  <div class="card-top">
+    <div><div class="card-title">Orçamento PoE</div><div class="card-ref">Cap. 11 · Seção 11.2</div></div>
+    <span class="card-badge badge-orange">Energia</span>
+  </div>
+  <div class="igroup"><label>Budget total do switch (W)</label><input type="number" id="c12_bud" value="120" step="10" min="1" oninput="calc12()"></div>
+  <div class="irow">
+    <div class="igroup"><label>APs PoE 802.3af (15,4 W)</label><input type="number" id="c12_af" value="4" step="1" min="0" oninput="calc12()"></div>
+    <div class="igroup"><label>APs PoE+ 802.3at (30 W)</label><input type="number" id="c12_at" value="2" step="1" min="0" oninput="calc12()"></div>
+  </div>
+  <div class="igroup"><label>APs PoE++ 802.3bt (60 W)</label><input type="number" id="c12_bt" value="0" step="1" min="0" oninput="calc12()"></div>
+  <div class="result"><div class="res-val" id="c12_res">122.0 <span>W</span></div><div class="res-label" id="c12_lbl">Consumo total estimado</div></div>
+  <div class="pbar-track"><div id="c12_bar" class="pbar-fill" style="width:70%;background:var(--green)"></div></div>
+  <div id="c12_status" class="helper" style="text-align:center"></div>
+</div>
+
+</div><!-- /grid -->
+</section>
+
+<!-- ═══════════════ TAB 2: REFERÊNCIAS ═══════════════ -->
+<section id="tab-ref" class="tab-section">
+<div class="sec-title">Tabelas de Referência</div>
+
+<div class="sec-title" style="font-size:.75rem;margin-top:0">Qualidade de RSSI · Cap. 4 Seção 4.4</div>
+<div class="ref-table-wrap">
+<table class="ref-table">
+<thead><tr><th>RSSI (dBm)</th><th>Classificação</th><th>Aplicações suportadas</th><th>MCS típico</th></tr></thead>
+<tbody>
+<tr><td><span class="tag tag-g">≥ −60</span></td><td>Excelente</td><td>Streaming 4K, VoIP, backhaul corporativo</td><td>MCS 9–11</td></tr>
+<tr><td><span class="tag tag-g">−60 a −70</span></td><td>Muito Boa</td><td>Streaming HD, VoIP, videoconferência</td><td>MCS 7–9</td></tr>
+<tr><td><span class="tag tag-y">−70 a −80</span></td><td>Boa / Regular</td><td>Navegação, e-mail, aplicações básicas</td><td>MCS 3–6</td></tr>
+<tr><td><span class="tag tag-o">−80 a −90</span></td><td>Fraca</td><td>Conexão instável, possível queda frequente</td><td>MCS 0–2</td></tr>
+<tr><td><span class="tag tag-r">&lt; −90</span></td><td>Muito Fraca</td><td>Sem serviço ou conexão impossível</td><td>—</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="sec-title" style="font-size:.75rem">SNR e MCS Sustentável · Cap. 4 Seção 4.5 / Cap. 9</div>
+<div class="ref-table-wrap">
+<table class="ref-table">
+<thead><tr><th>MCS</th><th>Modulação</th><th>Codificação</th><th>SNR mín. (dB)</th><th>Throughput 20 MHz</th><th>Padrão</th></tr></thead>
+<tbody id="mcs-tbody"></tbody>
+</table>
+</div>
+
+<div class="sec-title" style="font-size:.75rem">Expoente de Perda por Ambiente · Cap. 4 Seção 4.3</div>
+<div class="ref-table-wrap">
+<table class="ref-table">
+<thead><tr><th>Ambiente</th><th>n típico</th><th>Observação</th></tr></thead>
+<tbody>
+<tr><td>Espaço livre (externo sem obstáculos)</td><td><span class="tag tag-b">2,0</span></td><td>Modelo de Friis puro</td></tr>
+<tr><td>Corredor de escritório (planta aberta)</td><td><span class="tag tag-b">1,8–2,2</span></td><td>Propagação guiada no corredor</td></tr>
+<tr><td>Escritório com divisórias leves (drywall)</td><td><span class="tag tag-g">2,8–3,2</span></td><td>Cenário mais comum em corporativo</td></tr>
+<tr><td>Escritório com paredes densas</td><td><span class="tag tag-g">3,0–3,5</span></td><td>Alvenaria entre salas</td></tr>
+<tr><td>Residência brasileira típica (alvenaria)</td><td><span class="tag tag-y">3,5–4,0</span></td><td>Tijolo cerâmico, lajes</td></tr>
+<tr><td>Shopping center / mall</td><td><span class="tag tag-y">3,0–3,5</span></td><td>Grande volume com reflexões</td></tr>
+<tr><td>Galpão industrial (metais, maquinário)</td><td><span class="tag tag-o">4,0–5,0</span></td><td>Multi-path severo, absorção por metais</td></tr>
+<tr><td>Ambiente externo com vegetação</td><td><span class="tag tag-g">2,2–2,8</span></td><td>Folhagem absorve em 2,4 e 5 GHz</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="sec-title" style="font-size:.75rem">Atenuação por Material · Cap. 1 Seção 1.3</div>
+<div class="ref-table-wrap">
+<table class="ref-table">
+<thead><tr><th>Material</th><th>Atenuação (dB)</th><th>Observação</th></tr></thead>
+<tbody>
+<tr><td>Vidro comum (simples)</td><td><span class="tag tag-g">2–3</span></td><td>Pouca atenuação; película adiciona 3–5 dB</td></tr>
+<tr><td>Drywall / Gesso acartonado</td><td><span class="tag tag-g">3–5</span></td><td>Varia com espessura; muito usado em escritórios</td></tr>
+<tr><td>Porta de madeira</td><td><span class="tag tag-g">3–4</span></td><td>Maciça pode chegar a 6 dB</td></tr>
+<tr><td>Alvenaria de tijolo 10 cm</td><td><span class="tag tag-y">6–8</span></td><td>Padrão residencial brasileiro</td></tr>
+<tr><td>Alvenaria de tijolo 15 cm+</td><td><span class="tag tag-y">8–12</span></td><td>Paredes externas ou estruturais</td></tr>
+<tr><td>Concreto armado 10 cm</td><td><span class="tag tag-o">10–15</span></td><td>Armadura eleva a atenuação</td></tr>
+<tr><td>Laje nervurada (residencial)</td><td><span class="tag tag-o">14–18</span></td><td>Laje com vigotas de concreto</td></tr>
+<tr><td>Laje maciça de concreto</td><td><span class="tag tag-o">18–24</span></td><td>Laje de concreto sólido</td></tr>
+<tr><td>Laje protendida</td><td><span class="tag tag-r">20–28</span></td><td>Alta densidade de concreto e armadura</td></tr>
+<tr><td>Estrutura metálica / Aço</td><td><span class="tag tag-r">30–40+</span></td><td>Praticamente opaco; cria zonas mortas</td></tr>
+<tr><td>Janela com película de controle solar</td><td><span class="tag tag-y">5–8</span></td><td>Metálica pode bloquear quase totalmente</td></tr>
+<tr><td>Piso elevado (data center)</td><td><span class="tag tag-y">8–15</span></td><td>Depende do material e plenum</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="sec-title" style="font-size:.75rem">Reason Codes 802.11 mais comuns · Cap. 8 Seção 8.2</div>
+<div class="ref-table-wrap">
+<table class="ref-table">
+<thead><tr><th>Código</th><th>Motivo</th><th>Causa provável</th><th>Ação</th></tr></thead>
+<tbody id="rc-tbody"></tbody>
+</table>
+</div>
+
+<div class="sec-title" style="font-size:.75rem">Classes PoE · Cap. 11 Seção 11.2</div>
+<div class="ref-table-wrap">
+<table class="ref-table">
+<thead><tr><th>Padrão</th><th>Potência máxima</th><th>Uso típico</th></tr></thead>
+<tbody>
+<tr><td><span class="tag tag-g">802.3af (PoE)</span></td><td>15,4 W</td><td>APs básicos, câmeras IP, VoIP</td></tr>
+<tr><td><span class="tag tag-y">802.3at (PoE+)</span></td><td>30 W</td><td>APs de médio porte, PTZ cameras</td></tr>
+<tr><td><span class="tag tag-o">802.3bt tipo 3 (PoE++)</span></td><td>60 W</td><td>APs Wi-Fi 6/6E corporativos</td></tr>
+<tr><td><span class="tag tag-r">802.3bt tipo 4 (PoE++)</span></td><td>100 W</td><td>Estações de trabalho, TVs, iluminação smart</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- ═══════════════ TAB 3: CANAIS ═══════════════ -->
+<section id="tab-channels" class="tab-section">
+<div class="sec-title">Planejamento de Canais</div>
+
+<!-- 2.4 GHz -->
+<div class="ch-section">
+  <div class="ch-title">2,4 GHz <span class="ch-band">2412–2472 MHz · 13 canais · 22 MHz de largura</span></div>
+  <div class="ch24-grid" id="ch24-grid"></div>
+  <div class="ch-legend">
+    <div class="ch-leg-item"><div class="ch-leg-dot" style="background:var(--accent)"></div><span>Canal não sobreponível (1, 6, 11)</span></div>
+    <div class="ch-leg-item"><div class="ch-leg-dot" style="background:var(--muted)"></div><span>Canal sobreponível — evitar</span></div>
+  </div>
+  <div class="ex-box" style="margin-top:.8rem"><strong>Regra obrigatória:</strong> use apenas os canais 1, 6 e 11 em 2,4 GHz. Qualquer outro canal causa interferência adjacente (ACI), que o CSMA/CA não detecta e que é pior do que interferência co-canal. Use sempre 20 MHz de largura nessa faixa. Cap. 9 Seção 9.3.</div>
+</div>
+
+<!-- 5 GHz -->
+<div class="ch-section">
+  <div class="ch-title">5 GHz <span class="ch-band">Mais de 20 canais não sobreponível · UNII-1 a UNII-3</span></div>
+  <div class="ch5-grid" id="ch5-grid"></div>
+  <div class="ch-legend">
+    <div class="ch-leg-item"><div class="ch-leg-dot" style="background:var(--green)"></div><span>UNII-1 (sem DFS)</span></div>
+    <div class="ch-leg-item"><div class="ch-leg-dot" style="background:var(--yellow)"></div><span>UNII-2A/2C (DFS obrigatório)</span></div>
+    <div class="ch-leg-item"><div class="ch-leg-dot" style="background:var(--primary)"></div><span>UNII-3 (sem DFS)</span></div>
+  </div>
+  <div class="ex-box" style="margin-top:.8rem">
+    <strong>DFS:</strong> o AP libera automaticamente o canal ao detectar sinal de radar. Em ambientes próximos a aeroportos, costa ou bases militares, prefira UNII-1 (36–48) ou UNII-3 (149–165). Em ambientes urbanos sem essas fontes, canais DFS são geralmente seguros e oferecem espectro extra.<br>
+    <strong>Largura recomendada:</strong> residencial → 80 MHz · corporativo denso → 40 MHz · alta densidade → 20 MHz. Cap. 9 Seção 9.3 / Cap. 10 Seção 10.2.
+  </div>
+</div>
+
+<!-- 6 GHz -->
+<div class="ch-section">
+  <div class="ch-title">6 GHz <span class="ch-band">Wi-Fi 6E / Wi-Fi 7 · Aprovado Anatel 2021 (Resolução 754)</span></div>
+  <div class="card" style="background:var(--surf3)">
+    <div style="font-size:.82rem;line-height:1.7">
+      <div><span class="tag tag-g" style="margin-right:.5rem">59 canais de 20 MHz</span>disponíveis na faixa 5925–7125 MHz</div>
+      <div style="margin-top:.5rem"><span class="tag tag-g" style="margin-right:.5rem">7 canais de 160 MHz</span>sem sobreposição — ideal para Wi-Fi 6E</div>
+      <div style="margin-top:.5rem"><span class="tag tag-b" style="margin-right:.5rem">Wi-Fi 7</span>canais de 320 MHz — em implantação no mercado</div>
+      <div style="margin-top:.7rem;color:var(--green)">Vantagens: nenhum dispositivo legado · sem DFS · sem interferência acumulada · 160 MHz viável na maioria dos cenários</div>
+      <div style="margin-top:.4rem;color:var(--dim)">Use 6 GHz para clientes modernos e mantenha 5 GHz para compatibilidade retroativa. Cap. 10 Seção 10.2.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Recomendador de canal -->
+<div class="sec-title" style="font-size:.75rem;margin-top:1.5rem">Recomendador de Canal</div>
+<div class="diag-card">
+  <div class="diag-title">Qual canal escolher?</div>
+  <div class="irow">
+    <div class="igroup"><label>Faixa</label>
+      <select id="ch_faixa" onchange="recChannel()">
+        <option value="24">2,4 GHz</option>
+        <option value="5">5 GHz</option>
+        <option value="6">6 GHz</option>
+      </select>
+    </div>
+    <div class="igroup"><label>Proximidade a aeroporto/radar</label>
+      <select id="ch_radar" onchange="recChannel()">
+        <option value="no">Não</option>
+        <option value="yes">Sim</option>
+      </select>
+    </div>
+    <div class="igroup"><label>Densidade de redes vizinhas</label>
+      <select id="ch_density" onchange="recChannel()">
+        <option value="low">Baixa (residencial)</option>
+        <option value="med">Média (escritório)</option>
+        <option value="high">Alta (corporativo/hotéis)</option>
+      </select>
+    </div>
+  </div>
+  <div class="code-block" id="ch_rec" style="color:var(--accent);white-space:pre-wrap"></div>
+</div>
+</section>
+
+<!-- ═══════════════ TAB 4: DIAGNÓSTICO ═══════════════ -->
+<section id="tab-diag" class="tab-section">
+<div class="sec-title">Ferramentas de Diagnóstico em Campo</div>
+
+<!-- Reason Code Lookup -->
+<div class="diag-card">
+  <div class="diag-title">Lookup de Reason Code 802.11 · Cap. 8 Seção 8.2</div>
+  <div class="irow" style="align-items:flex-end">
+    <div class="igroup" style="flex:0 0 120px"><label>Reason Code</label>
+      <input type="number" id="rc_input" value="15" step="1" min="1" oninput="lookupRC()">
+    </div>
+    <div class="igroup" style="flex:1" id="rc_result_wrap">
+      <label>Resultado</label>
+      <div id="rc_result" style="background:var(--surf2);border:1px solid var(--border);border-radius:7px;padding:.6rem .85rem;font-size:.84rem;min-height:42px"></div>
+    </div>
+  </div>
+  <div id="rc_detail" class="diag-note" style="margin-top:.6rem"></div>
+</div>
+
+<!-- Wireshark Filter Generator -->
+<div class="diag-card">
+  <div class="diag-title">Gerador de Filtros Wireshark · Cap. 7 Seção 7.2 / 7.3</div>
+  <div class="igroup"><label>Selecione o sintoma</label>
+    <select id="ws_symptom" onchange="genFilter()">
+      <option value="auth">Cliente não associa / falha de autenticação WPA</option>
+      <option value="deauth">Desconexões frequentes (deauthentication)</option>
+      <option value="retry">Lentidão / alta taxa de retransmissão</option>
+      <option value="signal">Sinal fraco (RSSI abaixo de −75 dBm)</option>
+      <option value="beacon">Ver beacons e configuração do AP</option>
+      <option value="probe">Ver o que o cliente está procurando (probe requests)</option>
+      <option value="bssid">Filtrar por AP específico (por BSSID)</option>
+      <option value="mac">Filtrar por dispositivo específico (por MAC)</option>
+      <option value="rc">Filtrar por reason code específico</option>
+      <option value="eapol">Capturar handshake WPA completo (4 mensagens)</option>
+    </select>
+  </div>
+  <div id="ws_mac_row" class="igroup" style="display:none"><label>Endereço MAC (XX:XX:XX:XX:XX:XX)</label>
+    <input type="text" id="ws_mac" placeholder="AA:BB:CC:DD:EE:FF" oninput="genFilter()" style="background:var(--surf2);border:1px solid var(--border);border-radius:7px;padding:.6rem .85rem;font-size:.9rem;font-family:var(--mono);color:var(--text);width:100%">
+  </div>
+  <div id="ws_rc_row" class="igroup" style="display:none"><label>Reason Code</label>
+    <input type="number" id="ws_rc_val" value="4" step="1" min="1" oninput="genFilter()" style="background:var(--surf2);border:1px solid var(--border);border-radius:7px;padding:.6rem .85rem;font-size:.9rem;font-family:var(--mono);color:var(--text);width:100%">
+  </div>
+  <label style="font-size:.75rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;display:block;margin-bottom:.35rem">Filtro Wireshark</label>
+  <div class="code-block" id="ws_filter">eapol<button class="copy-btn" onclick="copyText('ws_filter')">Copiar</button></div>
+  <div class="diag-note" id="ws_note"></div>
+  <div id="ws_alt_wrap" style="display:none">
+    <label style="font-size:.75rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;display:block;margin:.7rem 0 .35rem">Filtro complementar</label>
+    <div class="code-block" id="ws_alt"><button class="copy-btn" onclick="copyText('ws_alt')">Copiar</button></div>
+  </div>
+</div>
+
+<!-- iPerf3 Builder -->
+<div class="diag-card">
+  <div class="diag-title">Gerador de Comandos iPerf3 · Cap. 7 Seção 7.2</div>
+  <div class="irow">
+    <div class="igroup"><label>IP do servidor</label>
+      <input type="text" id="ip_server" value="192.168.1.100" oninput="genIperf()" style="background:var(--surf2);border:1px solid var(--border);border-radius:7px;padding:.6rem .85rem;font-size:.9rem;font-family:var(--mono);color:var(--text);width:100%">
+    </div>
+    <div class="igroup"><label>Cenário</label>
+      <select id="ip_mode" onchange="genIperf()">
+        <option value="tcp">TCP — Teste de vazão padrão</option>
+        <option value="udp">UDP — Qualidade para VoIP/vídeo</option>
+        <option value="bidir">Bidirecional (upload + download)</option>
+        <option value="quick">Teste rápido de campo (30 s)</option>
+      </select>
+    </div>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>Duração (s)</label><input type="number" id="ip_t" value="60" step="10" min="10" oninput="genIperf()"></div>
+    <div class="igroup"><label>Threads paralelas</label><input type="number" id="ip_p" value="4" step="1" min="1" max="20" oninput="genIperf()"></div>
+    <div class="igroup"><label>Intervalo relatório (s)</label><input type="number" id="ip_i" value="5" step="1" min="1" oninput="genIperf()"></div>
+  </div>
+  <div id="ip_udp_row" class="igroup" style="display:none">
+    <label>Largura de banda UDP alvo (Mbps)</label>
+    <input type="number" id="ip_bw" value="10" step="1" min="1" oninput="genIperf()" style="background:var(--surf2);border:1px solid var(--border);border-radius:7px;padding:.6rem .85rem;font-size:.9rem;font-family:var(--mono);color:var(--text);width:100%">
+  </div>
+  <label style="font-size:.75rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;display:block;margin-bottom:.35rem">Servidor</label>
+  <div class="code-block" id="ip_server_cmd">iperf3 -s<button class="copy-btn" onclick="copyText('ip_server_cmd')">Copiar</button></div>
+  <label style="font-size:.75rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;display:block;margin:.7rem 0 .35rem">Cliente</label>
+  <div class="code-block" id="ip_client_cmd"><button class="copy-btn" onclick="copyText('ip_client_cmd')">Copiar</button></div>
+  <div class="diag-note" id="ip_note"></div>
+</div>
+
+<!-- Symptom → Tool Selector -->
+<div class="diag-card">
+  <div class="diag-title">Seletor: Sintoma → Ferramenta → Próximo Passo · Cap. 7 Guia de Seleção</div>
+  <div class="igroup"><label>Descreva o sintoma</label>
+    <select id="sym_sel" onchange="symptomTool()">
+      <option value="">Selecione o sintoma...</option>
+      <option value="slow">Wi-Fi lento (velocidade abaixo do esperado)</option>
+      <option value="drop">Desconexões frequentes sem causa óbvia</option>
+      <option value="noassoc">Dispositivo não consegue associar à rede</option>
+      <option value="noinet">Wi-Fi conectado mas sem acesso à internet</option>
+      <option value="coverage">Sinal fraco em área específica</option>
+      <option value="device">Só um dispositivo com problema</option>
+      <option value="channel">Suspeita de canal congestionado</option>
+      <option value="auth">Autenticação WPA falha</option>
+      <option value="history">Quedas ocorrem no mesmo horário todo dia</option>
+    </select>
+  </div>
+  <div id="sym_result" style="display:none">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.8rem">
+      <div class="card" style="padding:.9rem">
+        <div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.5rem">Ferramenta primária</div>
+        <div id="sym_tool" style="font-size:.88rem;font-weight:600"></div>
+      </div>
+      <div class="card" style="padding:.9rem">
+        <div style="font-size:.72rem;font-weight:700;color:var(--primary);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.5rem">Referência no livro</div>
+        <div id="sym_ref" style="font-size:.85rem;font-family:var(--mono)"></div>
+      </div>
+    </div>
+    <div class="diag-note" id="sym_steps" style="margin-top:.7rem"></div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ TAB 5: CHECKLISTS ═══════════════ -->
+<section id="tab-check" class="tab-section">
+<div class="sec-title">Checklists de Campo</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem">
+
+<!-- Site Survey -->
+<div class="card">
+  <div class="card-top"><div><div class="card-title">Site Survey</div><div class="card-ref">Cap. 5 · Seção 5.3</div></div><button class="check-reset" onclick="resetCheck('survey')">Resetar</button></div>
+  <div class="check-progress">
+    <div class="check-pct" id="survey-pct">0%</div>
+    <div class="check-bar"><div class="pbar-track"><div id="survey-bar" class="pbar-fill" style="width:0%;background:var(--accent)"></div></div></div>
+  </div>
+  <div id="survey-list"></div>
+</div>
+
+<!-- Pós-Instalação -->
+<div class="card">
+  <div class="card-top"><div><div class="card-title">Testes Pós-Instalação</div><div class="card-ref">Cap. 11 · Seção 11.4</div></div><button class="check-reset" onclick="resetCheck('install')">Resetar</button></div>
+  <div class="check-progress">
+    <div class="check-pct" id="install-pct">0%</div>
+    <div class="check-bar"><div class="pbar-track"><div id="install-bar" class="pbar-fill" style="width:0%;background:var(--accent)"></div></div></div>
+  </div>
+  <div id="install-list"></div>
+</div>
+
+<!-- Auditoria -->
+<div class="card">
+  <div class="card-top"><div><div class="card-title">Auditoria Periódica</div><div class="card-ref">Cap. 12 · Seção 12.3</div></div><button class="check-reset" onclick="resetCheck('audit')">Resetar</button></div>
+  <div class="check-progress">
+    <div class="check-pct" id="audit-pct">0%</div>
+    <div class="check-bar"><div class="pbar-track"><div id="audit-bar" class="pbar-fill" style="width:0%;background:var(--accent)"></div></div></div>
+  </div>
+  <div id="audit-list"></div>
+</div>
+
+</div>
+</section>
+
+<!-- ═══════════════ TAB 6: ANOTAÇÕES ═══════════════ -->
+<section id="tab-notes" class="tab-section">
+<div class="sec-title">Anotações de Campo</div>
+<div class="notes-form">
+  <div class="irow">
+    <div class="igroup"><label>Local / Ponto</label>
+      <input type="text" id="n_loc" placeholder="Ex: Corredor 3º andar, Sala reuniões" style="background:var(--surf2);border:1px solid var(--border);border-radius:7px;padding:.6rem .85rem;font-size:.9rem;color:var(--text);width:100%">
+    </div>
+    <div class="igroup"><label>RSSI (dBm)</label>
+      <input type="number" id="n_rssi" step="1" max="0" placeholder="-65" style="background:var(--surf2);border:1px solid var(--border);border-radius:7px;padding:.6rem .85rem;font-size:.9rem;font-family:var(--mono);color:var(--text);width:100%">
+    </div>
+    <div class="igroup"><label>SNR (dB)</label>
+      <input type="number" id="n_snr" step="1" min="0" placeholder="25" style="background:var(--surf2);border:1px solid var(--border);border-radius:7px;padding:.6rem .85rem;font-size:.9rem;font-family:var(--mono);color:var(--text);width:100%">
+    </div>
+  </div>
+  <div class="irow">
+    <div class="igroup"><label>Canal / Faixa</label>
+      <input type="text" id="n_ch" placeholder="Ex: Canal 6 / 2,4 GHz" style="background:var(--surf2);border:1px solid var(--border);border-radius:7px;padding:.6rem .85rem;font-size:.9rem;color:var(--text);width:100%">
+    </div>
+    <div class="igroup"><label>Observação</label>
+      <input type="text" id="n_obs" placeholder="Ex: Zona de sombra atrás da escada" style="background:var(--surf2);border:1px solid var(--border);border-radius:7px;padding:.6rem .85rem;font-size:.9rem;color:var(--text);width:100%">
+    </div>
+    <div class="igroup" style="flex:0 0 auto;align-self:flex-end">
+      <button onclick="addNote()" style="background:var(--accent);border:none;border-radius:7px;padding:.65rem 1.2rem;font-family:var(--sans);font-size:.85rem;font-weight:700;color:#fff;cursor:pointer;width:100%;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">+ Adicionar</button>
+    </div>
+  </div>
+</div>
+<div class="notes-actions">
+  <button class="action-btn" onclick="exportNotes()">⬇ Exportar .txt</button>
+  <button class="action-btn danger" onclick="clearNotes()">✕ Limpar tudo</button>
+  <span id="n_count" style="font-size:.78rem;color:var(--muted);align-self:center;margin-left:auto">0 registros</span>
+</div>
+<div class="notes-table-wrap">
+  <table class="notes-table">
+    <thead><tr><th>#</th><th>Hora</th><th>Local</th><th>RSSI</th><th>SNR</th><th>Qualidade</th><th>Canal</th><th>Observação</th><th></th></tr></thead>
+    <tbody id="notes-tbody"></tbody>
+  </table>
+  <div id="notes-empty" style="text-align:center;padding:2rem;color:var(--muted);font-size:.85rem">Nenhuma anotação ainda. Adicione medições de campo acima.</div>
+</div>
+</section>
+</main>
+
+<script>
+// ══════════════════════════════════════════════
+// REFERENCE DATA
+// ══════════════════════════════════════════════
+const MCS_DATA = [
+  {mcs:0,mod:'BPSK',code:'1/2',snr:5,mbps:7.2,std:'Wi-Fi 4+'},
+  {mcs:1,mod:'QPSK',code:'1/2',snr:10,mbps:14.4,std:'Wi-Fi 4+'},
+  {mcs:2,mod:'QPSK',code:'3/4',snr:13,mbps:21.7,std:'Wi-Fi 4+'},
+  {mcs:3,mod:'16-QAM',code:'1/2',snr:17,mbps:28.9,std:'Wi-Fi 4+'},
+  {mcs:4,mod:'16-QAM',code:'3/4',snr:20,mbps:43.3,std:'Wi-Fi 4+'},
+  {mcs:5,mod:'64-QAM',code:'2/3',snr:25,mbps:57.8,std:'Wi-Fi 4+'},
+  {mcs:6,mod:'64-QAM',code:'3/4',snr:27,mbps:65.0,std:'Wi-Fi 4+'},
+  {mcs:7,mod:'64-QAM',code:'5/6',snr:28,mbps:72.2,std:'Wi-Fi 4+'},
+  {mcs:8,mod:'256-QAM',code:'3/4',snr:30,mbps:86.7,std:'Wi-Fi 5+'},
+  {mcs:9,mod:'256-QAM',code:'5/6',snr:32,mbps:96.3,std:'Wi-Fi 5+'},
+  {mcs:10,mod:'1024-QAM',code:'3/4',snr:35,mbps:129.4,std:'Wi-Fi 6+'},
+  {mcs:11,mod:'1024-QAM',code:'5/6',snr:37,mbps:143.4,std:'Wi-Fi 6+'},
+];
+const REASON_CODES = [
+  {code:1,label:'Não especificado',cause:'Motivo genérico; o AP não detalhou a causa',action:'Analise o log do AP e as capturas em torno do evento'},
+  {code:2,label:'Autenticação anterior inválida',cause:'AP descartou o estado de autenticação do cliente; pode indicar reinício do AP',action:'Verifique o log do AP por reinicializações ou falhas de memória'},
+  {code:3,label:'Estação saiu da BSS',cause:'Cliente enviou Disassociate voluntariamente para se desconectar',action:'Normal ao desconectar; preocupante se ocorrer sem ação do usuário'},
+  {code:4,label:'Inatividade / timeout da estação',cause:'AP não recebeu quadros do cliente dentro do período configurado de inatividade',action:'Verifique o power save mode do cliente e o timeout de inatividade no AP'},
+  {code:5,label:'AP sem recursos',cause:'Número máximo de clientes atingido ou falta de memória no AP',action:'Verifique a carga do AP; adicione APs ou redistribua clientes'},
+  {code:6,label:'Frame de estação não autenticada',cause:'Cliente enviou um quadro que requer autenticação sem ter se autenticado',action:'Falha no processo de autenticação; reveja a configuração de segurança'},
+  {code:7,label:'Frame de classe 3 sem associação',cause:'AP recebeu quadro de dados de um cliente que considera não associado; AP provavelmente reiniciou',action:'Verifique se o AP reiniciou recentemente; analise o syslog'},
+  {code:15,label:'4-Way Handshake timeout',cause:'AP enviou M1 mas não recebeu M2 com MIC válido; senha incorreta ou incompatibilidade de padrão de segurança',action:'Confirme a senha PSK no cliente; verifique se o padrão (WPA2/WPA3) é compatível'},
+  {code:16,label:'Group Key Handshake timeout',cause:'Falha na renovação periódica da chave de grupo (GTK) após associação bem-sucedida',action:'Pode indicar driver desatualizado no cliente ou relógio do AP incorreto'},
+  {code:17,label:'IE do 4-Way Handshake diverge',cause:'As informações de segurança no handshake diferem das anunciadas no beacon',action:'Verifique inconsistências de configuração entre APs em modo roaming'},
+  {code:34,label:'QoS — largura de banda insuficiente',cause:'AP não consegue alocar a largura de banda solicitada pelo cliente para o tráfego QoS',action:'Reveja a configuração WMM e a capacidade do canal'},
+  {code:45,label:'QoS AP sem banda suficiente',cause:'AP rejeitou associação por falta de capacidade para servir o nível de QoS solicitado',action:'Redistribua clientes ou atualize o firmware do AP'},
+];
+const CABLE_LOSS = {
+  lmr400:  {name:'LMR-400', loss:{2.4:3.9,5:5.6,6:6.3}},
+  lmr195:  {name:'LMR-195', loss:{2.4:8.0,5:12.0,6:14.0}},
+  rg6:     {name:'RG-6',    loss:{2.4:8.2,5:12.5,6:15.0}},
+  rg58:    {name:'RG-58',   loss:{2.4:18.5,5:29.0,6:35.0}},
+};
+const WS_FILTERS = {
+  auth:{filter:'eapol',note:'Mostra as 4 mensagens do 4-Way Handshake WPA. Verifique: AP envia M1 (ANonce), cliente responde com M2 (SNonce + MIC). Se M2 tiver MIC inválido, a senha está errada. Ref: Cap. 7.3 / Cap. 8.2.',alt:'wlan.fc.type_subtype == 0x0b',altNote:'Filtra apenas frames de Authentication Request/Response (início da associação)'},
+  deauth:{filter:'wlan.fc.type_subtype == 0x0c',note:'Isola todos os frames de deauthentication. Anote quem envia (AP ou cliente) e o reason code. Em seguida use wlan.fixed.reason_code == X para isolar o motivo específico. Ref: Cap. 8.2.',alt:'wlan.fixed.reason_code == 15',altNote:'Exemplo: isola especificamente reason code 15 (4-Way Handshake timeout)'},
+  retry:{filter:'wlan.fc.retry == 1',note:'Exibe apenas frames que foram retransmitidos. Taxa de retry acima de 5% indica problema no enlace: SNR insuficiente, interferência ou distância excessiva. Ref: Cap. 7.2 / Cap. 8.1.',alt:null},
+  signal:{filter:'radiotap.dbm_antsignal < -75',note:'Filtra frames recebidos com RSSI abaixo de −75 dBm. Disponível apenas em capturas em modo monitor (radiotap header). Útil para mapear zonas de sinal fraco durante um walking survey. Ref: Cap. 7.2.',alt:null},
+  beacon:{filter:'wlan.fc.type_subtype == 0x08',note:'Isola apenas beacons do AP. Permitem inspecionar: SSID, canal, largura de canal, taxas suportadas, capacidades (802.11w/PMF, MU-MIMO) e intervalo de beacon. Ref: Cap. 7.2.',alt:null},
+  probe:{filter:'wlan.fc.type_subtype == 0x04',note:'Exibe apenas Probe Requests enviados pelos clientes. SSID vazio = scan passivo. SSID preenchido = cliente procura rede específica. Ref: Cap. 7.2.',alt:null},
+  bssid:{filter:'wlan.bssid == AA:BB:CC:DD:EE:FF',note:'Substitua pelo MAC do AP (BSSID). Isola todo o tráfego desse BSS específico. Essencial em ambientes com múltiplos APs para focar a análise em um ponto específico. Ref: Cap. 7.2.',mac:true},
+  mac:{filter:'wlan.addr == AA:BB:CC:DD:EE:FF',note:'Substitua pelo MAC do dispositivo. Captura todos os frames de e para esse endereço, em qualquer direção. Ref: Cap. 7.2.',mac:true},
+  rc:{filter:'wlan.fixed.reason_code == 4',note:'Substitua 4 pelo reason code de interesse. Use após filtrar por wlan.fc.type_subtype == 0x0c para isolar desconexões com motivo específico. Ref: Cap. 8.2.',rc:true},
+  eapol:{filter:'eapol',note:'Exibe as 4 mensagens do 4-Way Handshake WPA (M1 AP→cliente, M2 cliente→AP, M3 AP→cliente, M4 cliente→AP). Em uma autenticação com sucesso, os 4 frames devem aparecer em sequência. Ref: Cap. 7.3.',alt:null},
+};
+const SYMPTOM_GUIDE = {
+  slow:{tool:'iPerf3 TCP + Wireshark retry',ref:'Cap. 7.2 / Cap. 8.1',steps:'1. Separe: execute ping ao gateway e ping a um IP externo. Se gateway OK e externo lento → link ISP. Se local também lento → problema na rede Wi-Fi.\n2. Use iPerf3 com 4 threads paralelas por 60 s. Observe o campo Retr: acima de 5/intervalo indica problema de enlace.\n3. Capture com Wireshark e filtre wlan.fc.retry == 1. Taxa alta confirma problema de SNR ou interferência.\n4. Verifique o MCS atual no cliente (iw dev wlan0 link no Linux, Option+clique no ícone Wi-Fi no macOS).'},
+  drop:{tool:'Wireshark (modo monitor) + Log do AP',ref:'Cap. 7.2 / Cap. 8.2',steps:'1. Ative Wireshark em modo monitor no canal em uso e configure Ring Buffer de 10 arquivos de 100 MB.\n2. Aguarde a próxima desconexão. Abra o arquivo do período do evento.\n3. Filtre: wlan.fc.type_subtype == 0x0c. Identifique quem iniciou a deauth e o reason code.\n4. Consulte a tabela de reason codes na aba Referências para determinar a causa.'},
+  noassoc:{tool:'Wireshark (eapol + 0x0b)',ref:'Cap. 7.3 / Cap. 8.2',steps:'1. Filtre: wlan.addr == <MAC do cliente>. Verifique se Association Request e Response estão presentes.\n2. Se a associação passa mas a autenticação falha: filtre eapol. Confirme se M2 é enviado e se a sequência completa (M1–M4) ocorre.\n3. Reason code 15 → senha incorreta no cliente. Reason code 16 → problema de Group Key.'},
+  noinet:{tool:'Ping escalonado (gateway → 8.8.8.8 → DNS)',ref:'Cap. 8.5',steps:'1. Verifique o IP recebido: Windows: ipconfig /all · Linux: ip addr · macOS: ifconfig en0.\n2. IP 169.254.x.x → DHCP falhou. Esqueça a rede e reconecte.\n3. ping <gateway>: falhou → problema local. OK → próximo passo.\n4. ping 8.8.8.8: falhou → problema no roteador/link ISP. OK → problema de DNS.\n5. DNS: configure 8.8.8.8 ou 1.1.1.1 manualmente. Verifique portal cativo abrindo o navegador.'},
+  coverage:{tool:'WiFi Analyzer (Android) / inSSIDer / NetSpot',ref:'Cap. 7 Guia / Cap. 8.3',steps:'1. Realize um walking survey com WiFi Analyzer no celular Android, inSSIDer no Windows ou WiFi Explorer no macOS.\n2. Anote o RSSI em vários pontos. Use a aba Anotações desta ferramenta.\n3. Identifique onde o RSSI cai abaixo de −70 dBm. Mapeie obstáculos (paredes, lajes, metal).\n4. Calcule na calculadora One-Slope (aba Calculadoras) a atenuação esperada para validar o diagnóstico.'},
+  device:{tool:'netsh / iw / wdutil + Wireshark',ref:'Cap. 7.3 / Cap. 8.4',steps:'1. Confirme que outros dispositivos funcionam normalmente no mesmo AP e canal.\n2. Verifique o IP atribuído ao dispositivo problemático.\n3. Cheque compatibilidade: o dispositivo suporta a faixa e o padrão de segurança configurados no AP?\n4. Atualize o driver/firmware do cliente. Em Android/iOS, esqueça a rede e reconecte.\n5. Se o problema persistir, capture com Wireshark filtrado pelo MAC do dispositivo.'},
+  channel:{tool:'WiFi Analyzer / inSSIDer / wdutil info',ref:'Cap. 9.2 / Cap. 7 Guia',steps:'1. Use um scanner para visualizar todas as redes vizinhas e seus canais.\n2. Em 2,4 GHz: use apenas 1, 6 ou 11. Qualquer outro canal causa ACI.\n3. Em 5 GHz: escolha o canal com menos redes co-canal e menor RSSI médio das vizinhas.\n4. Após mudança de canal, aguarde 5 min e remeça o iPerf3.'},
+  auth:{tool:'Wireshark (eapol)',ref:'Cap. 7.3 / Cap. 8.2',steps:'1. Capture em modo monitor no canal do AP.\n2. Filtre: eapol. Verifique a sequência M1 (AP→cliente) → M2 (cliente→AP) → M3 → M4.\n3. Se apenas M1 aparece e o AP envia deauth (reason 15): senha incorreta no cliente.\n4. Se M2 aparece mas M3 não: problema no AP ao validar o MIC de M2 (possível incompatibilidade de cipher).'},
+  history:{tool:'Wireshark Ring Buffer + Log do AP + netsh wlanreport',ref:'Cap. 7.2 / Cap. 8.2 / Cap. 12',steps:'1. No Windows: execute netsh wlan show wlanreport. O HTML fica em C:\\ProgramData\\Microsoft\\Windows\\WlanReport\\wlan-report-latest.html.\n2. Configure Wireshark com Ring Buffer de 10 arquivos de 100 MB. Deixe capturando pelo período de interesse.\n3. Procure padrões no horário: forno de micro-ondas no almoço, radar, equipamentos com ciclos de ligar/desligar.\n4. Filtre: wlan.fc.type_subtype == 0x0c e anote os horários dos deauths.'},
+};
+const CHECKLISTS = {
+  survey:[
+    {g:'Etapa 1: Levantamento de Requisitos',items:['Reunião com responsável técnico e usuários realizada','Número e tipos de dispositivos mapeados','Requisitos de RSSI mínimo definidos por área','Requisitos de largura de banda (Mbps por usuário) definidos','Aplicações críticas identificadas (VoIP, vídeo, IoT)','Plantas baixas ou croquis do ambiente obtidos']},
+    {g:'Etapa 2: Inspeção Visual',items:['Percurso de todas as áreas realizadas','Obstáculos críticos fotografados (paredes, pilares, metais)','Fontes de interferência potencial identificadas (micro-ondas, indústria)','Pontos de acesso à eletricidade e rede cabeada mapeados','Alturas de teto medidas']},
+    {g:'Etapa 3: Survey Passivo',items:['Ferramenta configurada (NetSpot / Ekahau / WiFi Analyzer)','Redes vizinhas e seus canais registrados','Mapa de calor do ambiente existente gerado (se houver rede)','Noise floor medido por área']},
+    {g:'Etapa 4: Survey Preditivo',items:['Modelo de propagação selecionado (Log-Distance / One-Slope)','Expoente n estimado para o ambiente','Raio de cobertura calculado por faixa (2,4 e 5 GHz)','Posicionamento preliminar dos APs definido na planta']},
+    {g:'Etapa 5: Survey Ativo',items:['APs de teste posicionados nos locais planejados','Testes de RSSI realizados nos pontos críticos','Testes de vazão com iPerf3 realizados','Cobertura de borda confirmada (RSSI ≥ mínimo exigido)']},
+    {g:'Etapa 6: Relatório',items:['Mapa de cobertura final gerado','Número e posicionamento definitivo dos APs documentado','Lista de equipamentos (modelo, quantidade) elaborada','Relatório técnico entregue ao cliente']},
+  ],
+  install:[
+    {g:'Posicionamento Físico',items:['APs instalados na altura planejada (acima de 2,5 m em teto preferencialmente)','Orientação da antena verificada (omnidirecional: horizontal)','Distância mínima de 1 m de fontes metálicas grande (calhas, quadros elétricos)','Cabo de rede passado com raio de curvatura adequado (sem dobras agudas)']},
+    {g:'PoE e Alimentação',items:['Potência PoE disponível no switch verificada','Classe PoE do AP compatível com o switch/injetor','Comprimento do cabo Ethernet ≤ 100 m (padrão TIA-568)','Temperatura de operação do AP verificada (não exposto ao sol direto)']},
+    {g:'Configuração Inicial',items:['Firmware do AP atualizado para a versão mais recente','SSID configurado conforme padrão do projeto','Canal e largura de canal definidos manualmente','Potência de transmissão ajustada (não usar máxima sem critério)','Segurança WPA3 ou WPA2 configurada (sem WEP ou Open)','VLAN de gerenciamento separada do tráfego de usuários (corporativo)']},
+    {g:'Testes Pós-Instalação',items:['RSSI medido nos pontos críticos e documentado','Teste iPerf3 TCP realizado: resultado ≥ 70% da capacidade teórica','Teste iPerf3 UDP realizado (para VoIP se aplicável)','Roaming testado entre APs (associação automática ao mais próximo)','Teste de autenticação com cada SSID realizado','Documento de aceite assinado pelo cliente']},
+  ],
+  audit:[
+    {g:'Desempenho',items:['RSSI medido nos pontos críticos e comparado com baseline','SNR verificado por AP (mínimo 20 dB nos pontos de uso)','Vazão medida com iPerf3 e comparada com o benchmark inicial','Taxa de retransmissão verificada (meta: < 5%)','Airtime por AP verificado (alerta: > 70%)']},
+    {g:'Ambiente RF',items:['Canais vizinhos remapeados (ambiente pode ter mudado)','Interferências não Wi-Fi identificadas (micro-ondas, câmeras)','Canal atual ainda é o melhor disponível']},
+    {g:'Equipamentos',items:['Firmware de todos os APs verificado (pendência de atualização?)','Log do AP analisado (reinicializações não programadas?)','Temperatura de operação dos APs verificada','Estado dos LEDs e físico dos APs inspecionado']},
+    {g:'Segurança',items:['Senhas Wi-Fi alteradas conforme política do cliente','PMF (802.11w) habilitado onde suportado','Redes abertas/legacy desativadas','ACL de clientes revisada (corporativo)','Logs de autenticação analisados (tentativas de acesso indevido?)']},
+    {g:'Documentação',items:['Diagrama de rede atualizado','Registro de chamados dos últimos 90 dias revisado','Padrões recorrentes identificados e documentados','Base de conhecimento atualizada com novos aprendizados']},
+  ],
+};
+
+// ══════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════
+function showTab(name){
+  document.querySelectorAll('.tab-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ══════════════════════════════════════════════
+// CALCULATORS
+// ══════════════════════════════════════════════
+function calc1(src){
+  const dbm=document.getElementById('c1_dbm'), mw=document.getElementById('c1_mw');
+  if(src==='dbm'){let v=+dbm.value;mw.value=(Math.pow(10,v/10)).toFixed(2);}
+  else{let v=+mw.value;if(v>0)dbm.value=(10*Math.log10(v)).toFixed(1);}
+  let p=Math.min(100,Math.max(3,(+dbm.value/40)*100));
+  let b=document.getElementById('c1_bar');
+  b.style.width=p+'%';b.style.background=p>85?'var(--red)':p>65?'var(--yellow)':'var(--accent)';
+}
+function calc2(){
+  let p=+document.getElementById('c2_ptx').value,g=+document.getElementById('c2_g').value,c=+document.getElementById('c2_cab').value;
+  let e=p+g-c;
+  document.getElementById('c2_res').textContent=e.toFixed(1);
+  let lbl=document.getElementById('c2_lbl');
+  if(e>36)lbl.textContent='⚠ Acima do limite Anatel 2,4 GHz (36 dBm)';
+  else if(e>30)lbl.textContent='⚠ Acima do limite Anatel 5/6 GHz (30 dBm)';
+  else lbl.textContent='Dentro dos limites Anatel';
+}
+function setCalc2(p,g,c){document.getElementById('c2_ptx').value=p;document.getElementById('c2_g').value=g;document.getElementById('c2_cab').value=c;calc2();}
+function calc3(){
+  let f=+document.getElementById('c3_f').value;
+  if(f>0){
+    let l=(300/f).toFixed(2);
+    document.getElementById('c3_res').innerHTML=l+' <span>cm</span>';
+    let d=f<=2.4?'M0,20 Q25,0 50,20 T100,20 T150,20 T200,20':
+            f<=5?'M0,20 Q12.5,0 25,20 T50,20 T75,20 T100,20 T125,20 T150,20 T175,20 T200,20':
+                 'M0,20 Q8,0 16,20 T32,20 T48,20 T64,20 T80,20 T96,20 T112,20 T128,20 T144,20 T160,20 T176,20 T192,20 T208,20';
+    document.getElementById('c3_path').setAttribute('d',d);
+  }
+}
+function calc4(){
+  let f=+document.getElementById('c4_f').value,d=+document.getElementById('c4_d').value;
+  if(d>0){let v=32.45+20*Math.log10(d)+20*Math.log10(f);document.getElementById('c4_res').innerHTML=v.toFixed(2)+' <span>dB</span>';}
+}
+function calc5(){
+  let l0=+document.getElementById('c5_l0').value,n=+document.getElementById('c5_n').value,d=+document.getElementById('c5_d').value;
+  if(d>0){let v=l0+10*n*Math.log10(d);document.getElementById('c5_res').innerHTML=v.toFixed(2)+' <span>dB</span>';}
+}
+function setCalc5(l0,n,d){document.getElementById('c5_l0').value=l0;document.getElementById('c5_n').value=n;document.getElementById('c5_d').value=d;calc5();}
+function calc6(){
+  let l0=+document.getElementById('c6_l0').value,n=+document.getElementById('c6_n').value,d=+document.getElementById('c6_d').value;
+  let w1=+document.getElementById('c6_w1').value||0,w2=+document.getElementById('c6_w2').value||0;
+  let laje=+document.getElementById('c6_laje').value||0,porta=+document.getElementById('c6_porta').value||0;
+  if(d>0){let v=l0+10*n*Math.log10(d)+(w1*3)+(w2*8)+(laje*20)+(porta*4);document.getElementById('c6_res').innerHTML=v.toFixed(2)+' <span>dB</span>';}
+}
+function setCalc6(l0,n,d,w1,w2,laje,porta){
+  ['c6_l0','c6_n','c6_d','c6_w1','c6_w2','c6_laje','c6_porta'].forEach((id,i)=>{document.getElementById(id).value=[l0,n,d,w1,w2,laje,porta][i];});
+  calc6();
+}
+function calc7(){
+  let ptx=+document.getElementById('c7_ptx').value,gtx=+document.getElementById('c7_gtx').value;
+  let grx=+document.getElementById('c7_grx').value,lp=+document.getElementById('c7_lp').value;
+  let r=ptx+gtx+grx-lp;
+  let el=document.getElementById('c7_res'),lb=document.getElementById('c7_lbl');
+  el.innerHTML=r.toFixed(1)+' <span>dBm</span>';
+  if(r>=-60){el.className='res-val q-ex';lb.textContent='Excelente — Streaming 4K, MCS máximo';}
+  else if(r>=-70){el.className='res-val q-vb';lb.textContent='Muito Boa — Streaming HD, VoIP';}
+  else if(r>=-80){el.className='res-val q-ok';lb.textContent='Boa / Regular — Navegação básica';}
+  else if(r>=-90){el.className='res-val q-low';lb.textContent='Fraca — Conexão instável';}
+  else{el.className='res-val q-bad';lb.textContent='Muito Fraca / Sem serviço';}
+}
+function setCalc7(p,g,r,l){document.getElementById('c7_ptx').value=p;document.getElementById('c7_gtx').value=g;document.getElementById('c7_grx').value=r;document.getElementById('c7_lp').value=l;calc7();}
+function calc8(){
+  let rssi=+document.getElementById('c8_rssi').value,nf=+document.getElementById('c8_nf').value;
+  let snr=rssi-nf;
+  let el=document.getElementById('c8_res'),lb=document.getElementById('c8_lbl'),mcs=document.getElementById('c8_mcs'),bar=document.getElementById('c8_bar');
+  el.innerHTML=snr.toFixed(0)+' <span>dB SNR</span>';
+  if(snr>=30){el.className='res-val q-ex';lb.textContent='Excelente — MCS alto sustentável';}
+  else if(snr>=20){el.className='res-val q-vb';lb.textContent='Boa — Streaming HD';}
+  else if(snr>=10){el.className='res-val q-ok';lb.textContent='Aceitável — Navegação';}
+  else{el.className='res-val q-bad';lb.textContent='Insuficiente — Conexão instável';}
+  let best=MCS_DATA.slice().reverse().find(m=>snr>=m.snr);
+  if(best)mcs.textContent='MCS '+best.mcs+' · '+best.mod+' '+best.code+' · ≈ '+best.mbps+' Mbps (20 MHz)';
+  else mcs.textContent='SNR insuficiente para qualquer MCS';
+  bar.style.width=Math.min(100,Math.max(0,(snr/40)*100))+'%';
+  bar.style.background=snr>=25?'var(--green)':snr>=15?'var(--yellow)':'var(--red)';
+}
+function setCalc8(r,n){document.getElementById('c8_rssi').value=r;document.getElementById('c8_nf').value=n;calc8();}
+function calc9(){
+  let eirp=+document.getElementById('c9_eirp').value,grx=+document.getElementById('c9_grx').value;
+  let rssi=+document.getElementById('c9_rssi').value,l0=+document.getElementById('c9_l0').value,n=+document.getElementById('c9_n').value;
+  let lmax=eirp+grx-rssi,d=Math.pow(10,(lmax-l0)/(10*n));
+  document.getElementById('c9_res').innerHTML=d.toFixed(1)+' <span>m</span>';
+}
+function setCalc9(e,g,r,l,n){['c9_eirp','c9_grx','c9_rssi','c9_l0','c9_n'].forEach((id,i)=>{document.getElementById(id).value=[e,g,r,l,n][i];});calc9();}
+function calc10(){
+  let area=+document.getElementById('c10_area').value,apa=+document.getElementById('c10_ap_area').value;
+  let users=+document.getElementById('c10_users').value,cap=+document.getElementById('c10_cap').value;
+  if(apa>0&&cap>0){
+    let nc=Math.ceil(area/apa),nk=Math.ceil(users/cap),tot=Math.max(nc,nk);
+    document.getElementById('c10_res').innerHTML=tot+' <span>APs</span>';
+    let lb=document.getElementById('c10_lbl');
+    lb.textContent=nc>nk?'Limitado por Cobertura':nk>nc?'Limitado por Capacidade':'Gargalo Equilibrado (Cobertura = Capacidade)';
+    let mx=Math.max(nc,nk)*1.1;
+    document.getElementById('c10_bcov').style.height=(nc/mx*100)+'%';
+    document.getElementById('c10_bcap').style.height=(nk/mx*100)+'%';
+    document.getElementById('c10_lcov').textContent=nc;
+    document.getElementById('c10_lcap').textContent=nk;
+  }
+}
+function setCalc10(a,ap,u,c){['c10_area','c10_ap_area','c10_users','c10_cap'].forEach((id,i)=>{document.getElementById(id).value=[a,ap,u,c][i];});calc10();}
+function calc11(){
+  let cab=document.getElementById('c11_cab').value,len=+document.getElementById('c11_len').value,f=document.getElementById('c11_f').value;
+  let cd=CABLE_LOSS[cab];if(!cd)return;
+  let loss=(cd.loss[+f]||cd.loss[2.4])*(len/100);
+  document.getElementById('c11_res').innerHTML=loss.toFixed(2)+' <span>dB</span>';
+  let lb=document.getElementById('c11_lbl');
+  if(loss>6)lb.textContent='⚠ Perda elevada — reconsidere o tipo ou comprimento do cabo';
+  else if(loss>3)lb.textContent='Atenção — inclua no orçamento de enlace';
+  else lb.textContent='Perda aceitável — inclua no orçamento de enlace';
+}
+function calc12(){
+  let bud=+document.getElementById('c12_bud').value;
+  let af=+document.getElementById('c12_af').value,at=+document.getElementById('c12_at').value,bt=+document.getElementById('c12_bt').value;
+  let total=(af*15.4)+(at*30)+(bt*60);
+  document.getElementById('c12_res').innerHTML=total.toFixed(1)+' <span>W</span>';
+  let pct=total/bud,bar=document.getElementById('c12_bar'),st=document.getElementById('c12_status');
+  bar.style.width=Math.min(100,pct*100)+'%';
+  bar.style.background=pct>0.9?'var(--red)':pct>0.75?'var(--yellow)':'var(--green)';
+  if(total>bud)st.textContent='⚠ Budget excedido em '+(total-bud).toFixed(1)+' W — reduza APs ou use switch com maior capacidade';
+  else st.textContent='Margem disponível: '+(bud-total).toFixed(1)+' W ('+(100-pct*100).toFixed(0)+'%)';
+}
+
+// ══════════════════════════════════════════════
+// REFERENCE TABLE RENDERING
+// ══════════════════════════════════════════════
+function renderMCSTable(){
+  const t=document.getElementById('mcs-tbody');
+  MCS_DATA.forEach(m=>{
+    let tag=m.snr>=35?'tag-g':m.snr>=25?'tag-y':m.snr>=15?'tag-o':'tag-r';
+    t.innerHTML+=`<tr><td><strong>MCS ${m.mcs}</strong></td><td>${m.mod}</td><td>${m.code}</td>
+      <td><span class="tag ${tag}">≥ ${m.snr} dB</span></td>
+      <td>${m.mbps} Mbps</td><td><span class="tag tag-b">${m.std}</span></td></tr>`;
+  });
+}
+function renderRCTable(){
+  const t=document.getElementById('rc-tbody');
+  REASON_CODES.forEach(r=>{
+    t.innerHTML+=`<tr><td><span class="tag tag-o">${r.code}</span></td>
+      <td>${r.label}</td><td style="color:var(--dim);font-size:.78rem">${r.cause}</td>
+      <td style="font-size:.78rem">${r.action}</td></tr>`;
+  });
+}
+
+// ══════════════════════════════════════════════
+// CHANNEL VISUALIZER
+// ══════════════════════════════════════════════
+function renderChannels(){
+  const g24=document.getElementById('ch24-grid');
+  for(let i=1;i<=13;i++){
+    let freq=2412+(i-1)*5;
+    let isNonOv=[1,6,11].includes(i);
+    g24.innerHTML+=`<div class="ch24-item ${isNonOv?'ch-non':'ch-oth'}">
+      <div class="cn">${i}</div><div class="cf">${freq}</div></div>`;
+  }
+  const g5=document.getElementById('ch5-grid');
+  const ch5=[
+    {ch:36,band:'UNII-1',cls:'ch-unii1'},{ch:40,band:'UNII-1',cls:'ch-unii1'},
+    {ch:44,band:'UNII-1',cls:'ch-unii1'},{ch:48,band:'UNII-1',cls:'ch-unii1'},
+    {ch:52,band:'UNII-2A ⚡',cls:'ch-unii2'},{ch:56,band:'UNII-2A ⚡',cls:'ch-unii2'},
+    {ch:60,band:'UNII-2A ⚡',cls:'ch-unii2'},{ch:64,band:'UNII-2A ⚡',cls:'ch-unii2'},
+    {ch:100,band:'UNII-2C ⚡',cls:'ch-unii2'},{ch:104,band:'UNII-2C ⚡',cls:'ch-unii2'},
+    {ch:108,band:'UNII-2C ⚡',cls:'ch-unii2'},{ch:112,band:'UNII-2C ⚡',cls:'ch-unii2'},
+    {ch:116,band:'UNII-2C ⚡',cls:'ch-unii2'},{ch:120,band:'UNII-2C ⚡',cls:'ch-unii2'},
+    {ch:124,band:'UNII-2C ⚡',cls:'ch-unii2'},{ch:128,band:'UNII-2C ⚡',cls:'ch-unii2'},
+    {ch:132,band:'UNII-2C ⚡',cls:'ch-unii2'},{ch:136,band:'UNII-2C ⚡',cls:'ch-unii2'},
+    {ch:140,band:'UNII-2C ⚡',cls:'ch-unii2'},{ch:144,band:'UNII-2C ⚡',cls:'ch-unii2'},
+    {ch:149,band:'UNII-3',cls:'ch-unii3'},{ch:153,band:'UNII-3',cls:'ch-unii3'},
+    {ch:157,band:'UNII-3',cls:'ch-unii3'},{ch:161,band:'UNII-3',cls:'ch-unii3'},
+    {ch:165,band:'UNII-3',cls:'ch-unii3'},
+  ];
+  ch5.forEach(c=>{g5.innerHTML+=`<div class="ch5-item ${c.cls}"><div class="cn">${c.ch}</div><div class="cband">${c.band}</div></div>`;});
+}
+function recChannel(){
+  let f=document.getElementById('ch_faixa').value;
+  let r=document.getElementById('ch_radar').value==='yes';
+  let d=document.getElementById('ch_density').value;
+  let rec='';
+  if(f==='24'){
+    rec='Faixa 2,4 GHz:\n';
+    rec+='→ Use SEMPRE um dos 3 canais não sobreponível: 1, 6 ou 11\n';
+    rec+='→ Largura: sempre 20 MHz (nunca 40 MHz em 2,4 GHz)\n';
+    if(d==='high')rec+='→ Ambiente denso: priorize o canal com menos redes vizinhas co-canal\n→ Considere migrar clientes Wi-Fi 5/6 para 5 GHz com band steering';
+    else rec+='→ Escolha o canal com menor RSSI médio das redes vizinhas (elas estão mais distantes)';
+  } else if(f==='5'){
+    rec='Faixa 5 GHz:\n';
+    if(r){rec+='→ Proximidade a radar detectada\n→ Use apenas: UNII-1 (36, 40, 44, 48) ou UNII-3 (149, 153, 157, 161, 165)\n→ Evite canais DFS (52–144)';}
+    else{rec+='→ Canais seguros sem DFS: UNII-1 (36, 40, 44, 48) e UNII-3 (149, 153, 157, 161, 165)\n→ Canais DFS (52–144) também disponíveis em ambiente sem radar';}
+    rec+='\n';
+    if(d==='low')rec+='→ Largura recomendada: 80 MHz (mais vazão, poucos vizinhos)';
+    else if(d==='med')rec+='→ Largura recomendada: 40–80 MHz (equilibrio entre vazão e robustez)';
+    else rec+='→ Largura recomendada: 20–40 MHz (menos interferência, mais canais distintos por AP)';
+  } else {
+    rec='Faixa 6 GHz (Wi-Fi 6E/7):\n→ Nenhum dispositivo legado compete nessa faixa\n→ Sem obrigatoriedade de DFS\n';
+    if(d==='low')rec+='→ Largura recomendada: 160 MHz ou mais\n→ Canais sugeridos: 1, 5, 9, 13 (primeiros 4 canais de 160 MHz)';
+    else if(d==='med')rec+='→ Largura recomendada: 80–160 MHz\n→ Muitos canais disponíveis — use scan para escolher o menos ocupado';
+    else rec+='→ Largura recomendada: 80 MHz (mais canais distintos para múltiplos APs)';
+    rec+='\n→ Mantenha 5 GHz ativo para compatibilidade retroativa';
+  }
+  document.getElementById('ch_rec').textContent=rec;
+}
+
+// ══════════════════════════════════════════════
+// DIAGNOSIS TOOLS
+// ══════════════════════════════════════════════
+function lookupRC(){
+  let code=+document.getElementById('rc_input').value;
+  let rc=REASON_CODES.find(r=>r.code===code);
+  let res=document.getElementById('rc_result'),det=document.getElementById('rc_detail');
+  if(rc){
+    res.innerHTML='<strong>'+rc.label+'</strong>';
+    det.innerHTML='<strong>Causa provável:</strong> '+rc.cause+'<br><strong>Ação recomendada:</strong> '+rc.action;
+  } else {
+    res.innerHTML='<span style="color:var(--muted)">Reason code '+code+' não está na tabela. Consulte o IEEE 802.11-2020 Clause 9.4.1.7 para a lista completa.</span>';
+    det.innerHTML='';
+  }
+}
+function genFilter(){
+  let sym=document.getElementById('ws_symptom').value;
+  let fd=WS_FILTERS[sym];if(!fd)return;
+  let mac=document.getElementById('ws_mac').value||'AA:BB:CC:DD:EE:FF';
+  let rcv=document.getElementById('ws_rc_val').value||'4';
+  document.getElementById('ws_mac_row').style.display=(fd.mac)?'block':'none';
+  document.getElementById('ws_rc_row').style.display=(fd.rc)?'block':'none';
+  let f=fd.filter.replace('AA:BB:CC:DD:EE:FF',mac).replace(/== 4/,'== '+rcv);
+  let fEl=document.getElementById('ws_filter');
+  fEl.innerHTML=f+'<button class="copy-btn" onclick="copyText(\'ws_filter\')">Copiar</button>';
+  document.getElementById('ws_note').textContent=fd.note;
+  let aw=document.getElementById('ws_alt_wrap');
+  if(fd.alt){
+    aw.style.display='block';
+    let alt=fd.alt.replace('AA:BB:CC:DD:EE:FF',mac);
+    document.getElementById('ws_alt').innerHTML=alt+'<button class="copy-btn" onclick="copyText(\'ws_alt\')">Copiar</button>';
+  } else aw.style.display='none';
+}
+function genIperf(){
+  let srv=document.getElementById('ip_server').value||'192.168.1.100';
+  let mode=document.getElementById('ip_mode').value;
+  let t=document.getElementById('ip_t').value,p=document.getElementById('ip_p').value,i=document.getElementById('ip_i').value;
+  let bw=document.getElementById('ip_bw').value||'10';
+  document.getElementById('ip_udp_row').style.display=mode==='udp'?'block':'none';
+  let sCmd='iperf3 -s',cCmd='',note='';
+  if(mode==='tcp'){cCmd=`iperf3 -c ${srv} -t ${t} -P ${p} -i ${i}`;note='Interprete a coluna Retr: 0 = excelente · 1–5/intervalo = aceitável · >5 = problema de enlace. A linha sender vs receiver no sumário indica a perda total de pacotes no percurso.';}
+  else if(mode==='udp'){cCmd=`iperf3 -c ${srv} -u -b ${bw}M -t ${t} -i ${i}`;note='No UDP, observe o jitter (deve ser < 30 ms para VoIP) e a perda de pacotes (deve ser < 1%). Para videoconferência: jitter < 50 ms e perda < 5%.';}
+  else if(mode==='bidir'){cCmd=`iperf3 -c ${srv} --bidir -t ${t} -P ${p} -i ${i}`;note='Teste bidirecional: mede upload e download simultaneamente. Assimetria grande entre TX e RX indica problema de potência ou antena no cliente.';}
+  else{cCmd=`iperf3 -c ${srv} -t 30 -P 2 -i 5`;note='Teste rápido de 30 s com 2 threads. Ideal para verificar rapidamente a qualidade do enlace em campo antes de um teste mais longo.';}
+  document.getElementById('ip_server_cmd').innerHTML='iperf3 -s'+'<button class="copy-btn" onclick="copyText(\'ip_server_cmd\')">Copiar</button>';
+  document.getElementById('ip_client_cmd').innerHTML=cCmd+'<button class="copy-btn" onclick="copyText(\'ip_client_cmd\')">Copiar</button>';
+  document.getElementById('ip_note').textContent=note;
+}
+function symptomTool(){
+  let sym=document.getElementById('sym_sel').value;
+  let g=SYMPTOM_GUIDE[sym];
+  let res=document.getElementById('sym_result');
+  if(!g){res.style.display='none';return;}
+  res.style.display='block';
+  document.getElementById('sym_tool').textContent=g.tool;
+  document.getElementById('sym_ref').textContent=g.ref;
+  document.getElementById('sym_steps').innerHTML=g.steps.replace(/\n/g,'<br>');
+}
+function copyText(id){
+  let el=document.getElementById(id);
+  let txt=el.textContent.replace('Copiar','').trim();
+  navigator.clipboard.writeText(txt).then(()=>{
+    let btn=el.querySelector('.copy-btn');if(!btn)return;
+    btn.textContent='Copiado!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('copied');},2000);
+  });
+}
+
+// ══════════════════════════════════════════════
+// CHECKLISTS
+// ══════════════════════════════════════════════
+function loadCheckState(name){return JSON.parse(localStorage.getItem('cl_'+name)||'{}');}
+function saveCheckState(name,state){localStorage.setItem('cl_'+name,JSON.stringify(state));}
+function renderChecklist(name){
+  const cl=CHECKLISTS[name],state=loadCheckState(name);
+  let el=document.getElementById(name+'-list'),html='',total=0,done=0;
+  cl.forEach((g,gi)=>{
+    html+=`<div class="check-group"><div class="check-group-title">${g.g}</div>`;
+    g.items.forEach((item,ii)=>{
+      let key=gi+'_'+ii,checked=!!state[key];
+      if(checked)done++;total++;
+      html+=`<div class="check-item${checked?' done':''}" onclick="toggleCheck('${name}',${gi},${ii})">
+        <input type="checkbox" ${checked?'checked':''} onchange="toggleCheck('${name}',${gi},${ii})" onclick="event.stopPropagation()">
+        <label>${item}</label></div>`;
+    });
+    html+='</div>';
+  });
+  el.innerHTML=html;
+  let pct=total>0?Math.round(done/total*100):0;
+  document.getElementById(name+'-pct').textContent=pct+'%';
+  document.getElementById(name+'-bar').style.width=pct+'%';
+}
+function toggleCheck(name,gi,ii){
+  let state=loadCheckState(name),key=gi+'_'+ii;
+  state[key]=!state[key];saveCheckState(name,state);renderChecklist(name);
+}
+function resetCheck(name){localStorage.removeItem('cl_'+name);renderChecklist(name);}
+
+// ══════════════════════════════════════════════
+// FIELD NOTES
+// ══════════════════════════════════════════════
+function loadNotes(){return JSON.parse(localStorage.getItem('field_notes')||'[]');}
+function saveNotes(n){localStorage.setItem('field_notes',JSON.stringify(n));}
+function rssiQualLabel(r){
+  if(!r&&r!==0)return'—';r=+r;
+  if(r>=-60)return'Excelente';if(r>=-70)return'Muito Boa';
+  if(r>=-80)return'Boa/Regular';if(r>=-90)return'Fraca';return'Muito Fraca';
+}
+function rssiQualClass(r){
+  if(!r&&r!==0)return'';r=+r;
+  if(r>=-60)return'tag-g';if(r>=-70)return'tag-g';
+  if(r>=-80)return'tag-y';if(r>=-90)return'tag-o';return'tag-r';
+}
+function renderNotes(){
+  let notes=loadNotes(),tbody=document.getElementById('notes-tbody'),empty=document.getElementById('notes-empty');
+  document.getElementById('n_count').textContent=notes.length+' registro'+(notes.length!==1?'s':'');
+  if(!notes.length){tbody.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  tbody.innerHTML=notes.map((n,i)=>{
+    let t=new Date(n.ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    let qc=rssiQualClass(n.rssi),ql=rssiQualLabel(n.rssi);
+    return`<tr>
+      <td style="color:var(--muted);font-family:var(--mono)">${i+1}</td>
+      <td style="font-family:var(--mono);color:var(--dim)">${t}</td>
+      <td>${n.loc||'—'}</td>
+      <td><span class="tag ${qc}">${n.rssi||'—'} dBm</span></td>
+      <td style="font-family:var(--mono)">${n.snr||'—'} dB</td>
+      <td><span class="tag ${qc}">${ql}</span></td>
+      <td style="font-family:var(--mono);color:var(--dim)">${n.ch||'—'}</td>
+      <td style="color:var(--dim)">${n.obs||'—'}</td>
+      <td><button class="del-btn" onclick="delNote(${i})" title="Remover">✕</button></td>
+    </tr>`;
+  }).join('');
+}
+function addNote(){
+  let loc=document.getElementById('n_loc').value.trim();
+  let rssi=document.getElementById('n_rssi').value,snr=document.getElementById('n_snr').value;
+  let ch=document.getElementById('n_ch').value.trim(),obs=document.getElementById('n_obs').value.trim();
+  if(!loc&&!rssi){alert('Informe ao menos o local ou o RSSI.');return;}
+  let notes=loadNotes();
+  notes.unshift({ts:new Date().toISOString(),loc,rssi,snr,ch,obs});
+  saveNotes(notes);renderNotes();
+  ['n_loc','n_rssi','n_snr','n_ch','n_obs'].forEach(id=>document.getElementById(id).value='');
+}
+function delNote(i){let n=loadNotes();n.splice(i,1);saveNotes(n);renderNotes();}
+function clearNotes(){if(confirm('Remover todas as anotações? Esta ação não pode ser desfeita.')){{saveNotes([]);renderNotes();}}}
+function exportNotes(){
+  let notes=loadNotes();if(!notes.length){alert('Nenhuma anotação para exportar.');return;}
+  let txt='CAMPO WI-FI — Anotações de Campo\n';
+  txt+='Exportado em: '+new Date().toLocaleString('pt-BR')+'\n';
+  txt+='='.repeat(60)+'\n\n';
+  notes.forEach((n,i)=>{
+    let t=new Date(n.ts).toLocaleString('pt-BR');
+    txt+=`[${i+1}] ${t}\n`;
+    if(n.loc)txt+=`Local:     ${n.loc}\n`;
+    if(n.rssi)txt+=`RSSI:      ${n.rssi} dBm (${rssiQualLabel(n.rssi)})\n`;
+    if(n.snr)txt+=`SNR:       ${n.snr} dB\n`;
+    if(n.ch)txt+=`Canal:     ${n.ch}\n`;
+    if(n.obs)txt+=`Obs:       ${n.obs}\n`;
+    txt+='\n';
+  });
+  let a=document.createElement('a');
+  a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(txt);
+  a.download='campo-wifi-anotacoes-'+new Date().toISOString().slice(0,10)+'.txt';
+  a.click();
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+window.onload=function(){
+  renderMCSTable();renderRCTable();renderChannels();
+  ['survey','install','audit'].forEach(renderChecklist);
+  renderNotes();recChannel();lookupRC();genFilter();genIperf();
+  calc1('dbm');calc2();calc3();calc4();calc5();calc6();calc7();calc8();calc9();calc10();calc11();calc12();
+};
+</script>
+</body>
+</html>
