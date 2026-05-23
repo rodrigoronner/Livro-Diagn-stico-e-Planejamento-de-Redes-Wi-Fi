@@ -184,6 +184,33 @@ select option{background:var(--surf2)}
 .about-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;line-height:1}
 .about-close:hover{color:var(--text)}
 .about-cover{width:110px;border-radius:8px;box-shadow:0 4px 24px rgba(0,0,0,.5);border:1px solid var(--border2)}
+
+/* TOOLS */
+.tools-cat{margin-bottom:2rem}
+.tools-cat-title{font-size:.78rem;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem}
+.tools-cat-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.8rem}
+.tool-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:1rem;display:flex;flex-direction:column;gap:.5rem;transition:border-color .2s}
+.tool-card:hover{border-color:var(--border2)}
+.tool-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
+.tool-name{font-size:.88rem;font-weight:700;color:var(--text)}
+.tool-name a{color:var(--primary);text-decoration:none}
+.tool-name a:hover{text-decoration:underline}
+.tool-desc{font-size:.76rem;color:var(--dim);line-height:1.5;flex:1}
+.tool-foot{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;margin-top:.2rem}
+.plat{display:inline-block;font-size:.62rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:var(--surf3);color:var(--dim);letter-spacing:.03em}
+.plat-w{background:#1a3050;color:#7eb8f7}
+.plat-l{background:#0d2a1a;color:#7ae0a0}
+.plat-m{background:#1e1e2e;color:#c4b5fd}
+.plat-a{background:#1a2a10;color:#a8e063}
+.plat-i{background:#222028;color:#c4b5fd}
+.plat-web{background:#162030;color:#60c8e0}
+.cost-f{background:var(--green-dim);color:var(--green);font-size:.65rem;font-weight:700;padding:.1rem .45rem;border-radius:4px;letter-spacing:.04em}
+.cost-os{background:var(--primary-dim);color:var(--primary);font-size:.65rem;font-weight:700;padding:.1rem .45rem;border-radius:4px;letter-spacing:.04em}
+.cost-p{background:var(--red-dim);color:var(--red);font-size:.65rem;font-weight:700;padding:.1rem .45rem;border-radius:4px;letter-spacing:.04em}
+.cost-fm{background:var(--yellow-dim);color:var(--yellow);font-size:.65rem;font-weight:700;padding:.1rem .45rem;border-radius:4px;letter-spacing:.04em}
+.tool-cap{font-size:.64rem;color:var(--muted);font-family:var(--mono);margin-left:auto}
+.tools-note{font-size:.76rem;color:var(--dim);background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;margin-bottom:1.5rem;line-height:1.55}
 </style>
 </head>
 <body>
@@ -201,6 +228,7 @@ select option{background:var(--surf2)}
   <button class="tab-btn" onclick="showTab('ref')"><span class="icon">⊟</span>Referências</button>
   <button class="tab-btn" onclick="showTab('channels')"><span class="icon">◈</span>Canais</button>
   <button class="tab-btn" onclick="showTab('diag')"><span class="icon">⊕</span>Diagnóstico</button>
+  <button class="tab-btn" onclick="showTab('tools')"><span class="icon">⊗</span>Ferramentas</button>
   <button class="tab-btn" onclick="showTab('check')"><span class="icon">☑</span>Checklists</button>
   <button class="tab-btn" onclick="showTab('notes')"><span class="icon">⊞</span>Anotações</button>
 </nav>
@@ -824,6 +852,194 @@ select option{background:var(--surf2)}
   <div id="notes-empty" style="text-align:center;padding:2rem;color:var(--muted);font-size:.85rem">Nenhuma anotação ainda. Adicione medições de campo acima.</div>
 </div>
 </section>
+
+<!-- ═══════════════ TAB: FERRAMENTAS ═══════════════ -->
+<section id="tab-tools" class="tab-section">
+<div class="sec-title">Ferramentas</div>
+<div class="tools-note">
+  Todas as ferramentas listadas foram mencionadas explicitamente nos capítulos do livro. Links marcados com ↗ abrem o site oficial em nova aba.
+  Ferramentas <span class="cost-os">Open Source</span> têm código-fonte disponível publicamente.
+  Ferramentas <span class="cost-fm">Freemium</span> oferecem versão gratuita com funcionalidades limitadas.
+  Utilitários do sistema operacional não requerem instalação adicional.
+</div>
+<div class="tools-cat">
+  <div class="tools-cat-title">Captura e Análise de Tráfego · Cap. 7</div>
+  <div class="tools-grid"><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.wireshark.org/download.html" target="_blank" rel="noopener">Wireshark ↗</a></div><span class="tool-cap">Cap. 7.2 / 7.3</span></div>
+      <div class="tool-desc">Principal ferramenta de captura e dissecção de quadros 802.11. Requer adaptador em modo monitor para capturar tráfego de terceiros. Suporta todos os filtros de exibição documentados no livro.</div>
+      <div class="tool-foot"><span class="plat plat-w">Win</span><span class="plat plat-l">Linux</span><span class="plat plat-m">macOS</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.aircrack-ng.org/" target="_blank" rel="noopener">Aircrack-ng (airmon-ng) ↗</a></div><span class="tool-cap">Cap. 7.2</span></div>
+      <div class="tool-desc">Suite completa para ativar modo monitor (airmon-ng), capturar quadros (airodump-ng) e realizar auditoria de segurança Wi-Fi. O airmon-ng é o passo obrigatório antes de capturar com Wireshark no Linux.</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.kismetwireless.net/" target="_blank" rel="noopener">Kismet ↗</a></div><span class="tool-cap">Cap. 7.4</span></div>
+      <div class="tool-desc">Detector e analisador passivo de redes sem fio. Captura quadros em modo monitor sem emitir nenhum pacote próprio — útil em auditorias discretas onde qualquer transmissão ativa deve ser evitada.</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="cost-os">Open Source</span></div>
+    </div></div>
+</div>
+<div class="tools-cat">
+  <div class="tools-cat-title">Teste de Desempenho · Cap. 7</div>
+  <div class="tools-grid"><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://iperf.fr/iperf-download.php" target="_blank" rel="noopener">iPerf3 — Linux e macOS ↗</a></div><span class="tool-cap">Cap. 7.2</span></div>
+      <div class="tool-desc">Ferramenta padrão de medição de vazão TCP e UDP. Requer um nó como servidor e outro como cliente. Mede throughput, jitter, perda de pacotes e retransmissões TCP.</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="plat plat-m">macOS</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://github.com/ar51an/iperf3-win-builds" target="_blank" rel="noopener">iPerf3 — Windows ↗</a></div><span class="tool-cap">Cap. 7.2</span></div>
+      <div class="tool-desc">Build não oficial do iPerf3 para Windows, mantido pela comunidade. Mesma funcionalidade do iPerf3 original, com executável nativo para linha de comando no Windows.</div>
+      <div class="tool-foot"><span class="plat plat-w">Win</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://github.com/esnet/iperf" target="_blank" rel="noopener">iPerf3 — Código-fonte oficial ↗</a></div><span class="tool-cap">Cap. 7.2</span></div>
+      <div class="tool-desc">Repositório oficial do iPerf3 (ESnet / Lawrence Berkeley National Laboratory). Referência para compilação em plataformas não suportadas pelos binários pré-compilados.</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="plat plat-m">macOS</span><span class="plat plat-w">Win</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://apps.apple.com/app/magic-iperf/id1526773579" target="_blank" rel="noopener">Magic iPerf ↗</a></div><span class="tool-cap">Cap. 7.2</span></div>
+      <div class="tool-desc">Cliente iPerf3 com interface gráfica para iOS. Permite executar testes de vazão diretamente pelo iPhone ou iPad durante um site survey sem precisar de notebook.</div>
+      <div class="tool-foot"><span class="plat plat-i">iOS</span><span class="cost-p">Pago</span></div>
+    </div></div>
+</div>
+<div class="tools-cat">
+  <div class="tools-cat-title">Análise de Canais e Espectro · Cap. 7 / 9</div>
+  <div class="tools-grid"><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://play.google.com/store/apps/details?id=com.vrem.wifianalyzer" target="_blank" rel="noopener">WiFi Analyzer ↗</a></div><span class="tool-cap">Cap. 7.4 / 9.2</span></div>
+      <div class="tool-desc">Scanner de redes Wi-Fi para Android (Vrem Software, open source). Exibe canal, RSSI, largura de canal e sobreposição de canais em tempo real. Essencial para walking survey com celular.</div>
+      <div class="tool-foot"><span class="plat plat-a">Android</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.metageek.com/downloads/" target="_blank" rel="noopener">inSSIDer ↗</a></div><span class="tool-cap">Cap. 7.4 / 9.2</span></div>
+      <div class="tool-desc">Scanner Wi-Fi para Windows com visualização de canais 2,4 e 5 GHz, RSSI por rede e histórico temporal. Versão gratuita para uso básico; versão Pro adiciona análise de espectro via hardware MetaGeek.</div>
+      <div class="tool-foot"><span class="plat plat-w">Win</span><span class="cost-fm">Freemium</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://apps.apple.com/app/wifi-explorer/id494803304" target="_blank" rel="noopener">WiFi Explorer ↗</a></div><span class="tool-cap">Cap. 7.4 / 9.2</span></div>
+      <div class="tool-desc">Scanner Wi-Fi para macOS disponível na Mac App Store. Exibe canal, RSSI, padrão 802.11, largura de canal e capacidades do AP (MU-MIMO, OFDMA, BSS Color). Referência para técnicos com Mac.</div>
+      <div class="tool-foot"><span class="plat plat-m">macOS</span><span class="cost-p">Pago</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.acrylicwifi.com/en/wlan-software/wlan-scanner-acrylic-wifi-free/" target="_blank" rel="noopener">Acrylic Wi-Fi Home ↗</a></div><span class="tool-cap">Cap. 7.4</span></div>
+      <div class="tool-desc">Scanner Wi-Fi gratuito para Windows com análise de canais, RSSI e exportação de dados. Alternativa ao inSSIDer para ambientes onde a versão gratuita deste é insuficiente.</div>
+      <div class="tool-foot"><span class="plat plat-w">Win</span><span class="cost-f">Gratuito</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://github.com/linssid/linssid" target="_blank" rel="noopener">Linssid ↗</a></div><span class="tool-cap">Cap. 7.4</span></div>
+      <div class="tool-desc">Scanner Wi-Fi com interface gráfica para Linux. Exibe canal, RSSI, padrão e largura de banda das redes vizinhas. Alternativa gráfica ao iw scan no ambiente desktop Linux.</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://github.com/br101/horst" target="_blank" rel="noopener">horst ↗</a></div><span class="tool-cap">Cap. 7.4</span></div>
+      <div class="tool-desc">Ferramenta de monitoramento Wi-Fi em modo texto para Linux. Exibe estatísticas de quadros em tempo real no terminal. Ideal para sistemas embarcados ou servidores sem interface gráfica.</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="cost-os">Open Source</span></div>
+    </div></div>
+</div>
+<div class="tools-cat">
+  <div class="tools-cat-title">Survey, Mapeamento e Planejamento · Cap. 5 / 7</div>
+  <div class="tools-grid"><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.netspotapp.com/downloads.html" target="_blank" rel="noopener">NetSpot ↗</a></div><span class="tool-cap">Cap. 5.4 / 7.4</span></div>
+      <div class="tool-desc">Ferramenta de site survey com mapa de calor para Windows e macOS. A versão gratuita realiza surveys passivos; a versão Pro adiciona survey ativo, análise de interferência e planejamento preditivo.</div>
+      <div class="tool-foot"><span class="plat plat-w">Win</span><span class="plat plat-m">macOS</span><span class="cost-fm">Freemium</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.ekahau.com/" target="_blank" rel="noopener">Ekahau Pro ↗</a></div><span class="tool-cap">Cap. 5.4 / 7.4</span></div>
+      <div class="tool-desc">Solução profissional de planejamento e survey Wi-Fi. Suporta survey preditivo sobre planta baixa, survey ativo com hardware dedicado (Ekahau Sidekick) e geração de relatórios técnicos completos.</div>
+      <div class="tool-foot"><span class="plat plat-w">Win</span><span class="plat plat-m">macOS</span><span class="cost-p">Pago</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.tamos.com/products/wifi-site-survey/" target="_blank" rel="noopener">CommScope TAMOS ↗</a></div><span class="tool-cap">Cap. 7.4</span></div>
+      <div class="tool-desc">Software de site survey Wi-Fi com foco em ambientes corporativos. Suporta mapeamento de cobertura ativo e passivo, análise de interferência e exportação de relatórios.</div>
+      <div class="tool-foot"><span class="plat plat-w">Win</span><span class="cost-p">Pago</span></div>
+    </div></div>
+</div>
+<div class="tools-cat">
+  <div class="tools-cat-title">Diagnóstico Mobile · Cap. 7</div>
+  <div class="tools-grid"><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://network-tools.he.net/" target="_blank" rel="noopener">HE.NET Network Tools ↗</a></div><span class="tool-cap">Cap. 7.4</span></div>
+      <div class="tool-desc">Aplicativo de diagnóstico de rede para Android e iOS, desenvolvido pela Hurricane Electric. Inclui ping, traceroute, DNS lookup, port scanner e informações de IP. Útil para diagnóstico rápido em campo.</div>
+      <div class="tool-foot"><span class="plat plat-a">Android</span><span class="plat plat-i">iOS</span><span class="cost-f">Gratuito</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://apps.apple.com/app/network-analyzer-pro/id557405467" target="_blank" rel="noopener">Network Analyzer Pro ↗</a></div><span class="tool-cap">Cap. 7.4</span></div>
+      <div class="tool-desc">Aplicativo iOS e Android com scanner de rede local, ping, traceroute, wake-on-LAN e análise Wi-Fi. Alternativa móvel para diagnóstico sem notebook.</div>
+      <div class="tool-foot"><span class="plat plat-a">Android</span><span class="plat plat-i">iOS</span><span class="cost-fm">Freemium</span></div>
+    </div></div>
+</div>
+<div class="tools-cat">
+  <div class="tools-cat-title">Utilitários do Sistema Operacional · Cap. 7</div>
+  <div class="tools-grid"><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://learn.microsoft.com/pt-br/windows-server/networking/technologies/netsh/netsh-contexts" target="_blank" rel="noopener">netsh wlan (Windows) ↗</a></div><span class="tool-cap">Cap. 7.3</span></div>
+      <div class="tool-desc">Ferramenta nativa do Windows para gerenciamento de redes sem fio. Comandos essenciais: netsh wlan show interfaces (RSSI, MCS, canal), netsh wlan show wlanreport (relatório HTML de histórico de conexões).</div>
+      <div class="tool-foot"><span class="plat plat-w">Win</span><span class="cost-f">Gratuito</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://wireless.wiki.kernel.org/en/users/documentation/iw" target="_blank" rel="noopener">iw (Linux) ↗</a></div><span class="tool-cap">Cap. 7.3</span></div>
+      <div class="tool-desc">Ferramenta moderna para configuração de interfaces Wi-Fi no Linux. Substitui o deprecated iwconfig. Comandos: iw dev (listar interfaces), iw dev wlan0 link (RSSI/MCS atual), iw dev wlan0 scan (varredura de redes).</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://developer.apple.com/documentation/" target="_blank" rel="noopener">wdutil (macOS) ↗</a></div><span class="tool-cap">Cap. 7.3</span></div>
+      <div class="tool-desc">Utilitário de diagnóstico Wi-Fi nativo do macOS (Wi-Fi Diagnostics Tool). Comando: sudo wdutil info. Exibe RSSI, SNR, canal, largura de canal, MCS e contadores de erro da interface ativa.</div>
+      <div class="tool-foot"><span class="plat plat-m">macOS</span><span class="cost-f">Gratuito</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://support.apple.com/guide/mac-help/" target="_blank" rel="noopener">Wireless Diagnostics (macOS) ↗</a></div><span class="tool-cap">Cap. 7.3</span></div>
+      <div class="tool-desc">Interface gráfica de diagnóstico Wi-Fi do macOS, acessível via Option + clique no ícone Wi-Fi. Inclui scanner de canais, monitor de desempenho e captura de pacotes integrada.</div>
+      <div class="tool-foot"><span class="plat plat-m">macOS</span><span class="cost-f">Gratuito</span></div>
+    </div></div>
+</div>
+<div class="tools-cat">
+  <div class="tools-cat-title">Monitoramento de Redes · Cap. 12</div>
+  <div class="tools-grid"><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.librenms.org/" target="_blank" rel="noopener">LibreNMS ↗</a></div><span class="tool-cap">Cap. 12.2</span></div>
+      <div class="tool-desc">Plataforma open source de monitoramento de rede via SNMP. Suporta APs e switches Wi-Fi de múltiplos fabricantes. Gera alertas automáticos por RSSI, airtime, número de clientes e disponibilidade.</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.zabbix.com/" target="_blank" rel="noopener">Zabbix ↗</a></div><span class="tool-cap">Cap. 12.2</span></div>
+      <div class="tool-desc">Plataforma de monitoramento de infraestrutura open source com suporte a SNMP, ICMP e agentes. Permite criar dashboards customizados e definir limiares de alerta para métricas Wi-Fi.</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.paessler.com/prtg" target="_blank" rel="noopener">PRTG Network Monitor ↗</a></div><span class="tool-cap">Cap. 12.2</span></div>
+      <div class="tool-desc">Plataforma de monitoramento de infraestrutura para Windows. Versão gratuita suporta até 100 sensores. Interface web intuitiva com dashboards de RSSI, throughput e disponibilidade de APs.</div>
+      <div class="tool-foot"><span class="plat plat-w">Win</span><span class="cost-fm">Freemium</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://grafana.com/" target="_blank" rel="noopener">Grafana ↗</a></div><span class="tool-cap">Cap. 12.2</span></div>
+      <div class="tool-desc">Plataforma open source de visualização de dados e dashboards. Combinado com InfluxDB ou Prometheus, permite criar painéis de monitoramento de redes Wi-Fi com séries temporais e alertas.</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="plat plat-w">Win</span><span class="plat plat-m">macOS</span><span class="plat plat-web">Web</span><span class="cost-os">Open Source</span></div>
+    </div></div>
+</div>
+<div class="tools-cat">
+  <div class="tools-cat-title">Documentação e Base de Conhecimento · Cap. 12</div>
+  <div class="tools-grid"><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://nautobot.io" target="_blank" rel="noopener">Nautobot ↗</a></div><span class="tool-cap">Cap. 12.4</span></div>
+      <div class="tool-desc">Plataforma open source de documentação de infraestrutura de rede (Network Source of Truth). Permite registrar APs, switches, cabeamento, configurações e localização física de equipamentos.</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://netbox.dev" target="_blank" rel="noopener">NetBox ↗</a></div><span class="tool-cap">Cap. 12.4</span></div>
+      <div class="tool-desc">Ferramenta open source de gerenciamento de infraestrutura de rede e data center (IPAM/DCIM). Alternativa ao Nautobot para documentação de topologia, IPs, VLANs e equipamentos.</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.notion.so" target="_blank" rel="noopener">Notion ↗</a></div><span class="tool-cap">Cap. 12.4</span></div>
+      <div class="tool-desc">Plataforma de documentação colaborativa com suporte a bases de dados, wikis e templates. Útil para registrar procedimentos, runbooks e base de conhecimento da equipe técnica.</div>
+      <div class="tool-foot"><span class="plat plat-w">Win</span><span class="plat plat-m">macOS</span><span class="plat plat-web">Web</span><span class="plat plat-a">Android</span><span class="plat plat-i">iOS</span><span class="cost-fm">Freemium</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.atlassian.com/software/confluence" target="_blank" rel="noopener">Confluence (Atlassian) ↗</a></div><span class="tool-cap">Cap. 12.4</span></div>
+      <div class="tool-desc">Wiki corporativa da Atlassian, amplamente usada em equipes de TI. Integra-se com Jira para rastreamento de chamados e suporte a templates de documentação técnica.</div>
+      <div class="tool-foot"><span class="plat plat-web">Web</span><span class="plat plat-w">Win</span><span class="plat plat-m">macOS</span><span class="cost-p">Pago</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.getoutline.com" target="_blank" rel="noopener">Outline ↗</a></div><span class="tool-cap">Cap. 12.4</span></div>
+      <div class="tool-desc">Wiki de equipe open source (auto-hospedada) ou SaaS. Interface limpa, suporte a Markdown e hierarquia de documentos. Boa opção para equipes técnicas que preferem controle total dos dados.</div>
+      <div class="tool-foot"><span class="plat plat-web">Web</span><span class="plat plat-l">Linux</span><span class="cost-os">Open Source</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.mediawiki.org" target="_blank" rel="noopener">MediaWiki ↗</a></div><span class="tool-cap">Cap. 12.4</span></div>
+      <div class="tool-desc">Engine de wiki open source usada pela Wikipedia. Permite criar uma base de conhecimento interna robusta com histórico de versões, categorias e busca. Requer servidor próprio.</div>
+      <div class="tool-foot"><span class="plat plat-l">Linux</span><span class="plat plat-w">Win</span><span class="cost-os">Open Source</span></div>
+    </div></div>
+</div>
+<div class="tools-cat">
+  <div class="tools-cat-title">Armazenamento e Colaboração · Cap. 12</div>
+  <div class="tools-grid"><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://sheets.google.com" target="_blank" rel="noopener">Google Sheets ↗</a></div><span class="tool-cap">Cap. 12.1</span></div>
+      <div class="tool-desc">Planilhas colaborativas em nuvem para registro de inventário, logs de chamados e controle de firmware. Acessível de qualquer dispositivo sem instalação.</div>
+      <div class="tool-foot"><span class="plat plat-web">Web</span><span class="plat plat-a">Android</span><span class="plat plat-i">iOS</span><span class="cost-f">Gratuito</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://onedrive.live.com" target="_blank" rel="noopener">Microsoft OneDrive ↗</a></div><span class="tool-cap">Cap. 12.1</span></div>
+      <div class="tool-desc">Armazenamento em nuvem da Microsoft. Usado com Excel para manutenção de inventário e documentação técnica com controle de versão básico.</div>
+      <div class="tool-foot"><span class="plat plat-w">Win</span><span class="plat plat-m">macOS</span><span class="plat plat-web">Web</span><span class="plat plat-a">Android</span><span class="plat plat-i">iOS</span><span class="cost-fm">Freemium</span></div>
+    </div><div class="tool-card">
+      <div class="tool-top"><div class="tool-name"><a href="https://www.dropbox.com" target="_blank" rel="noopener">Dropbox ↗</a></div><span class="tool-cap">Cap. 12.1</span></div>
+      <div class="tool-desc">Armazenamento e compartilhamento de arquivos em nuvem. Mencionado no livro como opção para armazenamento de capturas, relatórios e documentação de campo.</div>
+      <div class="tool-foot"><span class="plat plat-w">Win</span><span class="plat plat-m">macOS</span><span class="plat plat-l">Linux</span><span class="plat plat-web">Web</span><span class="plat plat-a">Android</span><span class="plat plat-i">iOS</span><span class="cost-fm">Freemium</span></div>
+    </div></div>
+</div>
+</section>
+
 </main>
 
 <script>
