@@ -1,4 +1,4 @@
-# Wi-Fi — Ferramenta de Campo
+# Wi-Fi  Ferramenta de Campo
 
 Ferramenta interativa de diagnóstico e planejamento de redes Wi-Fi desenvolvida como material complementar ao livro **Diagnóstico e Planejamento de Redes Wi-Fi**, de Rodrigo Ronner Tertulino da Silva (IFRN Campus Mossoró).
 
