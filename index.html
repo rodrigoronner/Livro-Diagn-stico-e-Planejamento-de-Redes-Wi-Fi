@@ -211,6 +211,62 @@ select option{background:var(--surf2)}
 .cost-fm{background:var(--yellow-dim);color:var(--yellow);font-size:.65rem;font-weight:700;padding:.1rem .45rem;border-radius:4px;letter-spacing:.04em}
 .tool-cap{font-size:.64rem;color:var(--muted);font-family:var(--mono);margin-left:auto}
 .tools-note{font-size:.76rem;color:var(--dim);background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;margin-bottom:1.5rem;line-height:1.55}
+
+/* FORMULA DISPLAY */
+.formula-box{background:#060d16;border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem;margin:.6rem 0;font-family:var(--mono);font-size:.78rem;line-height:2;color:var(--dim)}
+.formula-box .f-eq{color:var(--text)}
+.formula-box .f-var{color:var(--primary)}
+.formula-box .f-res{color:var(--green);font-weight:700;font-size:.95rem}
+.formula-box .f-label{font-size:.7rem;color:var(--muted);letter-spacing:.05em}
+
+/* RADAR ANIMATION */
+.radar-anim{position:relative;width:90px;height:90px;margin:.5rem auto}
+.radar-ring{position:absolute;border-radius:50%;border:2px solid var(--primary);top:50%;left:50%;transform:translate(-50%,-50%);opacity:0;animation:rexp 2.4s ease-out infinite}
+.radar-ring:nth-child(1){animation-delay:0s}
+.radar-ring:nth-child(2){animation-delay:.8s}
+.radar-ring:nth-child(3){animation-delay:1.6s}
+.radar-dot{position:absolute;width:10px;height:10px;background:var(--accent);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 8px var(--accent)}
+@keyframes rexp{0%{width:0;height:0;opacity:.8}100%{width:90px;height:90px;opacity:0}}
+#c9_radar_size{font-size:.7rem;color:var(--muted);text-align:center;margin-top:.2rem}
+
+/* WIFI BARS ANIMATION */
+.wifi-anim{display:flex;align-items:flex-end;justify-content:center;gap:4px;height:44px;margin:.4rem auto;width:60px}
+.wbar{width:10px;border-radius:3px 3px 0 0;transition:height .4s,background .4s}
+
+/* EXEMPLO DO LIVRO BADGE */
+.book-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--accent-dim);border:1px solid var(--accent);border-radius:5px;padding:.2rem .55rem;font-size:.66rem;font-weight:700;color:var(--accent);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.45rem}
+
+/* SITE SURVEY */
+.sv-layout{display:grid;grid-template-columns:1fr 200px;gap:1rem;align-items:start}
+.sv-canvas-wrap{background:var(--surf);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:crosshair}
+#sv-canvas{display:block;width:100%}
+.sv-room-list{display:flex;flex-direction:column;gap:.5rem}
+.sv-room{background:var(--surf);border:1px solid var(--border);border-radius:8px;padding:.55rem .75rem}
+.sv-room-name{font-size:.72rem;font-weight:700;color:var(--text);margin-bottom:.25rem}
+.sv-room-rssi{font-family:var(--mono);font-size:.95rem;font-weight:700;line-height:1}
+.sv-room-qual{font-size:.64rem;color:var(--muted);margin-top:.1rem}
+.sv-legend{display:flex;gap:.7rem;flex-wrap:wrap;font-size:.7rem;margin-top:.8rem}
+.sv-dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+.sv-controls{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem}
+.sv-instruction{font-size:.78rem;color:var(--dim);background:var(--surf2);border-left:3px solid var(--primary);border-radius:0 7px 7px 0;padding:.6rem .9rem;margin-bottom:1rem;line-height:1.5}
+
+/* AP POSITIONING */
+.appos-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.appos-tab{background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:.5rem .85rem;font-family:var(--sans);font-size:.76rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s}
+.appos-tab:hover{color:var(--text)}
+.appos-tab.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
+.appos-layout{display:grid;grid-template-columns:1fr 200px;gap:1rem;align-items:start}
+.appos-canvas-wrap{background:var(--surf);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+#appos-canvas{display:block;width:100%}
+.appos-panel{display:flex;flex-direction:column;gap:.7rem}
+.appos-score-card{background:var(--surf);border:1px solid var(--border);border-radius:8px;padding:.85rem}
+.appos-metric{display:flex;justify-content:space-between;align-items:center;margin-bottom:.45rem;font-size:.78rem}
+.appos-metric-label{color:var(--dim)}
+.appos-tip{background:var(--surf2);border-left:3px solid var(--accent);border-radius:0 7px 7px 0;padding:.7rem .85rem;font-size:.74rem;color:var(--dim);line-height:1.55}
+.appos-pos-name{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.35rem}
+.appos-pos-sub{font-size:.72rem;color:var(--muted)}
+@media(max-width:680px){.sv-layout,.appos-layout{grid-template-columns:1fr}.sv-room-list{flex-direction:row;flex-wrap:wrap}}
+
 </style>
 </head>
 <body>
@@ -229,6 +285,8 @@ select option{background:var(--surf2)}
   <button class="tab-btn" onclick="showTab('channels')"><span class="icon">◈</span>Canais</button>
   <button class="tab-btn" onclick="showTab('diag')"><span class="icon">⊕</span>Diagnóstico</button>
   <button class="tab-btn" onclick="showTab('tools')"><span class="icon">⊗</span>Ferramentas</button>
+  <button class="tab-btn" onclick="showTab('survey')"><span class="icon">⊕</span>Site Survey</button>
+  <button class="tab-btn" onclick="showTab('appos')"><span class="icon">◎</span>Posição do AP</button>
   <button class="tab-btn" onclick="showTab('check')"><span class="icon">☑</span>Checklists</button>
   <button class="tab-btn" onclick="showTab('notes')"><span class="icon">⊞</span>Anotações</button>
 </nav>
@@ -374,7 +432,23 @@ select option{background:var(--surf2)}
     <div class="igroup"><label>Perda caminho (dB)</label><input type="number" id="c7_lp" value="84" step="1" oninput="calc7()"></div>
   </div>
   <div class="result"><div class="res-val" id="c7_res">-60.0 <span>dBm</span></div><div class="res-label" id="c7_lbl">Muito Boa — Streaming HD, VoIP</div></div>
-  <div class="ex-box"><button class="ex-btn" onclick="setCalc7(20,4,0,84)">AP 20 dBm, ant 4 dBi, cliente 0 dBi, perda 84 dB → −60 dBm</button></div>
+  <div class="formula-box" id="c7_formula">
+    <div class="f-label">FÓRMULA · Cap. 4, Seção 4.0.1 Componentes do Orçamento</div>
+    <div class="f-eq">RSSI = <span class="f-var">P_TX</span> + <span class="f-var">G_TX</span> + <span class="f-var">G_RX</span> − <span class="f-var">L_path</span></div>
+    <div id="c7_fstep"></div>
+    <div id="c7_fres"></div>
+  </div>
+  <div class="wifi-anim" id="c7_wifi">
+    <div class="wbar" id="wb1" style="height:20%;background:var(--border)"></div>
+    <div class="wbar" id="wb2" style="height:40%;background:var(--border)"></div>
+    <div class="wbar" id="wb3" style="height:65%;background:var(--border)"></div>
+    <div class="wbar" id="wb4" style="height:100%;background:var(--border)"></div>
+  </div>
+  <div class="ex-box">
+    <div class="book-badge">📖 Exemplo do Livro</div>
+    <p style="font-size:.76rem;color:var(--dim);margin:.3rem 0"><strong>Seção 4.0.1:</strong> AP de 20 dBm, antena de 4 dBi, cliente 0 dBi, perda de percurso 84 dB → RSSI = −60 dBm (Excelente).</p>
+    <button class="ex-btn" onclick="setCalc7(20,4,0,84)">Carregar exemplo do livro (→ −60 dBm)</button>
+  </div>
 </div>
 
 <!-- 8. SNR -->
@@ -414,7 +488,17 @@ select option{background:var(--surf2)}
   </div>
   <div class="igroup"><label>Expoente n</label><input type="number" id="c9_n" value="3.2" step="0.1" min="1" oninput="calc9()"></div>
   <div class="result"><div class="res-val" id="c9_res">29.5 <span>m</span></div><div class="res-label">Raio máximo útil do ponto de acesso</div></div>
-  <div class="ex-box"><button class="ex-btn" onclick="setCalc9(27,1,-65,46,3.2)">Escritório 5 GHz (Seção 4.6 → 29,5 m)</button>
+  <div class="radar-anim">
+    <div class="radar-ring" id="c9_r1"></div>
+    <div class="radar-ring" id="c9_r2"></div>
+    <div class="radar-ring" id="c9_r3"></div>
+    <div class="radar-dot"></div>
+  </div>
+  <div id="c9_radar_size">Raio estimado: 29,5 m</div>
+  <div class="ex-box">
+    <div class="book-badge">📖 Exemplo do Livro</div>
+    <p style="font-size:.76rem;color:var(--dim);margin:.3rem 0"><strong>Seção 4.6:</strong> Escritório (n=3,2), EIRP=27 dBm (P_TX=23+G_TX=4), G_RX=1 dBi, RSSI alvo −65 dBm → raio = 29,5 m.</p>
+    <button class="ex-btn" onclick="setCalc9(27,1,-65,46,3.2)">Carregar — Escritório 5 GHz (→ 29,5 m)</button>
     <button class="ex-btn" onclick="setCalc9(23,0,-70,40,3.5)">Residência 2,4 GHz</button>
   </div>
 </div>
@@ -1040,6 +1124,68 @@ select option{background:var(--surf2)}
 </div>
 </section>
 
+
+<!-- ═══════════════ TAB: SITE SURVEY ═══════════════ -->
+<section id="tab-survey" class="tab-section">
+<div class="sec-title">Site Survey Interativo</div>
+<p class="sv-instruction">Clique na planta baixa para posicionar o AP. Cada cômodo exibe o RSSI estimado com base na distância e nas paredes entre o AP e o centro do cômodo. O modelo usa Log-Distance com n=3,5 (residência brasileira típica) e penalidades de parede conforme o Cap. 1. <strong>Parâmetros ajustáveis abaixo.</strong></p>
+<div class="sv-controls">
+  <div class="igroup"><label>P_TX + G_TX — EIRP (dBm)</label><input type="number" id="sv_eirp" value="23" step="1" oninput="svUpdate()"></div>
+  <div class="igroup"><label>Noise Floor (dBm)</label><input type="number" id="sv_nf" value="-90" step="1" oninput="svUpdate()"></div>
+  <div class="igroup"><label>Expoente n</label><input type="number" id="sv_n" value="3.5" step="0.1" oninput="svUpdate()"></div>
+  <div class="igroup"><label>Faixa</label><select id="sv_freq" onchange="svUpdate()"><option value="40">2,4 GHz (L0=40 dB)</option><option value="46">5,0 GHz (L0=46 dB)</option></select></div>
+</div>
+<div class="sv-layout">
+  <div class="sv-canvas-wrap">
+    <canvas id="sv-canvas" width="560" height="350"></canvas>
+  </div>
+  <div class="sv-room-list" id="sv-room-list">
+    <div style="font-size:.76rem;color:var(--muted);text-align:center;padding:1rem">Clique no mapa<br>para posicionar o AP</div>
+  </div>
+</div>
+<div class="sv-legend">
+  <div class="sv-leg-item"><span class="sv-dot" style="background:rgba(16,214,128,.7)"></span><span>≥ −60 dBm Excelente</span></div>
+  <div class="sv-leg-item"><span class="sv-dot" style="background:rgba(80,200,80,.7)"></span><span>−60 a −70 Muito Boa</span></div>
+  <div class="sv-leg-item"><span class="sv-dot" style="background:rgba(255,176,32,.7)"></span><span>−70 a −75 Boa</span></div>
+  <div class="sv-leg-item"><span class="sv-dot" style="background:rgba(255,107,26,.7)"></span><span>−75 a −80 Regular</span></div>
+  <div class="sv-leg-item"><span class="sv-dot" style="background:rgba(255,64,64,.7)"></span><span>&lt; −80 dBm Fraca</span></div>
+</div>
+<div class="ex-box" style="margin-top:1rem">
+  <div class="book-badge">📖 Seção 5.3 / Cap. 6 — Planejamento por Tipologia</div>
+  <p style="font-size:.76rem;color:var(--dim);margin:.3rem 0">Posicione o AP no centro da sala para máxima cobertura. Compare com o posicionamento em um quarto — observe como as paredes de alvenaria (−8 dB cada) reduzem o sinal nos cômodos não adjacentes. Tente ambas as faixas (2,4 e 5 GHz) para ver o impacto de L0 no raio útil.</p>
+</div>
+</section>
+
+<!-- ═══════════════ TAB: POSIÇÃO DO AP ═══════════════ -->
+<section id="tab-appos" class="tab-section">
+<div class="sec-title">Posicionamento do AP — Plano de Irradiação</div>
+<p class="sv-instruction">Selecione um cenário de posicionamento para visualizar o padrão de irradiação do AP em corte lateral do ambiente. As zonas coloridas representam a qualidade do sinal: verde (excelente), amarelo (boa), laranja (regular), vermelho (fraca). A animação simula a propagação da onda eletromagnética. Ref: Cap. 6, Seção 6.1 / Cap. 11, Seção 11.1.</p>
+<div class="appos-tabs">
+  <button class="appos-tab active" onclick="apposSelect(0)">📡 No Teto</button>
+  <button class="appos-tab" onclick="apposSelect(1)">🔼 Parede Alta</button>
+  <button class="appos-tab" onclick="apposSelect(2)">📍 Parede Baixa</button>
+  <button class="appos-tab" onclick="apposSelect(3)">📦 Em Móvel</button>
+  <button class="appos-tab" onclick="apposSelect(4)">🚫 No Canto</button>
+</div>
+<div class="appos-layout">
+  <div class="appos-canvas-wrap">
+    <canvas id="appos-canvas" width="560" height="300"></canvas>
+  </div>
+  <div class="appos-panel">
+    <div class="appos-score-card">
+      <div class="appos-pos-name" id="ap_pos_name">No Teto</div>
+      <div class="appos-pos-sub" id="ap_pos_sub">Posição ideal</div>
+      <div style="height:1px;background:var(--border);margin:.6rem 0"></div>
+      <div class="appos-metric"><span class="appos-metric-label">Cobertura útil</span><span class="appos-metric-val res-val" id="ap_cov" style="font-size:.9rem;color:var(--green)">95%</span></div>
+      <div class="appos-metric"><span class="appos-metric-label">Uniformidade</span><span class="appos-metric-val res-val" id="ap_uni" style="font-size:.9rem;color:var(--green)">92%</span></div>
+      <div class="appos-metric"><span class="appos-metric-label">Zonas mortas</span><span class="appos-metric-val res-val" id="ap_dead" style="font-size:.9rem;color:var(--green)">Mínimas</span></div>
+      <div class="appos-metric"><span class="appos-metric-label">Classificação</span><span class="appos-metric-val res-val" id="ap_class" style="font-size:.9rem;color:var(--green)">⭐⭐⭐⭐⭐</span></div>
+    </div>
+    <div class="appos-tip" id="ap_tip">No teto, o AP irradia igualmente para baixo e para os lados. Esta é a posição recomendada pelo Cap. 11: sinal simétrico, zona morta mínima e menor bloqueio por móveis.</div>
+  </div>
+</div>
+</section>
+
 </main>
 
 <script>
@@ -1130,11 +1276,32 @@ const CHECKLISTS = {
 // ══════════════════════════════════════════════
 // NAVIGATION
 // ══════════════════════════════════════════════
+// Polyfill roundRect para browsers sem suporte nativo
+if(!CanvasRenderingContext2D.prototype.roundRect){
+  CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
+    r=Math.min(r,w/2,h/2);
+    this.beginPath();
+    this.moveTo(x+r,y);this.lineTo(x+w-r,y);this.quadraticCurveTo(x+w,y,x+w,y+r);
+    this.lineTo(x+w,y+h-r);this.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    this.lineTo(x+r,y+h);this.quadraticCurveTo(x,y+h,x,y+h-r);
+    this.lineTo(x,y+r);this.quadraticCurveTo(x,y,x+r,y);
+    this.closePath();
+  };
+}
+
 function showTab(name){
   document.querySelectorAll('.tab-section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
   event.currentTarget.classList.add('active');
+  // Lazy-init: só inicializa quando a aba fica visível pela primeira vez
+  if(name==='survey'){
+    if(!svAnimId){initSurvey();}
+    else{svDraw();}
+  }
+  if(name==='appos'){
+    if(!apposAnimId){initAppos();}
+  }
 }
 
 // ══════════════════════════════════════════════
@@ -1515,6 +1682,362 @@ function exportNotes(){
 function toggleAbout(){
   let o=document.getElementById('about-overlay');
   o.classList.toggle('open');
+}
+
+
+// ══════════════════════════════════════════════
+// SITE SURVEY ENGINE
+// ══════════════════════════════════════════════
+const SV_ROOMS = [
+  {key:'sala',   name:'Sala de Estar', x:10,  y:10,  w:250, h:165, cx:135, cy:92},
+  {key:'q1',     name:'Quarto 1',      x:260, y:10,  w:290, h:165, cx:405, cy:92},
+  {key:'cozinha',name:'Cozinha',       x:10,  y:175, w:130, h:165, cx:75,  cy:258},
+  {key:'corr',   name:'Corredor',      x:140, y:175, w:120, h:165, cx:200, cy:258},
+  {key:'banh',   name:'Banheiro',      x:260, y:175, w:100, h:165, cx:310, cy:258},
+  {key:'q2',     name:'Quarto 2',      x:360, y:175, w:190, h:165, cx:455, cy:258},
+];
+const SV_WALLS = [
+  {x1:260,y1:10, x2:260,y2:175, loss:8,  type:'Alvenaria'},
+  {x1:10, y1:175,x2:550,y2:175, loss:8,  type:'Alvenaria'},
+  {x1:140,y1:175,x2:140,y2:340, loss:3,  type:'Drywall'},
+  {x1:260,y1:175,x2:260,y2:340, loss:3,  type:'Drywall'},
+  {x1:360,y1:175,x2:360,y2:340, loss:8,  type:'Alvenaria'},
+];
+const SV_SCALE = 0.035; // 1px = 3.5cm
+let svAP=null, svRipples=[], svAnimId=null;
+
+function svSegIntersect(ax,ay,bx,by,cx,cy,dx,dy){
+  let d=(bx-ax)*(dy-cy)-(by-ay)*(dx-cx);
+  if(Math.abs(d)<1e-9)return false;
+  let t=((cx-ax)*(dy-cy)-(cy-ay)*(dx-cx))/d;
+  let u=((cx-ax)*(by-ay)-(cy-ay)*(bx-ax))/d;
+  return t>=0&&t<=1&&u>=0&&u<=1;
+}
+function svWallLoss(ax,ay,rx,ry){
+  let tot=0;
+  for(let w of SV_WALLS){if(svSegIntersect(ax,ay,rx,ry,w.x1,w.y1,w.x2,w.y2))tot+=w.loss;}
+  return tot;
+}
+function svRoomRSSI(room){
+  if(!svAP)return null;
+  let eirp=parseFloat(document.getElementById('sv_eirp').value)||23;
+  let nf=parseFloat(document.getElementById('sv_nf').value)||-90;
+  let n=parseFloat(document.getElementById('sv_n').value)||3.5;
+  let L0=parseFloat(document.getElementById('sv_freq').value)||40;
+  let dx=(svAP.x-room.cx)*SV_SCALE, dy=(svAP.y-room.cy)*SV_SCALE;
+  let d=Math.max(0.3, Math.sqrt(dx*dx+dy*dy));
+  let pl=L0+10*n*Math.log10(d);
+  let wl=svWallLoss(svAP.x,svAP.y,room.cx,room.cy);
+  return eirp-pl-wl;
+}
+function svRssiColor(r,a){
+  if(r===null)return `rgba(30,48,80,${a})`;
+  if(r>=-60)return `rgba(16,214,128,${a})`;
+  if(r>=-70)return `rgba(80,210,80,${a})`;
+  if(r>=-75)return `rgba(255,176,32,${a})`;
+  if(r>=-80)return `rgba(255,107,26,${a})`;
+  return `rgba(255,64,64,${a})`;
+}
+function svQualLabel(r){
+  if(r===null)return '—';
+  if(r>=-60)return 'Excelente';if(r>=-70)return 'Muito Boa';
+  if(r>=-75)return 'Boa';if(r>=-80)return 'Regular';return 'Fraca';
+}
+function svDraw(){
+  const cvs=document.getElementById('sv-canvas');
+  if(!cvs)return;
+  const ctx=cvs.getContext('2d');
+  const W=cvs.width||560, H=cvs.height||350;
+  // Escala dinâmica se canvas foi redimensionado
+  const sx=W/560, sy=H/350;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#0b1220';ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.scale(sx,sy);
+  // Rooms
+  for(let rm of SV_ROOMS){
+    let rssi=svRoomRSSI(rm);
+    ctx.fillStyle=svRssiColor(rssi,.5);
+    ctx.fillRect(rm.x,rm.y,rm.w,rm.h);
+    ctx.strokeStyle='#253d63';ctx.lineWidth=2;
+    ctx.strokeRect(rm.x,rm.y,rm.w,rm.h);
+    ctx.textAlign='center';
+    ctx.font='bold 11px Syne,sans-serif';ctx.fillStyle='#dde4f0';
+    ctx.fillText(rm.name,rm.cx,rm.cy-12);
+    if(rssi!==null){
+      let col=svRssiColor(rssi,1).replace(/,[^,]+\)$/,',1)');
+      ctx.font='bold 12px JetBrains Mono,monospace';ctx.fillStyle=col;
+      ctx.fillText(rssi.toFixed(0)+' dBm',rm.cx,rm.cy+4);
+      ctx.font='10px Syne,sans-serif';ctx.fillStyle='#94a3b8';
+      ctx.fillText(svQualLabel(rssi),rm.cx,rm.cy+18);
+    }
+  }
+  // Wall types
+  for(let w of SV_WALLS){
+    ctx.strokeStyle=w.loss>5?'#e74c3c55':'#3498db55';
+    ctx.lineWidth=w.loss>5?4:2;ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.moveTo(w.x1,w.y1);ctx.lineTo(w.x2,w.y2);ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  // Ripples + AP
+  if(svAP){
+    for(let r of svRipples){
+      ctx.beginPath();ctx.arc(svAP.x,svAP.y,r.rad,0,2*Math.PI);
+      ctx.strokeStyle=`rgba(29,110,245,${r.alpha})`;ctx.lineWidth=1.5;ctx.stroke();
+      r.rad+=1.8;r.alpha-=0.007;
+    }
+    svRipples=svRipples.filter(r=>r.alpha>0);
+    let g=ctx.createRadialGradient(svAP.x,svAP.y,2,svAP.x,svAP.y,16);
+    g.addColorStop(0,'#f77f1a');g.addColorStop(1,'rgba(247,127,26,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(svAP.x,svAP.y,16,0,2*Math.PI);ctx.fill();
+    ctx.fillStyle='#f77f1a';ctx.beginPath();ctx.arc(svAP.x,svAP.y,9,0,2*Math.PI);ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.fillStyle='#fff';ctx.font='bold 8px Syne,sans-serif';ctx.textAlign='center';
+    ctx.fillText('AP',svAP.x,svAP.y+3);
+  }
+  ctx.restore();
+}
+function svLoop(){
+  if(svAP&&Math.random()<0.06)svRipples.push({rad:10,alpha:.55});
+  svDraw();svAnimId=requestAnimationFrame(svLoop);
+}
+function svUpdate(){if(svAP)svUpdateRoomList();svDraw();}
+function svUpdateRoomList(){
+  const list=document.getElementById('sv-room-list');
+  if(!list)return;
+  list.innerHTML=SV_ROOMS.map(rm=>{
+    let r=svRoomRSSI(rm);
+    let qc=r!==null?(r>=-60?'q-ex':r>=-70?'q-vb':r>=-75?'q-ok':r>=-80?'q-low':'q-bad'):'';
+    return`<div class="sv-room">
+      <div class="sv-room-name">${rm.name}</div>
+      <div class="sv-room-rssi res-val ${qc}" style="font-size:.95rem">${r!==null?r.toFixed(1)+' dBm':'—'}</div>
+      <div class="sv-room-qual">${svQualLabel(r)}</div>
+    </div>`;
+  }).join('');
+}
+function initSurvey(){
+  const cvs=document.getElementById('sv-canvas');
+  if(!cvs)return;
+  // Garante dimensões corretas após o elemento ficar visível
+  setTimeout(()=>{
+    cvs.width=cvs.offsetWidth||560;
+    cvs.height=Math.round(cvs.width*350/560);
+  },50);
+  cvs.addEventListener('click',e=>{
+    const rect=cvs.getBoundingClientRect();
+    if(!rect.width||!rect.height)return;
+    const sx=cvs.width/rect.width, sy=cvs.height/rect.height;
+    svAP={x:(e.clientX-rect.left)*sx, y:(e.clientY-rect.top)*sy};
+    svRipples=[];svUpdateRoomList();
+  });
+  if(!svAnimId)svLoop();
+}
+
+// ══════════════════════════════════════════════
+// AP POSITIONING ENGINE
+// ══════════════════════════════════════════════
+const AP_SCENARIOS = [
+  // Canvas base: RX=30,RY=20,RW=500,RH=240 → 5m×3m. Escala: 100px/m horiz, 80px/m vert
+  // ellipses: idx 0 = mais interno (melhor sinal, desenhado por cima), idx 4 = mais externo
+  {label:'No Teto', sub:'Posição ideal — cobertura total',
+   ap:{x:280,y:30}, rot:0, cov:'95%', uni:'92%', dead:'Mínimas', stars:'⭐⭐⭐⭐⭐',
+   tip:'No teto, o AP irradia em hemisfério descendente. Para um cômodo de 15 m² (5×3 m) em 2,4 GHz com 20 dBm, o sinal supera −60 dBm em toda a área — cobertura Excelente sem nenhuma zona morta. Posição sempre recomendada (Cap. 11). Fixe a pelo menos 15 cm do teto.',
+   ellipses:[
+     {rx:70,  ry:50,  col:'rgba(16,214,128,.80)'},
+     {rx:200, ry:140, col:'rgba(80,210,80,.50)'},
+     {rx:360, ry:230, col:'rgba(255,176,32,.32)'},
+     {rx:540, ry:340, col:'rgba(255,107,26,.18)'},
+     {rx:720, ry:450, col:'rgba(255,64,64,.10)'},
+   ]
+  },
+  {label:'Parede Alta', sub:'Boa posição — altura ≥ 2,5 m',
+   ap:{x:40,y:60}, rot:0, cov:'80%', uni:'72%', dead:'Pequenas', stars:'⭐⭐⭐⭐',
+   tip:'Na parede alta (2,5 m do piso = 0,5 m do teto), o AP irradia bem para o interior. A parede oposta e o piso recebem sinal adequado; apenas o canto atrás do AP fica em zona morta. Boa alternativa quando o teto não é acessível.',
+   ellipses:[
+     {rx:60,  ry:45,  col:'rgba(16,214,128,.80)'},
+     {rx:180, ry:130, col:'rgba(80,210,80,.50)'},
+     {rx:340, ry:220, col:'rgba(255,176,32,.33)'},
+     {rx:510, ry:310, col:'rgba(255,107,26,.18)'},
+     {rx:680, ry:400, col:'rgba(255,64,64,.10)'},
+   ]
+  },
+  {label:'Parede Baixa', sub:'Posição mediana — altura ~1,2 m',
+   ap:{x:40,y:164}, rot:0, cov:'55%', uni:'48%', dead:'Moderadas', stars:'⭐⭐⭐',
+   tip:'A 1,2 m do piso, o AP fica no nível dos móveis. O sofá e a estante criam zonas de sombra. A metade inferior do cômodo tem sinal mais fraco e a parede oposta recebe −10 dB a menos do que na posição alta. Aceito em ambientes muito pequenos sem outra opção.',
+   ellipses:[
+     {rx:45,  ry:35,  col:'rgba(16,214,128,.80)'},
+     {rx:140, ry:100, col:'rgba(80,210,80,.52)'},
+     {rx:280, ry:175, col:'rgba(255,176,32,.38)'},
+     {rx:420, ry:245, col:'rgba(255,107,26,.24)'},
+     {rx:560, ry:310, col:'rgba(255,64,64,.13)'},
+   ]
+  },
+  {label:'Em Móvel', sub:'Posição ruim — altura ~0,8 m',
+   ap:{x:220,y:196}, rot:0, cov:'38%', uni:'30%', dead:'Elevadas', stars:'⭐⭐',
+   tip:'Sobre um móvel a 0,8 m do piso, o AP fica abaixo do nível médio dos corpos das pessoas. O sofá à esquerda cria zona morta imediata. A cobertura é horizontal e rasa; o teto e a parte superior das paredes recebem pouco sinal. Evite sempre que possível.',
+   ellipses:[
+     {rx:40,  ry:18,  col:'rgba(16,214,128,.80)'},
+     {rx:110, ry:50,  col:'rgba(80,210,80,.55)'},
+     {rx:220, ry:95,  col:'rgba(255,176,32,.42)'},
+     {rx:360, ry:145, col:'rgba(255,107,26,.28)'},
+     {rx:500, ry:190, col:'rgba(255,64,64,.16)'},
+   ]
+  },
+  {label:'No Canto', sub:'Posição muito ruim — nível do piso',
+   ap:{x:40,y:250}, rot:0, cov:'18%', uni:'12%', dead:'Severas', stars:'⭐',
+   tip:'No canto ao nível do piso, duas paredes adjacentes absorvem cerca de 70% da energia irradiada. Apenas o quadrante diagonal oposto recebe sinal razoável. Em um cômodo de 15 m², o canto oposto pode ter RSSI abaixo de −80 dBm. Nunca recomendado.',
+   ellipses:[
+     {rx:28,  ry:20,  col:'rgba(16,214,128,.80)'},
+     {rx:80,  ry:58,  col:'rgba(80,210,80,.55)'},
+     {rx:170, ry:120, col:'rgba(255,176,32,.42)'},
+     {rx:290, ry:195, col:'rgba(255,107,26,.28)'},
+     {rx:430, ry:280, col:'rgba(255,64,64,.16)'},
+   ]
+  },
+];
+
+let apposIdx=0, apposFrame=0, apposAnimId=null;
+
+function apposSelect(idx){
+  apposIdx=idx;apposFrame=0;
+  document.querySelectorAll('.appos-tab').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  let s=AP_SCENARIOS[idx];
+  document.getElementById('ap_pos_name').textContent=s.label;
+  document.getElementById('ap_pos_sub').textContent=s.sub;
+  document.getElementById('ap_cov').textContent=s.cov;
+  document.getElementById('ap_uni').textContent=s.uni;
+  document.getElementById('ap_dead').textContent=s.dead;
+  document.getElementById('ap_class').textContent=s.stars;
+  document.getElementById('ap_tip').textContent=s.tip;
+  // Color metric vals
+  let colors={'95%':'var(--green)','80%':'var(--green)','60%':'var(--yellow)',
+              '40%':'var(--accent)','20%':'var(--red)'};
+  let c=colors[s.cov]||'var(--dim)';
+  ['ap_cov','ap_uni'].forEach(id=>{
+    document.getElementById(id).style.color=c;
+  });
+  document.getElementById('ap_dead').style.color=
+    s.dead==='Mínimas'?'var(--green)':s.dead==='Pequenas'?'#7dd3a0':
+    s.dead==='Moderadas'?'var(--yellow)':s.dead==='Elevadas'?'var(--accent)':'var(--red)';
+}
+function apposDraw(){
+  const cvs=document.getElementById('appos-canvas');
+  if(!cvs)return;
+  const ctx=cvs.getContext('2d');
+  const W=cvs.width||560, H=cvs.height||300;
+  const sx=W/560, sy=H/300;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#0b1220';ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.scale(sx,sy);
+
+  // Cômodo 5 m × 3 m — escala: 100 px/m horiz, 80 px/m vert
+  // Área útil do canvas: 560×300 → margem: RX=30,RY=20
+  const RX=30,RY=20,RW=500,RH=240;
+  // pé-direito 3 m, largura 5 m → área = 15 m²
+
+  // Fundo do cômodo
+  let bg=ctx.createLinearGradient(RX,RY,RX,RY+RH);
+  bg.addColorStop(0,'#111d2e');bg.addColorStop(1,'#162236');
+  ctx.fillStyle=bg;ctx.fillRect(RX,RY,RW,RH);
+
+  // === ONDAS DE PROPAGAÇÃO (clipped ao cômodo) ===
+  ctx.save();
+  ctx.beginPath();ctx.rect(RX,RY,RW,RH);ctx.clip(); // clip nas paredes
+  let sc=AP_SCENARIOS[apposIdx];
+  let pulse=(apposFrame%90)/90;
+  // Rotação global do cenário
+  ctx.save();
+  ctx.translate(sc.ap.x,sc.ap.y);
+  ctx.rotate((sc.rot||0)*Math.PI/180);
+  // Desenha do maior (fundo) para o menor (frente) para sobrepor corretamente
+  for(let i=sc.ellipses.length-1;i>=0;i--){
+    let e=sc.ellipses[i];
+    let phase=(pulse+(i*0.20))%1;
+    let scale2=0.55+phase*0.45;
+    let alpha=(1-phase*0.72);
+    ctx.globalAlpha=alpha;
+    ctx.beginPath();ctx.ellipse(0,0,e.rx*scale2,e.ry*scale2,0,0,2*Math.PI);
+    ctx.fillStyle=e.col;ctx.fill();
+  }
+  ctx.globalAlpha=1;
+  ctx.restore(); // remove translate/rotate
+  ctx.restore(); // remove clip
+
+  // === PAREDES E ESTRUTURA (por cima das ondas) ===
+  ctx.strokeStyle='#2d4a6a';ctx.lineWidth=4;ctx.strokeRect(RX,RY,RW,RH);
+  ctx.strokeStyle='#1e3050';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(RX,RY+RH);ctx.lineTo(RX+RW,RY+RH);ctx.stroke();
+  ctx.fillStyle='rgba(29,110,245,.06)';ctx.fillRect(RX,RY,RW,10); // teto
+
+  // === MOBÍLIA (proporcional a 5×3 m) ===
+  // Sofá: 1,8 m largo × 0,8 m alto, encostado na parede esquerda
+  // Em pixels: 180 × 64, y = RY+RH-64 = 196
+  const sofa={x:RX+10,y:RY+RH-64,w:180,h:64};
+  ctx.fillStyle='#1a2a3a';ctx.fillRect(sofa.x,sofa.y,sofa.w,sofa.h);
+  ctx.fillStyle='#19253a';ctx.fillRect(sofa.x,sofa.y,sofa.w,16); // encosto
+  ctx.strokeStyle='#253d63';ctx.lineWidth=1;ctx.strokeRect(sofa.x,sofa.y,sofa.w,sofa.h);
+
+  // Mesa de centro: 1 m largo × 0,45 m alto, à frente do sofá
+  const mesa={x:RX+50,y:RY+RH-30,w:100,h:22};
+  ctx.fillStyle='#162236';ctx.fillRect(mesa.x,mesa.y,mesa.w,mesa.h);
+  ctx.strokeStyle='#253d63';ctx.strokeRect(mesa.x,mesa.y,mesa.w,mesa.h);
+
+  // Estante: 0,4 m largo × 2 m alto, parede direita
+  const estante={x:RX+RW-42,y:RY+RH-160,w:38,h:160};
+  ctx.fillStyle='#111927';ctx.fillRect(estante.x,estante.y,estante.w,estante.h);
+  for(let s=0;s<4;s++){
+    ctx.fillStyle='#19253a';
+    ctx.fillRect(estante.x+2,estante.y+10+s*38,estante.w-4,28);
+  }
+  ctx.strokeStyle='#253d63';ctx.lineWidth=1;ctx.strokeRect(estante.x,estante.y,estante.w,estante.h);
+
+  // Labels de dimensão
+  ctx.font='10px Syne,sans-serif';ctx.fillStyle='#3a5270';ctx.textAlign='center';
+  ctx.fillText('Teto',RX+RW/2,RY+13);
+  ctx.fillText('Piso',RX+RW/2,RY+RH+14);
+  ctx.fillStyle='#2d4a6a';ctx.textAlign='right';
+  ctx.fillText('3 m',RX-5,RY+RH/2+4);
+  ctx.textAlign='center';
+  ctx.fillText('5 m  (15 m²)',RX+RW/2,RY+RH+26);
+
+  // === AP ICON ===
+  let apx=sc.ap.x, apy=sc.ap.y;
+  let glow=ctx.createRadialGradient(apx,apy,2,apx,apy,20);
+  glow.addColorStop(0,'rgba(247,127,26,.8)');glow.addColorStop(1,'rgba(247,127,26,0)');
+  ctx.fillStyle=glow;ctx.beginPath();ctx.arc(apx,apy,20,0,2*Math.PI);ctx.fill();
+  ctx.fillStyle='#f77f1a';ctx.beginPath();ctx.arc(apx,apy,9,0,2*Math.PI);ctx.fill();
+  ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+  ctx.strokeStyle='#fff';ctx.lineWidth=1.8;ctx.lineCap='round';
+  ctx.beginPath();ctx.arc(apx,apy-1,4,Math.PI*1.15,Math.PI*1.85);ctx.stroke();
+  ctx.beginPath();ctx.arc(apx,apy-1,8,Math.PI*1.2,Math.PI*1.8);ctx.stroke();
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(apx,apy+4,2,0,2*Math.PI);ctx.fill();
+  ctx.font='bold 11px Syne,sans-serif';ctx.fillStyle='#dde4f0';ctx.textAlign='center';
+  ctx.fillText(sc.label, apx, apy+(apy<80?22:-16));
+
+  // === BARRA DE COBERTURA ===
+  let qx=RX+10,qy=RY+RH+33,qw=RW-20;
+  ctx.fillStyle='#162236';ctx.fillRect(qx,qy,qw,8);
+  ctx.strokeStyle='#1e3050';ctx.lineWidth=1;ctx.strokeRect(qx,qy,qw,8);
+  let pct=parseFloat(sc.cov)/100;
+  let grad=ctx.createLinearGradient(qx,qy,qx+qw,qy);
+  grad.addColorStop(0,'#ff4040');grad.addColorStop(0.35,'#ffb020');
+  grad.addColorStop(0.65,'#7dd3a0');grad.addColorStop(1,'#12d580');
+  ctx.fillStyle=grad;ctx.fillRect(qx,qy,qw*pct,8);
+  ctx.font='10px Syne,sans-serif';ctx.fillStyle='#64748b';ctx.textAlign='left';
+  ctx.fillText('Cobertura útil: '+sc.cov,qx,qy+20);
+
+  ctx.restore(); // remove ctx.scale
+  apposFrame++;
+}
+function apposLoop(){apposDraw();apposAnimId=requestAnimationFrame(apposLoop);}
+function initAppos(){
+  const cvs=document.getElementById('appos-canvas');
+  if(!cvs)return;
+  setTimeout(()=>{
+    cvs.width=cvs.offsetWidth||560;
+    cvs.height=Math.round(cvs.width*300/560);
+  },50);
+  apposSelect(0);
+  if(!apposAnimId)apposLoop();
 }
 
 window.onload=function(){
