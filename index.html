@@ -318,7 +318,8 @@ select option{background:var(--surf2)}
     <input type="number" id="c1_dbm" value="20" step="1" oninput="calc1('dbm')">
   </div>
   <div class="igroup"><label data-pt="Potência em mW">Power in mW</label>
-    <input type="number" id="c1_mw" value="100" step="0.1" oninput="calc1('mw')">
+    <input type="number" id="c1_mw" value="100" step="any" oninput="calc1('mw')">
+    <div id="c1_sci" style="font-size:.85em;opacity:.8;margin-top:4px">1,00 × 10² mW</div>
   </div>
   <div class="pbar-track"><div id="c1_bar" class="pbar-fill" style="width:55%;background:var(--accent)"></div></div>
   <div class="ex-box"><strong data-pt="Referência:">Reference:</strong> <span data-pt="0 dBm = 1 mW · 20 dBm = 100 mW · 30 dBm = 1 W · 36 dBm = 4 W (limite típico Anatel para EIRP em 2,4 GHz)">0 dBm = 1 mW · 20 dBm = 100 mW · 30 dBm = 1 W · 36 dBm = 4 W (typical Anatel 2.4 GHz EIRP limit)</span>
@@ -1502,10 +1503,18 @@ function setLanguage(code) { LANG.setCode(code); }
 // ══════════════════════════════════════════════
 // CALCULATORS (with LANG.t())
 // ══════════════════════════════════════════════
+function c1Sci(m){
+  const el=document.getElementById('c1_sci'); if(!el)return;
+  if(!(m>0)){el.textContent='';return;}
+  const sup={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  const e=Math.floor(Math.log10(m)); const c=m/Math.pow(10,e);
+  el.textContent=c.toFixed(2).replace('.',',')+' × 10'+String(e).split('').map(ch=>sup[ch]).join('')+' mW';
+}
 function calc1(src){
   const dbm=document.getElementById('c1_dbm'), mw=document.getElementById('c1_mw');
-  if(src==='dbm'){let v=+dbm.value;mw.value=(Math.pow(10,v/10)).toFixed(2);}
+  if(src==='dbm'){let v=+dbm.value;let m=Math.pow(10,v/10);mw.value=m>=0.01?+m.toFixed(2):+m.toPrecision(3);}
   else{let v=+mw.value;if(v>0)dbm.value=(10*Math.log10(v)).toFixed(1);}
+  c1Sci(+mw.value);
   let p=Math.min(100,Math.max(3,(+dbm.value/40)*100));
   let b=document.getElementById('c1_bar');
   b.style.width=p+'%';b.style.background=p>85?'var(--red)':p>65?'var(--yellow)':'var(--accent)';
