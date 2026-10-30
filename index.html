@@ -273,6 +273,104 @@ select option{background:var(--surf2)}
 .appos-pos-sub{font-size:.72rem;color:var(--muted)}
 @media(max-width:680px){.sv-layout,.appos-layout{grid-template-columns:1fr}.sv-room-list{flex-direction:row;flex-wrap:wrap}}
 
+/* EXPLORING MODULATIONS (tab-mod) */
+.mx-lede{font-size:.88rem;color:var(--dim);line-height:1.65;max-width:78ch;margin-bottom:1.2rem}
+.mx-route{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.7rem;margin-bottom:2.2rem}
+.mx-route button{display:flex;flex-direction:column;gap:.25rem;text-align:left;background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:.8rem .9rem;color:var(--text);font-family:var(--sans);cursor:pointer;transition:border-color .2s}
+.mx-route button:hover{border-color:var(--accent)}
+.mx-route strong{font-size:.86rem}
+.mx-s{font-family:var(--mono);font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;color:var(--accent)}
+.mx-d{font-size:.72rem;color:var(--muted)}
+.mx-part{display:flex;flex-direction:column;gap:1.1rem;margin-bottom:2.8rem;scroll-margin-top:130px}
+.mx-head{display:flex;flex-direction:column;gap:.3rem}
+.mx-n{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.mx-h{font-size:1.25rem;font-weight:700;line-height:1.25}
+.mx-concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem}
+.mx-concept{background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;display:flex;flex-direction:column;gap:.35rem;min-width:0}
+.mx-concept h4{font-size:.86rem;font-weight:700}
+.mx-concept p{font-size:.78rem;color:var(--dim);line-height:1.6}
+.mx-f{font-family:var(--mono);font-size:.74rem;background:var(--surf3);border-radius:5px;padding:.3rem .5rem;width:fit-content;max-width:100%}
+.mx-analogy{display:flex;gap:.9rem;align-items:flex-start;background:var(--accent-dim);border:1px solid rgba(247,127,26,.35);border-radius:10px;padding:.9rem 1rem}
+.mx-analogy b{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);white-space:nowrap;padding-top:.15rem}
+.mx-analogy p{font-size:.84rem;line-height:1.65}
+.mx-grid2{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:1.2rem;align-items:start}
+.mx-grid2 > *{min-width:0}
+@media(max-width:880px){.mx-grid2{grid-template-columns:minmax(0,1fr)}}
+.mx-panel{display:flex;flex-direction:column;gap:.9rem}
+.mx-panel .igroup{margin-bottom:0}
+.mx-panel canvas{display:block;width:100%;touch-action:none;border-radius:6px}
+.mx-seg{display:flex;flex-wrap:wrap;gap:.35rem}
+.mx-seg button{font-family:var(--sans);font-size:.74rem;font-weight:600;color:var(--dim);background:var(--surf2);border:1px solid var(--border2);border-radius:6px;padding:.45rem .6rem;cursor:pointer;text-align:left}
+.mx-seg button small{display:block;font-family:var(--mono);font-size:.6rem;font-weight:400;color:var(--muted);margin-top:.2rem}
+.mx-seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.mx-seg button[aria-pressed="true"] small{color:#fff;opacity:.8}
+.mx-range{width:100%;accent-color:var(--accent)}
+.mx-panel output{font-family:var(--mono);color:var(--text);text-transform:none}
+.mx-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:.6rem}
+.mx-stat{border-top:1px solid var(--border2);padding-top:.45rem;min-width:0}
+.mx-k{font-family:var(--mono);font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.mx-v{font-family:var(--mono);font-size:1.05rem;font-weight:600;color:var(--text);overflow-wrap:anywhere}
+.mx-chip{display:inline-flex;align-items:center;gap:.45rem;font-size:.74rem;font-weight:600;padding:.35rem .65rem;border-radius:999px;border:1px solid currentColor;width:fit-content}
+.mx-chip::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:currentColor}
+.mx-chip.ok{color:var(--green)}.mx-chip.warn{color:var(--yellow)}.mx-chip.bad{color:var(--red)}
+.mx-reading{background:var(--surf3);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:.7rem .85rem;display:flex;flex-direction:column;gap:.3rem}
+.mx-reading .mx-k{color:var(--accent)}
+.mx-reading p{font-size:.8rem;line-height:1.65;color:var(--text)}
+.mx-reading b{color:var(--accent)}
+.mx-how{font-size:.74rem;color:var(--muted);border-top:1px dashed var(--border2);padding-top:.6rem}
+.mx-legend{display:flex;flex-wrap:wrap;gap:.35rem .9rem;font-size:.7rem;color:var(--dim)}
+.mx-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:.35rem}
+.mx-views{display:flex;flex-wrap:wrap;gap:.4rem}
+.mx-views .ex-btn{margin-top:0}
+.mx-pause{margin:0 0 0 .5rem;padding:.15rem .55rem;text-transform:none;letter-spacing:0}
+.mx-bits{font-family:var(--mono);font-size:.72rem;display:flex;flex-wrap:wrap;gap:.2rem .6rem;color:var(--muted);margin-top:.4rem}
+.mx-bits .cur{color:var(--accent);font-weight:600}
+.mx-sym{font-family:var(--mono);font-size:.7rem;color:var(--dim);margin-top:.25rem}
+.mx-exps-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.5rem;margin-top:.4rem}
+.mx-exps-head h4{font-size:.95rem;font-weight:700}
+.mx-hint{font-family:var(--mono);font-size:.66rem;color:var(--muted)}
+.mx-exps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.8rem}
+.mx-exp{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:.9rem;display:flex;flex-direction:column;gap:.55rem;min-width:0}
+.mx-exp.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.mx-exp .mx-n{font-size:.6rem}
+.mx-exp h5{font-size:.88rem;font-weight:700}
+.mx-exp p{font-size:.78rem;color:var(--dim);line-height:1.6}
+.mx-obs{font-size:.78rem;line-height:1.6;border-left:2px solid var(--accent);padding-left:.6rem;color:var(--text)}
+.mx-obs b{display:block;font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.mx-exp .ex-btn{margin-top:auto;width:fit-content;color:var(--accent);border-color:var(--accent)}
+.mx-think{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.8rem}
+.mx-think details{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:.75rem .9rem}
+.mx-think summary{cursor:pointer;font-size:.82rem;font-weight:600;list-style:none;display:flex;gap:.6rem;align-items:flex-start}
+.mx-think summary::-webkit-details-marker{display:none}
+.mx-think summary::before{content:"?";flex:none;font-family:var(--mono);font-size:.72rem;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--accent-dim);color:var(--accent)}
+.mx-think details[open] summary::before{content:"!"}
+.mx-think details p{margin-top:.55rem;font-size:.78rem;color:var(--dim);line-height:1.6}
+.mx-note{font-size:.7rem;color:var(--muted);line-height:1.6}
+.mx-tablewrap{overflow-x:auto}
+.mx-cmp{width:100%;border-collapse:collapse;font-size:.76rem}
+.mx-cmp th,.mx-cmp td{text-align:left;padding:.4rem .5rem;border-bottom:1px solid var(--border)}
+.mx-cmp th{font-family:var(--mono);font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.mx-cmp td.num{font-family:var(--mono);white-space:nowrap}
+.mx-cmp tr.on td{background:var(--accent-dim)}
+.mx-bar{height:7px;border-radius:4px;background:var(--accent);min-width:3px}
+.mx-sum{width:100%;border-collapse:collapse;font-size:.8rem;min-width:560px}
+.mx-sum th,.mx-sum td{text-align:left;padding:.65rem .8rem;border-bottom:1px solid var(--border);vertical-align:top}
+.mx-sum thead th{font-size:.9rem;color:var(--accent)}
+.mx-sum tbody th{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:400;width:20%}
+.mx-gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0 1.5rem;margin-top:.6rem}
+.mx-gloss div{padding:.55rem 0;border-bottom:1px solid var(--border)}
+.mx-gloss dt{font-size:.82rem;font-weight:700}
+.mx-gloss dd{font-size:.76rem;color:var(--dim);margin-top:.15rem}
+.mx-quiz{display:flex;flex-direction:column;gap:.8rem}
+.mx-qq{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:1rem;display:flex;flex-direction:column;gap:.6rem}
+.mx-qq h5{font-size:.86rem;font-weight:700}
+.mx-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.45rem}
+.mx-opts button{text-align:left;font-family:var(--sans);font-size:.78rem;color:var(--text);background:var(--surf2);border:1px solid var(--border2);border-radius:7px;padding:.55rem .7rem;cursor:pointer}
+.mx-opts button.right{border-color:var(--green);color:var(--green);font-weight:700}
+.mx-opts button.wrong{border-color:var(--red);color:var(--red)}
+.mx-fb{font-size:.78rem;color:var(--dim)}
+.mx-score{font-family:var(--mono);font-size:.78rem;color:var(--accent)}
+#mx-quiz-reset{width:fit-content}
 </style>
 </head>
 <body>
@@ -299,6 +397,7 @@ select option{background:var(--surf2)}
   <button class="tab-btn" onclick="showTab('appos')"><span class="icon">◎</span><span data-pt="Posição AP">AP Position</span></button>
   <button class="tab-btn" onclick="showTab('check')"><span class="icon">☑</span><span data-pt="Checklists">Checklists</span></button>
   <button class="tab-btn" onclick="showTab('notes')"><span class="icon">⊞</span><span data-pt="Notas de Campo">Field Notes</span></button>
+  <button class="tab-btn" onclick="showTab('mod')"><span class="icon">◬</span><span data-pt="Modulações">Modulations</span></button>
 </nav>
 
 <main>
@@ -480,6 +579,7 @@ select option{background:var(--surf2)}
   <div class="pbar-track"><div id="c8_bar" class="pbar-fill" style="width:62%;background:var(--primary)"></div></div>
   <div class="ex-box"><button class="ex-btn" onclick="setCalc8(-55,-72)" data-pt="Ruído crítico −72 dBm (exemplo Cap. 7)">Critical noise −72 dBm (Ch. 7 example)</button>
     <button class="ex-btn" onclick="setCalc8(-65,-90)" data-pt="Cenário interno típico">Typical indoor scenario</button>
+    <button class="ex-btn" onclick="MODX.openWithSnr((+document.getElementById('c8_rssi').value)-(+document.getElementById('c8_nf').value))" data-pt="◬ Ver esta SNR na constelação QAM">◬ See this SNR on the QAM constellation</button>
   </div>
 </div>
 
@@ -1197,6 +1297,176 @@ select option{background:var(--surf2)}
 </div>
 </section>
 
+<!-- 10. Exploring Modulations (guided lesson: QAM, OFDMA, MU-MIMO) -->
+<section id="tab-mod" class="tab-section">
+<div class="sec-title"><span data-pt="Explorando as Modulações">Exploring Modulations</span></div>
+<p class="mx-lede" data-pt="Guia interativo sobre três técnicas que colocam mais dados no ar: a modulação QAM, que decide quantos bits cabem em cada símbolo; o OFDMA, que divide o canal na frequência; e o MU-MIMO, que divide o canal no espaço. Cada etapa tem conceitos, um simulador com leitura ao vivo e experimentos passo a passo.">An interactive guide to three techniques that put more data on the air: QAM modulation, which sets how many bits each symbol carries; OFDMA, which splits the channel in frequency; and MU-MIMO, which splits the channel in space. Each step has concepts, a simulator with a live reading and step-by-step experiments.</p>
+<div class="mx-route">
+  <button type="button" data-mxgo="mx-base"><span class="mx-s" data-pt="Etapa 1 · 5 min">Step 1 · 5 min</span><strong data-pt="Ideias de base">The basics</strong><span class="mx-d" data-pt="Portadora, símbolo e canal">Carrier, symbol and channel</span></button>
+  <button type="button" data-mxgo="mx-qam"><span class="mx-s" data-pt="Etapa 2 · 15 min">Step 2 · 15 min</span><strong data-pt="Modulação QAM">QAM modulation</strong><span class="mx-d" data-pt="5 experimentos com a constelação">5 constellation experiments</span></button>
+  <button type="button" data-mxgo="mx-cube"><span class="mx-s" data-pt="Etapa 3 · 15 min">Step 3 · 15 min</span><strong>OFDMA × MU-MIMO</strong><span class="mx-d" data-pt="6 experimentos com o cubo de recursos">6 resource-cube experiments</span></button>
+  <button type="button" data-mxgo="mx-beam"><span class="mx-s" data-pt="Etapa 4 · 10 min">Step 4 · 10 min</span><strong data-pt="Feixes no espaço">Beams in space</strong><span class="mx-d" data-pt="4 experimentos na sala virtual">4 virtual-room experiments</span></button>
+  <button type="button" data-mxgo="mx-quiz"><span class="mx-s" data-pt="Etapa 5 · 10 min">Step 5 · 10 min</span><strong data-pt="Verifique o que aprendeu">Check what you learned</strong><span class="mx-d" data-pt="Resumo, glossário e quiz">Summary, glossary and quiz</span></button>
+</div>
+
+<!-- STEP 1 -->
+<div class="mx-part" id="mx-base">
+  <div class="mx-head"><span class="mx-n" data-pt="Etapa 1 · Ideias de base">Step 1 · The basics</span><h3 class="mx-h" data-pt="Antes de começar: três ideias">Before you start: three ideas</h3></div>
+  <div class="mx-concepts">
+    <div class="mx-concept"><h4 data-pt="A portadora">The carrier</h4><p data-pt="Uma onda de rádio de frequência fixa, por exemplo 2,4 GHz ou 5 GHz. Sozinha ela não carrega informação: é só o veículo. Veja seu comprimento de onda na calculadora λ.">A radio wave of fixed frequency, such as 2.4 GHz or 5 GHz. On its own it carries no information: it is only the vehicle. See its wavelength in the λ calculator.</p></div>
+    <div class="mx-concept"><h4 data-pt="A modulação">Modulation</h4><p data-pt="É o jeito de alterar a portadora para representar bits. No Wi-Fi mudamos ao mesmo tempo a amplitude (altura da onda) e a fase (onde a onda começa). Cada combinação é um símbolo.">The way the carrier is changed to represent bits. Wi-Fi changes amplitude (wave height) and phase (where the wave starts) at the same time. Each combination is a symbol.</p></div>
+    <div class="mx-concept"><h4 data-pt="O canal é compartilhado">The channel is shared</h4><p data-pt="Todos os dispositivos usam o mesmo canal. O tempo que cada um ocupa se chama airtime. Quanto menos airtime cada um gasta, mais clientes a rede atende.">All devices use the same channel. The time each one occupies it is called airtime. The less airtime each client spends, the more clients the network serves.</p></div>
+  </div>
+  <div class="mx-analogy"><b data-pt="Analogia">Analogy</b><p data-pt="Pense no canal como uma estrada e nos dados como encomendas. A QAM decide quantas caixas cabem em cada caminhão. O OFDMA deixa um caminhão levar encomendas de vários clientes numa única viagem. O MU-MIMO coloca vários caminhões em pistas diferentes, ao mesmo tempo, cada um indo para um cliente.">Think of the channel as a road and data as parcels. QAM decides how many boxes fit in each truck. OFDMA lets one truck carry parcels for several clients in a single trip. MU-MIMO puts several trucks on different lanes at the same time, each going to one client.</p></div>
+</div>
+
+<!-- STEP 2 QAM -->
+<div class="mx-part" id="mx-qam">
+  <div class="mx-head"><span class="mx-n" data-pt="Etapa 2 · Modulação">Step 2 · Modulation</span><h3 class="mx-h" data-pt="Constelação QAM: quantos bits cabem em um símbolo">QAM constellation: how many bits fit in a symbol</h3></div>
+  <div class="mx-concepts">
+    <div class="mx-concept"><h4 data-pt="Como ler o gráfico">How to read the chart</h4><p data-pt="Cada ponto branco é um símbolo possível. A distância até o centro é a amplitude; o ângulo é a fase. Os eixos I e Q são duas componentes da mesma onda.">Each white dot is a possible symbol. Distance from the centre is the amplitude; the angle is the phase. Axes I and Q are two components of the same wave.</p></div>
+    <div class="mx-concept"><h4 data-pt="Mais pontos, mais bits">More points, more bits</h4><p data-pt="Com N pontos, cada símbolo carrega log₂(N) bits.">With N points, each symbol carries log₂(N) bits.</p><span class="mx-f">16 → 4 bits · 1024 → 10 bits</span></div>
+    <div class="mx-concept"><h4 data-pt="O problema: ruído">The problem: noise</h4><p data-pt="O sinal chega com ruído e se espalha em volta do ponto certo (nuvem laranja). Se cair na região do vizinho, o receptor decodifica errado (ponto vermelho).">The signal arrives with noise and spreads around the right point (orange cloud). If it lands in a neighbour's region, the receiver decodes it wrong (red dot).</p></div>
+    <div class="mx-concept"><h4>SNR</h4><p data-pt="Relação sinal-ruído, em dB. Quanto mais pontos na constelação, maior a SNR necessária. Os limiares vêm da tabela SNR × MCS da aba Referências.">Signal-to-noise ratio, in dB. The more points in the constellation, the higher the SNR needed. Thresholds come from the SNR × MCS table in the References tab.</p></div>
+  </div>
+  <div class="mx-grid2">
+    <div class="card mx-panel">
+      <canvas id="mx-const" aria-label="QAM constellation"></canvas>
+      <div class="mx-legend"><span><i style="background:var(--text)"></i><span data-pt="Símbolo ideal">Ideal symbol</span></span><span><i style="background:var(--accent);opacity:.6"></i><span data-pt="Recebido certo">Received right</span></span><span><i style="background:var(--red)"></i><span data-pt="Recebido errado">Received wrong</span></span></div>
+      <p class="mx-how" data-pt="Experimente: clique em qualquer ponto para enviá-lo. A seta mostra amplitude e fase, e a onda abaixo muda.">Try it: click any dot to transmit it. The arrow shows amplitude and phase, and the wave below changes.</p>
+    </div>
+    <div class="card mx-panel">
+      <div class="igroup"><label data-pt="Modulação">Modulation</label><div class="mx-seg" id="mx-seg-order"></div></div>
+      <div class="igroup"><label><span data-pt="Relação sinal-ruído (SNR)">Signal-to-noise ratio (SNR)</span> · <output id="mx-snr-out">30 dB</output></label><input type="range" id="mx-snr" min="0" max="45" step="1" value="30" class="mx-range"></div>
+      <div class="mx-stats">
+        <div class="mx-stat"><div class="mx-k" data-pt="Bits por símbolo">Bits per symbol</div><div class="mx-v" id="mx-st-bits">6</div></div>
+        <div class="mx-stat"><div class="mx-k" data-pt="SNR mínimo (Ref.)">Min. SNR (Ref.)</div><div class="mx-v" id="mx-st-min">25 dB</div></div>
+        <div class="mx-stat"><div class="mx-k" data-pt="Erro de símbolo">Symbol error</div><div class="mx-v" id="mx-st-ser">0%</div></div>
+        <div class="mx-stat"><div class="mx-k" data-pt="Taxa máx. 20 MHz">Max rate 20 MHz</div><div class="mx-v" id="mx-st-rate">72 Mbps</div></div>
+      </div>
+      <span class="mx-chip" id="mx-chip"></span>
+      <div class="mx-reading"><span class="mx-k" data-pt="Leitura ao vivo">Live reading</span><p id="mx-q-read"></p></div>
+      <div class="igroup" style="margin:0"><label><span data-pt="A portadora no ar">The carrier on air</span> <button type="button" class="ex-btn mx-pause" id="mx-pause">Pause</button></label>
+        <canvas id="mx-wave" aria-label="Modulated carrier"></canvas>
+        <div class="mx-bits" id="mx-bitstream"></div>
+        <p class="mx-sym" id="mx-syminfo"></p>
+      </div>
+    </div>
+  </div>
+  <div class="mx-exps-head"><h4 data-pt="Experimentos guiados">Guided experiments</h4><span class="mx-hint" data-pt="Faça na ordem. Cada botão monta o cenário no simulador.">Do them in order. Each button sets up the simulator.</span></div>
+  <div class="mx-exps" id="mx-exps-qam"></div>
+  <div class="mx-think" id="mx-think-qam"></div>
+</div>
+
+<!-- STEP 3 CUBE -->
+<div class="mx-part" id="mx-cube">
+  <div class="mx-head"><span class="mx-n" data-pt="Etapa 3 · Divisão do canal">Step 3 · Sharing the channel</span><h3 class="mx-h" data-pt="OFDMA × MU-MIMO: frequência, tempo e espaço">OFDMA × MU-MIMO: frequency, time and space</h3></div>
+  <div class="mx-concepts">
+    <div class="mx-concept"><h4 data-pt="Eixo da frequência">Frequency axis</h4><p data-pt="O canal de 20 MHz tem centenas de subportadoras. O Wi-Fi 6 as agrupa em até 9 RUs (unidades de recurso de 26 subportadoras).">A 20 MHz channel has hundreds of subcarriers. Wi-Fi 6 groups them into up to 9 RUs (resource units of 26 subcarriers).</p></div>
+    <div class="mx-concept"><h4 data-pt="Eixo do tempo">Time axis</h4><p data-pt="Cada coluna é um slot: uma transmissão. Menos slots para atender todos significa menos airtime gasto.">Each column is a slot: one transmission. Fewer slots to serve everyone means less airtime spent.</p></div>
+    <div class="mx-concept"><h4 data-pt="Eixo do espaço">Space axis</h4><p data-pt="Com várias antenas, o AP cria fluxos espaciais: feixes que vão para clientes diferentes ao mesmo tempo, na mesma frequência.">With several antennas the AP creates spatial streams: beams that reach different clients at the same time, on the same frequency.</p></div>
+    <div class="mx-concept"><h4 data-pt="Como ler o cubo">How to read the cube</h4><p data-pt="Cada cubinho é 1 RU, em 1 slot, em 1 fluxo. A cor indica o cliente. Cubo transparente é preenchimento: ocupa o canal sem levar dados.">Each small cube is 1 RU, in 1 slot, on 1 stream. Colour marks the client. A transparent cube is padding: it occupies the channel without carrying data.</p></div>
+  </div>
+  <div class="mx-grid2">
+    <div class="card mx-panel">
+      <canvas id="mx-cubecv" aria-label="Frequency, time and space resource cube"></canvas>
+      <div class="mx-views">
+        <button type="button" class="ex-btn" data-mxview="3d" data-pt="Vista 3D">3D view</button>
+        <button type="button" class="ex-btn" data-mxview="top" data-pt="De cima: frequência × tempo">Top: frequency × time</button>
+        <button type="button" class="ex-btn" data-mxview="front" data-pt="De frente: espaço × tempo">Front: space × time</button>
+      </div>
+      <div class="mx-legend" id="mx-cube-legend"></div>
+      <p class="mx-how" data-pt="Experimente: arraste o cubo para girar. A vista de cima mostra o OFDMA; a vista de frente mostra o MU-MIMO.">Try it: drag the cube to rotate. The top view shows OFDMA; the front view shows MU-MIMO.</p>
+    </div>
+    <div class="card mx-panel">
+      <div class="igroup"><label data-pt="Técnica">Technique</label><div class="mx-seg" id="mx-seg-mode"></div></div>
+      <div class="igroup"><label data-pt="Tráfego">Traffic</label><div class="mx-seg" id="mx-seg-traffic"></div></div>
+      <div class="igroup"><label><span data-pt="Clientes ativos">Active clients</span> · <output id="mx-n-out">6</output></label><input type="range" id="mx-n" min="1" max="8" step="1" value="6" class="mx-range"></div>
+      <div class="mx-stats">
+        <div class="mx-stat"><div class="mx-k" data-pt="Airtime usado">Airtime used</div><div class="mx-v" id="mx-cb-T">2</div></div>
+        <div class="mx-stat"><div class="mx-k" data-pt="Dados úteis">Useful data</div><div class="mx-v" id="mx-cb-eff">100%</div></div>
+        <div class="mx-stat"><div class="mx-k" data-pt="Espera média">Avg. wait</div><div class="mx-v" id="mx-cb-avg">1.5</div></div>
+      </div>
+      <div class="mx-reading"><span class="mx-k" data-pt="Leitura ao vivo">Live reading</span><p id="mx-c-read"></p></div>
+      <div class="mx-tablewrap"><table class="mx-cmp" id="mx-cmp"></table></div>
+    </div>
+  </div>
+  <div class="mx-exps-head"><h4 data-pt="Experimentos guiados">Guided experiments</h4><span class="mx-hint" data-pt="Compare os números da tabela a cada passo.">Compare the numbers in the table at each step.</span></div>
+  <div class="mx-exps" id="mx-exps-cube"></div>
+  <div class="mx-think" id="mx-think-cube"></div>
+  <p class="mx-note" data-pt="Modelo simplificado para fins didáticos. Pacote pequeno = 2 RUs de dados; pacote grande = 18 RUs. Clientes com uma antena. A sondagem do canal (NDP) do MU-MIMO aparece em cinza; quadros de disparo e confirmações foram omitidos.">Simplified teaching model. Small packet = 2 RUs of data; large packet = 18 RUs. Single-antenna clients. MU-MIMO channel sounding (NDP) appears in grey; trigger frames and acknowledgements are left out.</p>
+</div>
+
+<!-- STEP 4 BEAMS -->
+<div class="mx-part" id="mx-beam">
+  <div class="mx-head"><span class="mx-n" data-pt="Etapa 4 · Espaço">Step 4 · Space</span><h3 class="mx-h" data-pt="Feixes do MU-MIMO na sala">MU-MIMO beams in the room</h3></div>
+  <div class="mx-concepts">
+    <div class="mx-concept"><h4>Beamforming</h4><p data-pt="Ajustando o sinal de cada antena, o AP concentra a energia numa direção, formando um feixe para cada cliente.">By adjusting the signal on each antenna, the AP concentrates energy in one direction, forming a beam for each client.</p></div>
+    <div class="mx-concept"><h4 data-pt="Separação angular">Angular separation</h4><p data-pt="Dois clientes na mesma direção recebem feixes sobrepostos. O AP atende um agora e o outro no próximo slot.">Two clients in the same direction get overlapping beams. The AP serves one now and the other in the next slot.</p></div>
+    <div class="mx-concept"><h4 data-pt="Mais antenas">More antennas</h4><p data-pt="Mais antenas formam feixes mais estreitos e atendem mais clientes ao mesmo tempo: um AP 4×4 atende até 4 clientes de uma antena.">More antennas form narrower beams and serve more clients at once: a 4×4 AP serves up to 4 single-antenna clients.</p></div>
+  </div>
+  <div class="mx-grid2">
+    <div class="card mx-panel">
+      <canvas id="mx-beamcv" aria-label="MU-MIMO beam map"></canvas>
+      <p class="mx-how" data-pt="Experimente: arraste os círculos (clientes) pela sala. Colorido = atendido; tracejado = aguardando.">Try it: drag the circles (clients) around the room. Coloured = served; dashed = waiting.</p>
+    </div>
+    <div class="card mx-panel">
+      <div class="igroup"><label data-pt="Geração">Generation</label><div class="mx-seg" id="mx-seg-gen"></div></div>
+      <div class="igroup"><label data-pt="Sentido">Direction</label><div class="mx-seg" id="mx-seg-dir"></div></div>
+      <div class="igroup"><label data-pt="Antenas do AP">AP antennas</label><div class="mx-seg" id="mx-seg-ant"></div></div>
+      <div class="igroup"><label><span data-pt="Clientes na sala">Clients in the room</span> · <output id="mx-bn-out">5</output></label><input type="range" id="mx-bn" min="1" max="8" step="1" value="5" class="mx-range"></div>
+      <div class="mx-stats">
+        <div class="mx-stat"><div class="mx-k" data-pt="Atendidos agora">Served now</div><div class="mx-v" id="mx-bm-now">3</div></div>
+        <div class="mx-stat"><div class="mx-k" data-pt="Limite simultâneo">Simultaneous limit</div><div class="mx-v" id="mx-bm-lim">4</div></div>
+        <div class="mx-stat"><div class="mx-k" data-pt="Separação mínima">Min. separation</div><div class="mx-v" id="mx-bm-sep">25°</div></div>
+      </div>
+      <div class="mx-reading"><span class="mx-k" data-pt="Leitura ao vivo">Live reading</span><p id="mx-b-read"></p></div>
+    </div>
+  </div>
+  <div class="mx-exps-head"><h4 data-pt="Experimentos guiados">Guided experiments</h4></div>
+  <div class="mx-exps" id="mx-exps-beam"></div>
+  <div class="mx-think" id="mx-think-beam"></div>
+</div>
+
+<!-- STEP 5 -->
+<div class="mx-part" id="mx-quiz">
+  <div class="mx-head"><span class="mx-n" data-pt="Etapa 5 · Fechamento">Step 5 · Wrap-up</span><h3 class="mx-h" data-pt="Resumo, glossário e quiz">Summary, glossary and quiz</h3></div>
+  <div class="mx-tablewrap card" style="padding:0">
+    <table class="mx-sum">
+      <thead><tr><th></th><th>OFDMA</th><th>MU-MIMO</th></tr></thead>
+      <tbody>
+        <tr><th data-pt="Divide">Splits</th><td data-pt="A frequência: o canal vira unidades de recurso (RUs)">Frequency: the channel becomes resource units (RUs)</td><td data-pt="O espaço: um feixe e um fluxo espacial por cliente">Space: one beam and one spatial stream per client</td></tr>
+        <tr><th data-pt="Analogia">Analogy</th><td data-pt="Um caminhão com encomendas de vários clientes">One truck with parcels for several clients</td><td data-pt="Vários caminhões em pistas diferentes">Several trucks on different lanes</td></tr>
+        <tr><th data-pt="Ganho principal">Main gain</th><td data-pt="Menor latência com muitos pacotes pequenos">Lower latency with many small packets</td><td data-pt="Mais capacidade com fluxos grandes">More capacity with large flows</td></tr>
+        <tr><th data-pt="Cenário típico">Typical scenario</th><td data-pt="Auditório, IoT, mensagens, navegação">Auditorium, IoT, messaging, browsing</td><td data-pt="Vídeo 4K, downloads grandes, backups">4K video, large downloads, backups</td></tr>
+        <tr><th data-pt="Requisito">Requirement</th><td data-pt="AP e clientes com Wi-Fi 6 ou superior">AP and clients with Wi-Fi 6 or later</td><td data-pt="Várias antenas no AP, clientes compatíveis e separação angular">Several AP antennas, compatible clients and angular separation</td></tr>
+        <tr><th data-pt="Geração">Generation</th><td data-pt="Wi-Fi 6, 6E e 7">Wi-Fi 6, 6E and 7</td><td data-pt="Wi-Fi 5 (só download, até 4 usuários); Wi-Fi 6 e 7 (download e upload, até 8 usuários no Wi-Fi 6)">Wi-Fi 5 (download only, up to 4 users); Wi-Fi 6 and 7 (download and upload, up to 8 users in Wi-Fi 6)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title" data-pt="Glossário">Glossary</div>
+    <dl class="mx-gloss">
+      <div><dt data-pt="Portadora">Carrier</dt><dd data-pt="Onda de rádio de frequência fixa alterada para transportar dados.">Fixed-frequency radio wave that is altered to carry data.</dd></div>
+      <div><dt data-pt="Símbolo">Symbol</dt><dd data-pt="Uma combinação de amplitude e fase; representa um grupo de bits.">A combination of amplitude and phase; it represents a group of bits.</dd></div>
+      <div><dt>QAM</dt><dd data-pt="Modulação por amplitude em quadratura: varia amplitude e fase ao mesmo tempo.">Quadrature amplitude modulation: changes amplitude and phase together.</dd></div>
+      <div><dt data-pt="I e Q">I and Q</dt><dd data-pt="Componentes em fase e em quadratura da onda; são os eixos da constelação.">In-phase and quadrature components of the wave; the axes of the constellation.</dd></div>
+      <div><dt>SNR</dt><dd data-pt="Relação sinal-ruído, em dB. Define qual modulação o enlace suporta.">Signal-to-noise ratio, in dB. Sets which modulation the link supports.</dd></div>
+      <div><dt>MCS</dt><dd data-pt="Esquema de modulação e codificação; o equipamento troca de MCS conforme a qualidade do sinal.">Modulation and coding scheme; the device changes MCS with signal quality.</dd></div>
+      <div><dt data-pt="Subportadora">Subcarrier</dt><dd data-pt="Cada uma das pequenas portadoras em que o OFDM divide o canal.">Each of the small carriers into which OFDM splits the channel.</dd></div>
+      <div><dt>RU</dt><dd data-pt="Unidade de recurso: grupo de subportadoras entregue a um cliente no OFDMA.">Resource unit: group of subcarriers given to one client in OFDMA.</dd></div>
+      <div><dt>Airtime</dt><dd data-pt="Tempo em que um dispositivo ocupa o canal.">Time a device occupies the channel.</dd></div>
+      <div><dt data-pt="Fluxo espacial">Spatial stream</dt><dd data-pt="Sequência independente de dados enviada por um caminho espacial diferente.">Independent data sequence sent over a different spatial path.</dd></div>
+      <div><dt>Beamforming</dt><dd data-pt="Técnica que concentra o sinal das antenas na direção do cliente.">Technique that focuses the antennas' signal toward the client.</dd></div>
+      <div><dt data-pt="Sondagem (NDP)">Sounding (NDP)</dt><dd data-pt="Quadro de teste que o AP envia para medir o canal antes de formar os feixes.">Test frame the AP sends to measure the channel before forming beams.</dd></div>
+    </dl>
+  </div>
+  <div class="mx-exps-head"><h4 data-pt="Quiz rápido">Quick quiz</h4><span class="mx-score" id="mx-score"></span></div>
+  <div class="mx-quiz" id="mx-quizbox"></div>
+  <button type="button" class="ex-btn" id="mx-quiz-reset" data-pt="Recomeçar o quiz">Restart quiz</button>
+</div>
+</section>
+
 </main>
 
 <script>
@@ -1313,6 +1583,7 @@ function showTab(name){
   if(name==='appos'){
     if(!apposAnimId){initAppos();}
   }
+  if(name==='mod'&&window.MODX){MODX.show();}
 }
 
 // ══════════════════════════════════════════════
@@ -1494,6 +1765,7 @@ const LANG = {
     if(typeof genIperf === 'function') genIperf();
     if(typeof symptomTool === 'function') { var s=document.getElementById('sym_sel'); if(s) { s.selectedIndex=0; document.getElementById('sym_result').style.display='none'; }}
     
+    if(window.MODX) MODX.onLang();
     localStorage.setItem('wifi-lang', code);
   }
 };
@@ -2255,6 +2527,291 @@ window.onload=function(){
   calc1('dbm');calc2();calc3();calc4();calc5();calc6();calc7();calc8();calc9();calc10();calc11();calc12();
 };
 
+</script>
+<script>
+// ══════════════════════════════════════════════
+// EXPLORING MODULATIONS (QAM · OFDMA · MU-MIMO)
+// ══════════════════════════════════════════════
+window.MODX=(function(){
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const T=(en,pt)=>(typeof LANG!=='undefined'&&LANG.current==='pt')?pt:en;
+const fmt=(v,d=1)=>{const s=v.toFixed(d);return T(s,s.replace('.',','));};
+const nf=v=>v.toLocaleString(T('en-US','pt-BR'));
+const UC=['#3b8cff','#ff6a4d','#12d580','#b57bff','#ffc23d','#22c8d8','#ff5fa8','#a3c94a'];
+let C={},started=false;
+function readColors(){const cs=getComputedStyle(document.documentElement);const g=n=>cs.getPropertyValue(n).trim();
+ C={fg:g('--text'),muted:g('--muted'),dim:g('--dim'),grid:g('--surf3'),line:g('--border2'),panel:g('--surf'),accent:g('--accent'),bad:g('--red'),sound:'#7a8aa8'};}
+function rgb(h){h=h.replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');const n=parseInt(h,16);return[n>>16&255,n>>8&255,n&255];}
+function rgba(h,a,m=1){const[r,g,b]=rgb(h);const f=v=>Math.round(Math.min(255,v*m));return`rgba(${f(r)},${f(g)},${f(b)},${a})`;}
+const cvs={};
+function fit(id,hf){const cv=document.getElementById(id);if(!cv||!cv.clientWidth)return;const dpr=window.devicePixelRatio||1;const w=cv.clientWidth;const h=Math.round(hf(w));cv.style.height=h+'px';cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);cvs[id]={cv,ctx,w,h};}
+function fitAll(){fit('mx-const',w=>Math.min(w,540));fit('mx-wave',()=>120);fit('mx-cubecv',w=>Math.max(300,Math.min(w*0.8,480)));fit('mx-beamcv',w=>Math.max(300,Math.min(w*0.8,460)));}
+function seg(el,items,cur,on){el.innerHTML='';items.forEach(it=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-pressed',String(it.v===cur));const lab=typeof it.label==='function'?it.label():it.label;const sub=typeof it.sub==='function'?it.sub():it.sub;b.innerHTML=lab+(sub?'<small>'+sub+'</small>':'');b.addEventListener('click',()=>{[...el.children].forEach(c=>c.setAttribute('aria-pressed',String(c===b)));on(it.v);});el.appendChild(b);});}
+function goTo(el){if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});}
+function visible(){const s=document.getElementById('tab-mod');return s&&s.classList.contains('active');}
+
+/* experiments + think */
+const expState={};
+function buildExps(boxId,list,run,target){const box=$(boxId);box.innerHTML='';list.forEach((e,i)=>{const d=document.createElement('div');d.className='mx-exp'+(expState[boxId]===i?' on':'');
+ d.innerHTML='<span class="mx-n">'+T('Experiment ','Experimento ')+(i+1)+'</span><h5>'+T(e.t[0],e.t[1])+'</h5><p>'+T(e.txt[0],e.txt[1])+'</p><div class="mx-obs"'+(expState[boxId]===i?'':' hidden')+'><b>'+T('What to observe','O que observar')+'</b>'+T(e.obs[0],e.obs[1])+'</div><button class="ex-btn" type="button">'+T('Set up this scenario','Montar este cenário')+'</button>';
+ d.querySelector('button').addEventListener('click',()=>{expState[boxId]=i;[...box.children].forEach(c=>{c.classList.remove('on');c.querySelector('.mx-obs').hidden=true;});d.classList.add('on');d.querySelector('.mx-obs').hidden=false;run(e.set);goTo($(target));});
+ box.appendChild(d);});}
+function buildThink(boxId,list){$(boxId).innerHTML=list.map(x=>'<details><summary>'+T(x[0],x[1])+'</summary><p>'+T(x[2],x[3])+'</p></details>').join('');}
+
+/* ================= QAM ================= */
+function mcsFor(mod){const rows=(typeof MCS_DATA!=='undefined'?MCS_DATA:[]).filter(r=>r.mod===mod);return rows;}
+const ORD=[{m:2,n:'BPSK'},{m:4,n:'QPSK'},{m:16,n:'16-QAM'},{m:64,n:'64-QAM'},{m:256,n:'256-QAM'},{m:1024,n:'1024-QAM'},{m:4096,n:'4096-QAM'}];
+ORD.forEach(o=>{const r=mcsFor(o.n);if(r.length){o.snr=Math.min(...r.map(x=>x.snr));o.rate=Math.max(...r.map(x=>x.mbps));o.mcs=r.map(x=>x.mcs);o.gen=r[0].std;o.est=false;}});
+const W7=ORD[6];if(!W7.snr){W7.snr=40;W7.rate=172.1;W7.mcs=[12,13];W7.gen='Wi-Fi 7';W7.est=true;}
+ORD.forEach(o=>{if(!o.snr){o.snr=5;o.rate=7.2;o.mcs=[0];o.gen='Wi-Fi 4+';}});
+const genOf=o=>({2:'Wi-Fi 4+',4:'Wi-Fi 4+',16:'Wi-Fi 4+',64:'Wi-Fi 4+',256:'Wi-Fi 5',1024:'Wi-Fi 6',4096:'Wi-Fi 7'})[o.m];
+const q={o:3,snr:30,pts:[],L:2,sc:1,amax:1,noisy:[],ser:0,queue:[],cur:0,paused:false,last:0,reveal:1,bits:6};
+function gray(i,k){return(i^(i>>1)).toString(2).padStart(k,'0');}
+function build(){const m=ORD[q.o].m;q.pts=[];if(m===2){q.L=2;q.sc=1;q.pts=[{i:-1,q:0,b:'0'},{i:1,q:0,b:'1'}];}
+ else{const Lv=Math.round(Math.sqrt(m)),k=Math.log2(Lv),sc=1/Math.sqrt(2*(m-1)/3);q.L=Lv;q.sc=sc;for(let a=0;a<Lv;a++)for(let b=0;b<Lv;b++)q.pts.push({i:(2*a-Lv+1)*sc,q:(2*b-Lv+1)*sc,b:gray(a,k)+gray(b,k)});}
+ q.amax=Math.max(...q.pts.map(p=>Math.hypot(p.i,p.q)));q.queue=[];q.bits=Math.log2(m);}
+function decide(x,y){if(ORD[q.o].m===2)return x<0?0:1;const Lv=q.L,sc=q.sc;const cl=v=>Math.max(0,Math.min(Lv-1,Math.round((v/sc+Lv-1)/2)));return cl(x)*Lv+cl(y);}
+function gauss(){let u=0;while(!u)u=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*Math.random());}
+function simulate(){const s=Math.sqrt(1/(2*Math.pow(10,q.snr/10)));const N=20000,M=q.pts.length;let err=0;q.noisy=[];
+ for(let n=0;n<N;n++){const k=(Math.random()*M)|0,p=q.pts[k];const x=p.i+gauss()*s,y=p.q+gauss()*s;const e=decide(x,y)!==k;if(e)err++;if(n<1500)q.noisy.push([x,y,e]);}q.ser=err/N;}
+function pushSym(k){q.queue.push(k);if(q.queue.length>12)q.queue.shift();q.cur=k;q.last=performance.now();q.reveal=reduce?1:0;symInfo();}
+function symInfo(){const p=q.pts[q.cur];if(!p)return;const A=Math.hypot(p.i,p.q)/q.amax;const ph=Math.atan2(p.q,p.i)*180/Math.PI;
+ $('#mx-syminfo').textContent=T('Current symbol: ','Símbolo atual: ')+p.b+' · '+T('amplitude','amplitude')+' = '+fmt(A,2)+' · '+T('phase','fase')+' = '+fmt(ph,1)+'°';
+ const last=q.queue.slice(-6);$('#mx-bitstream').innerHTML='<span>'+T('Bits sent:','Bits enviados:')+'</span>'+last.map((k,i)=>'<span class="'+(i===last.length-1?'cur':'')+'">'+q.pts[k].b+'</span>').join('');}
+function updQ(){const o=ORD[q.o];$('#mx-snr').value=q.snr;$('#mx-snr-out').textContent=q.snr+' dB';$('#mx-st-bits').textContent=q.bits;$('#mx-st-min').textContent=(o.est?'≈ ':'')+o.snr+' dB';$('#mx-st-rate').textContent=fmt(o.rate,1)+' Mbps';
+ const ser=q.ser;$('#mx-st-ser').textContent=ser===0?'≈ 0%':fmt(ser*100,ser<0.01?3:1)+'%';
+ const chip=$('#mx-chip');const margin=q.snr-o.snr;let state;
+ if(margin>=0&&ser<0.01){state='ok';chip.className='mx-chip ok';chip.textContent=T('Enough signal: the receiver separates the points','Sinal suficiente: o receptor separa os pontos');}
+ else if(margin>=-4){state='warn';chip.className='mx-chip warn';chip.textContent=T('Borderline: frequent errors','No limite: erros frequentes');}
+ else{state='bad';chip.className='mx-chip bad';chip.textContent=T('Not viable: the device would fall back to a simpler modulation','Inviável: o equipamento trocaria para uma modulação mais simples');}
+ const sym8=Math.ceil(8/q.bits);const mcsTxt='MCS '+o.mcs.join(T(' and ',' e '));let t;
+ t=T('You are using <b>'+o.n+'</b>: '+nf(o.m)+' points, so each symbol carries log₂('+nf(o.m)+') = <b>'+q.bits+' bit'+(q.bits>1?'s':'')+'</b>. Sending 1 byte (8 bits) takes '+sym8+' symbol'+(sym8>1?'s':'')+'. ',
+   'Você está usando <b>'+o.n+'</b>: '+nf(o.m)+' pontos, então cada símbolo leva log₂('+nf(o.m)+') = <b>'+q.bits+' bit'+(q.bits>1?'s':'')+'</b>. Para enviar 1 byte (8 bits) '+(sym8>1?'são necessários '+sym8+' símbolos':'basta 1 símbolo')+'. ');
+ t+=T('In the References table this modulation appears as '+mcsTxt+', needs at least '+o.snr+' dB'+(o.est?' (estimate for Wi-Fi 7)':'')+' and reaches up to '+fmt(o.rate,1)+' Mbps per stream in 20 MHz. ',
+   'Na tabela de Referências esta modulação aparece como '+mcsTxt+', exige ao menos '+o.snr+' dB'+(o.est?' (estimativa para o Wi-Fi 7)':'')+' e chega a '+fmt(o.rate,1)+' Mbps por fluxo em 20 MHz. ');
+ t+=T('Current SNR: '+q.snr+' dB. ','SNR atual: '+q.snr+' dB. ');
+ if(ser===0)t+=T('None of the 20,000 simulated symbols arrived wrong.','Nenhum dos 20.000 símbolos simulados chegou errado.');
+ else{const one=Math.max(1,Math.round(1/ser));t+=T('About 1 in every '+nf(one)+' symbols arrives wrong (before error correction).','Cerca de 1 em cada '+nf(one)+' símbolos chega errado (antes da correção de erros).');}
+ if(state==='bad'&&q.o>0){let k=q.o;while(k>0&&ORD[k].snr>q.snr)k--;t+=T(' At this SNR a real device would use something like <b>'+ORD[k].n+'</b>.',' Com essa SNR, um equipamento real usaria algo como <b>'+ORD[k].n+'</b>.');}
+ if(state==='ok'&&q.o<ORD.length-1&&ORD[q.o+1].snr<=q.snr){let k=q.o;while(k<ORD.length-1&&ORD[k+1].snr<=q.snr)k++;t+=T(' There is margin: the signal would support up to '+ORD[k].n+'.',' Há margem: o sinal suportaria até '+ORD[k].n+'.');}
+ $('#mx-q-read').innerHTML=t;}
+function drawConst(){const c=cvs['mx-const'];if(!c)return;const{ctx,w,h}=c;ctx.clearRect(0,0,w,h);
+ const R=1.55,cx=w/2,cy=h/2,k=(Math.min(w,h)/2-22)/R;const X=x=>cx+x*k,Y=y=>cy-y*k;const m=ORD[q.o].m;
+ ctx.lineWidth=1;ctx.strokeStyle=C.grid;for(let v=-1.5;v<=1.501;v+=0.5){ctx.beginPath();ctx.moveTo(X(v),Y(-R));ctx.lineTo(X(v),Y(R));ctx.moveTo(X(-R),Y(v));ctx.lineTo(X(R),Y(v));ctx.stroke();}
+ ctx.strokeStyle=C.muted;ctx.beginPath();ctx.moveTo(X(-R),cy);ctx.lineTo(X(R),cy);ctx.moveTo(cx,Y(-R));ctx.lineTo(cx,Y(R));ctx.stroke();
+ ctx.fillStyle=C.muted;ctx.font='11px "JetBrains Mono", monospace';ctx.textAlign='right';ctx.fillText(T('I (in-phase)','I (em fase)'),X(R)-2,cy-6);ctx.textAlign='left';ctx.fillText(T('Q (quadrature)','Q (quadratura)'),cx+6,Y(R)+12);
+ if(m<=256){ctx.strokeStyle=C.line;ctx.setLineDash([3,4]);ctx.beginPath();
+  if(m===2){ctx.moveTo(cx,Y(-R));ctx.lineTo(cx,Y(R));}else{const ext=q.L*q.sc;for(let j=1;j<q.L;j++){const v=(2*j-q.L)*q.sc;ctx.moveTo(X(v),Y(-ext));ctx.lineTo(X(v),Y(ext));ctx.moveTo(X(-ext),Y(v));ctx.lineTo(X(ext),Y(v));}}
+  ctx.stroke();ctx.setLineDash([]);}
+ const nr=m>=1024?1.1:1.5;
+ for(const[x,y,e]of q.noisy){if(Math.abs(x)>R||Math.abs(y)>R)continue;ctx.fillStyle=e?C.bad:rgba(C.accent,.4);ctx.beginPath();ctx.arc(X(x),Y(y),e?nr+.4:nr,0,7);ctx.fill();}
+ const pr=m<=16?5:m<=64?4:m<=256?2.6:m<=1024?1.6:1;ctx.fillStyle=C.fg;for(const p of q.pts){ctx.beginPath();ctx.arc(X(p.i),Y(p.q),pr,0,7);ctx.fill();}
+ if(m<=16){ctx.font='10.5px "JetBrains Mono", monospace';ctx.textAlign='center';ctx.fillStyle=C.dim;for(const p of q.pts)ctx.fillText(p.b,X(p.i),Y(p.q)-pr-5);}
+ const p=q.pts[q.cur];if(p){ctx.strokeStyle=C.accent;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(X(p.i),Y(p.q));ctx.stroke();ctx.beginPath();ctx.arc(X(p.i),Y(p.q),Math.max(7,pr+5),0,7);ctx.stroke();
+  const ang=Math.atan2(p.q,p.i);ctx.lineWidth=1;ctx.beginPath();ctx.arc(cx,cy,22,0,-ang,ang>0);ctx.stroke();
+  if(m>16){ctx.fillStyle=C.accent;ctx.font='600 12px "JetBrains Mono", monospace';const r=X(p.i)>cx;ctx.textAlign=r?'right':'left';ctx.fillText(p.b,X(p.i)+(r?-12:12),Y(p.q)-10);}}}
+function drawWave(){const c=cvs['mx-wave'];if(!c)return;const{ctx,w,h}=c;ctx.clearRect(0,0,w,h);const n=4,sw=w/n,mid=h/2+9,amp=h/2-22;
+ ctx.strokeStyle=C.grid;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,mid);ctx.lineTo(w,mid);ctx.stroke();
+ const syms=q.queue.slice(-n);const off=n-syms.length;
+ syms.forEach((k,j)=>{const p=q.pts[k];if(!p)return;const A=Math.hypot(p.i,p.q)/q.amax,ph=Math.atan2(p.q,p.i);const x0=(j+off)*sw;const isLast=j===syms.length-1;const tmax=isLast?q.reveal:1;
+  ctx.strokeStyle=isLast?C.accent:rgba(C.fg,.5);ctx.lineWidth=isLast?2:1.4;ctx.beginPath();
+  for(let s=0;s<=80*tmax;s++){const t=s/80;const y=mid-amp*A*Math.cos(2*Math.PI*2*t+ph);const x=x0+t*sw;s?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.stroke();
+  ctx.strokeStyle=C.line;ctx.setLineDash([2,3]);ctx.beginPath();ctx.moveTo(x0,4);ctx.lineTo(x0,h);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=isLast?C.accent:C.muted;ctx.font=(q.bits>8?'10px':'11px')+' "JetBrains Mono", monospace';ctx.textAlign='left';ctx.fillText(p.b,x0+5,12);});}
+function orderSeg(){seg($('#mx-seg-order'),ORD.map((o,i)=>({v:i,label:o.n,sub:genOf(o)})),q.o,v=>setQ({o:v}));}
+function setQ(s){if(s.o!==undefined&&s.o!==q.o){q.o=s.o;build();pushSym((Math.random()*q.pts.length)|0);}if(s.snr!==undefined)q.snr=Math.max(0,Math.min(45,Math.round(s.snr)));simulate();orderSeg();updQ();}
+const QEXP=[
+ {t:['Start simple','Comece pelo simples'],set:{o:1,snr:30},txt:['QPSK has only 4 points. Each one stands for 2 bits: 00, 01, 10 or 11.','QPSK tem só 4 pontos. Cada ponto representa 2 bits: 00, 01, 10 ou 11.'],obs:['The orange clouds stay well apart: the receiver never confuses one symbol with another. On the wave, only the phase changes; the height is always the same.','As nuvens laranja ficam bem separadas: o receptor nunca confunde um símbolo com outro. Na onda, só a fase muda; a altura é sempre a mesma.']},
+ {t:['More points, more bits','Mais pontos, mais bits'],set:{o:2,snr:30},txt:['In 16-QAM each point carries 4 bits. Now amplitude changes too.','No 16-QAM cada ponto leva 4 bits. Agora a amplitude também varia.'],obs:['The labels show that neighbouring points differ by only 1 bit (Gray code). On the wave, different heights appear: amplitude and phase change together.','Os rótulos mostram que pontos vizinhos diferem em só 1 bit (código Gray). Na onda aparecem alturas diferentes: amplitude e fase mudam juntas.']},
+ {t:['Reaching Wi-Fi 6','Chegando ao Wi-Fi 6'],set:{o:5,snr:30},txt:['1024-QAM carries 10 bits per symbol. The signal stays at 30 dB.','1024-QAM leva 10 bits por símbolo. O sinal continua em 30 dB.'],obs:['The points are so close that noise pushes many symbols into a neighbour\'s region: red dots appear and the error rate soars.','Os pontos ficaram tão próximos que o ruído joga muitos símbolos na região do vizinho: surgem pontos vermelhos e a taxa de erro dispara.']},
+ {t:['Close to the router','Perto do roteador'],set:{o:5,snr:40},txt:['Same 1024-QAM, now at 40 dB: client near the AP, no walls.','Mesmo 1024-QAM, agora com 40 dB: cliente perto do AP, sem paredes.'],obs:['The clouds shrink and errors practically vanish. That is why 1024-QAM and 4096-QAM only show up very close to the router.','As nuvens encolhem e os erros praticamente somem. É por isso que 1024-QAM e 4096-QAM só aparecem bem perto do roteador.']},
+ {t:['The device adapts','O equipamento se adapta'],set:{o:3,snr:25},txt:['Far from the AP the signal dropped to 25 dB, and the device switches to 64-QAM.','Longe do AP o sinal caiu para 25 dB, e o equipamento troca para 64-QAM.'],obs:['Fewer bits per symbol, but almost no errors. This is rate adaptation (MCS): speed drops with distance because modulation gets simpler. Compare with the SNR and MCS calculator.','Menos bits por símbolo, porém quase sem erros. É a adaptação de taxa (MCS): a velocidade cai com a distância porque a modulação fica mais simples. Compare com a calculadora de SNR e MCS.']}];
+const QTHINK=[
+ ['How many bits per symbol does Wi-Fi 7 4096-QAM carry?','Quantos bits por símbolo tem o 4096-QAM do Wi-Fi 7?','log₂(4096) = 12 bits. Wi-Fi 6 1024-QAM carries 10: a 20% gain in rate, as long as the signal is very clean.','log₂(4096) = 12 bits. O 1024-QAM do Wi-Fi 6 leva 10: um ganho de 20% na taxa, desde que o sinal seja muito limpo.'],
+ ['Why does a phone get slower far from the router even while showing signal?','Por que o celular fica mais lento longe do roteador, mesmo mostrando sinal?','SNR falls with distance and walls. To avoid errors the device picks a modulation with fewer points (fewer bits per symbol). The link stays up, but each symbol carries less data.','A SNR cai com a distância e com as paredes. Para evitar erros, o equipamento escolhe uma modulação com menos pontos (menos bits por símbolo). A conexão continua, mas cada símbolo carrega menos dados.'],
+ ['Why do neighbouring points differ by only one bit?','Por que pontos vizinhos diferem em apenas um bit?','It is Gray coding. The most common error swaps a point for its neighbour, so this layout means one error spoils only one bit, which error correction recovers more easily.','É o código Gray. Como o erro mais comum troca um ponto pelo vizinho, essa organização faz o erro estragar só um bit, que o código corretor recupera com mais facilidade.']];
+
+/* ================= CUBE ================= */
+const F=9,S=4;
+const g={mode:'ofdma',traffic:'small',n:6,yaw:-0.75,pitch:0.55,ty:null,tp:null,auto:!reduce,drag:null,sched:null};
+const MODES=[{v:'ofdm',label:'OFDM',sub:'Wi-Fi 4/5'},{v:'ofdma',label:'OFDMA',sub:'Wi-Fi 6/7'},{v:'mumimo',label:'MU-MIMO',sub:'Wi-Fi 5/6/7'},{v:'both',label:'OFDMA + MU-MIMO',sub:'Wi-Fi 6/7'}];
+function schedule(mode,traffic,n){const d=traffic==='small'?2:18;const cells=[];let t=0;const done=new Array(n).fill(0);
+ if(mode==='ofdm'){for(let u=0;u<n;u++){let left=d;const sl=Math.ceil(d/F);for(let k=0;k<sl;k++){for(let f=0;f<F;f++){cells.push({f,t,s:0,u,kind:left>0?'data':'pad'});if(left>0)left--;}t++;}done[u]=t;}}
+ else if(mode==='ofdma'){const rem=new Array(n).fill(d);let p=0;while(rem.some(r=>r>0)){for(let f=0;f<F;f++){let tries=0;while(rem[p]===0&&tries<n){p=(p+1)%n;tries++;}if(rem[p]===0)break;cells.push({f,t,s:0,u:p,kind:'data'});rem[p]--;if(rem[p]===0)done[p]=t+1;p=(p+1)%n;}t++;}}
+ else{const both=mode==='both',G=both?8:4,per=both?4:F;
+  for(let g0=0;g0<n;g0+=G){const mem=[];for(let u=g0;u<Math.min(n,g0+G);u++)mem.push(u);const layers=both?Math.ceil(mem.length/2):mem.length;
+   for(let s=0;s<layers;s++)for(let f=0;f<F;f++)cells.push({f,t,s,u:-1,kind:'sound'});t++;const sl=Math.ceil(d/per);
+   mem.forEach((u,j)=>{let left=d;const s=both?Math.floor(j/2):j;const cols=both?(j%2?[5,6,7,8]:[0,1,2,3]):[0,1,2,3,4,5,6,7,8];
+    for(let k=0;k<sl;k++)for(const f of cols){cells.push({f,t:t+k,s,u,kind:left>0?'data':'pad'});if(left>0)left--;}done[u]=t+sl;});t+=sl;}}
+ let data=0,pad=0,snd=0;cells.forEach(c=>{if(c.kind==='data')data++;else if(c.kind==='pad')pad++;else snd++;});
+ return{cells,T:t,eff:data/(data+pad+snd),avg:done.reduce((a,b)=>a+b,0)/n,pad,snd};}
+function modeText(){const m=g.mode;
+ if(m==='ofdm')return T('In <b>OFDM</b> (Wi-Fi 4 and 5) each transmission takes the whole channel for a single client, and the others wait in line.','No <b>OFDM</b> (Wi-Fi 4 e 5) cada transmissão ocupa o canal inteiro para um único cliente, e os outros esperam na fila.');
+ if(m==='ofdma')return T('In <b>OFDMA</b> (Wi-Fi 6 and 7) the 20 MHz channel is split into up to 9 RUs; several clients receive in the same transmission, each in its own slice of frequency.','No <b>OFDMA</b> (Wi-Fi 6 e 7) o canal de 20 MHz é dividido em até 9 RUs; vários clientes recebem na mesma transmissão, cada um na sua fatia de frequência.');
+ if(m==='mumimo')return T('In <b>MU-MIMO</b> the AP sends different streams, on the same frequency at the same instant, to up to 4 clients, one per spatial layer. Before each group it sounds the channel (grey cubes).','No <b>MU-MIMO</b> o AP envia fluxos diferentes, na mesma frequência e no mesmo instante, para até 4 clientes, um em cada camada espacial. Antes de cada grupo ele sonda o canal (cubos cinza).');
+ return T('In <b>OFDMA + MU-MIMO</b> (Wi-Fi 6 and 7) the channel becomes two large RUs (106 subcarriers; the centre RU stays free) and each carries 4 spatial streams: up to 8 clients per transmission.','Em <b>OFDMA + MU-MIMO</b> (Wi-Fi 6 e 7) o canal vira duas RUs grandes (106 subportadoras; a RU central fica livre) e cada uma leva 4 fluxos espaciais: até 8 clientes por transmissão.');}
+function updCube(){g.sched=schedule(g.mode,g.traffic,g.n);const s=g.sched;
+ $('#mx-n').value=g.n;$('#mx-n-out').textContent=g.n;$('#mx-cb-T').textContent=s.T+(s.T===1?' slot':' slots');$('#mx-cb-eff').textContent=fmt(s.eff*100,0)+'%';$('#mx-cb-avg').textContent=fmt(s.avg,1)+' slots';
+ const all=MODES.map(m=>({m,s:schedule(m.v,g.traffic,g.n)}));const maxT=Math.max(...all.map(a=>a.s.T));const best=all.reduce((a,b)=>b.s.T<a.s.T?b:a);const ofdm=all[0].s;
+ const tr=g.traffic==='small'?T('small packets','pacotes pequenos'):T('large packets','pacotes grandes');
+ let t=modeText()+' '+T('With '+g.n+' client'+(g.n>1?'s':'')+' sending '+tr+', everyone was served in <b>'+s.T+' slot'+(s.T>1?'s':'')+'</b>, and <b>'+fmt(s.eff*100,0)+'%</b> of the occupied resources carried data.','Com '+g.n+' cliente'+(g.n>1?'s':'')+' enviando '+tr+', todos foram atendidos em <b>'+s.T+' slot'+(s.T>1?'s':'')+'</b>, e <b>'+fmt(s.eff*100,0)+'%</b> dos recursos ocupados levaram dados.');
+ if(s.pad)t+=T(' The rest was padding'+(s.snd?' and sounding.':'.'),' O resto foi preenchimento'+(s.snd?' e sondagem.':'.'));else if(s.snd)t+=T(' The rest was channel sounding.',' O resto foi sondagem do canal.');
+ if(g.mode!=='ofdm'&&s.T<ofdm.T)t+=T(' Compared with OFDM ('+ofdm.T+' slots), airtime fell '+fmt((1-s.T/ofdm.T)*100,0)+'%.',' Em relação ao OFDM ('+ofdm.T+' slots), o airtime caiu '+fmt((1-s.T/ofdm.T)*100,0)+'%.');
+ if(g.mode!=='ofdm'&&s.T>ofdm.T)t+=T(' Here it did worse than OFDM ('+ofdm.T+' slots).',' Aqui ficou pior que o OFDM ('+ofdm.T+' slots).');
+ t+=T(' In this scenario the fastest technique is <b>'+best.m.label+'</b>.',' Neste cenário, a técnica mais rápida é <b>'+best.m.label+'</b>.');
+ $('#mx-c-read').innerHTML=t;
+ $('#mx-cmp').innerHTML='<thead><tr><th>'+T('Technique','Técnica')+'</th><th>Airtime</th><th style="width:34%">'+T('shorter is better','menor é melhor')+'</th><th>'+T('Useful','Úteis')+'</th></tr></thead><tbody>'+all.map(a=>'<tr class="'+(a.m.v===g.mode?'on':'')+'"><td>'+a.m.label+'</td><td class="num">'+a.s.T+'</td><td><div class="mx-bar" style="width:'+(a.s.T/maxT*100)+'%"></div></td><td class="num">'+fmt(a.s.eff*100,0)+'%</td></tr>').join('')+'</tbody>';
+ let lg='';for(let u=0;u<g.n;u++)lg+='<span><i style="background:'+UC[u]+'"></i>'+T('Client ','Cliente ')+(u+1)+'</span>';
+ lg+='<span><i style="background:'+rgba(UC[0],.25)+';outline:1px solid '+rgba(UC[0],.6)+'"></i>'+T('Padding','Preenchimento')+'</span>';
+ if(g.mode==='mumimo'||g.mode==='both')lg+='<span><i style="background:'+C.sound+'"></i>'+T('Channel sounding (NDP)','Sondagem do canal (NDP)')+'</span>';
+ $('#mx-cube-legend').innerHTML=lg;}
+function setView(v){g.auto=false;if(v==='3d'){g.ty=-0.75;g.tp=0.55;}else if(v==='top'){g.ty=0;g.tp=Math.PI/2;}else{g.ty=0;g.tp=0;}}
+function drawCube(now){const c=cvs['mx-cubecv'];if(!c||!g.sched)return;const{ctx,w,h}=c;ctx.clearRect(0,0,w,h);const sc=g.sched;const Tn=Math.max(sc.T,1);
+ if(g.ty!==null){g.yaw+=(g.ty-g.yaw)*0.12;g.pitch+=(g.tp-g.pitch)*0.12;if(Math.abs(g.ty-g.yaw)<0.002&&Math.abs(g.tp-g.pitch)<0.002){g.yaw=g.ty;g.pitch=g.tp;g.ty=null;}}
+ else if(g.auto){g.yaw=-0.75+Math.sin(now/3200)*0.35;}
+ const cyw=Math.cos(g.yaw),syw=Math.sin(g.yaw),cp=Math.cos(g.pitch),sp=Math.sin(g.pitch);const ox=Tn/2,oy=S/2,oz=F/2;
+ const diag=Math.sqrt(Tn*Tn+F*F+S*S);const k=Math.min(w*0.78,h*1.05)/diag;const vx=w/2,vy=h/2-6;
+ const R=(x,y,z)=>{x-=ox;y-=oy;z-=oz;const x1=x*cyw+z*syw,z1=-x*syw+z*cyw;return[vx+x1*k,vy-(y*cp-z1*sp)*k,y*sp+z1*cp];};
+ const RN=(x,y,z)=>{const z1=-x*syw+z*cyw;return y*sp+z1*cp;};
+ ctx.lineWidth=1;ctx.strokeStyle=C.grid;ctx.beginPath();
+ for(let t=0;t<=Tn;t++){const a=R(t,0,0),b=R(t,0,F);ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);}
+ for(let f=0;f<=F;f++){const a=R(0,0,f),b=R(Tn,0,f);ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);}ctx.stroke();
+ ctx.strokeStyle=rgba(C.muted,.55);ctx.setLineDash([3,4]);ctx.beginPath();
+ const E=[[0,0,0,Tn,0,0],[0,S,0,Tn,S,0],[0,0,F,Tn,0,F],[0,S,F,Tn,S,F],[0,0,0,0,S,0],[Tn,0,0,Tn,S,0],[0,0,F,0,S,F],[Tn,0,F,Tn,S,F],[0,0,0,0,0,F],[Tn,0,0,Tn,0,F],[0,S,0,0,S,F],[Tn,S,0,Tn,S,F]];
+ for(const e of E){const a=R(e[0],e[1],e[2]),b=R(e[3],e[4],e[5]);ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);}ctx.stroke();ctx.setLineDash([]);
+ const gap=0.08,sz=1-2*gap;
+ const faces=[{n:[1,0,0],v:[[1,0,0],[1,1,0],[1,1,1],[1,0,1]],sh:.82},{n:[-1,0,0],v:[[0,0,0],[0,0,1],[0,1,1],[0,1,0]],sh:.82},{n:[0,1,0],v:[[0,1,0],[0,1,1],[1,1,1],[1,1,0]],sh:1},{n:[0,-1,0],v:[[0,0,0],[1,0,0],[1,0,1],[0,0,1]],sh:.55},{n:[0,0,1],v:[[0,0,1],[1,0,1],[1,1,1],[0,1,1]],sh:.68},{n:[0,0,-1],v:[[0,0,0],[0,1,0],[1,1,0],[1,0,0]],sh:.68}];
+ const vis=faces.filter(fc=>RN(...fc.n)>0.001);
+ const list=sc.cells.map(cl=>({cl,d:R(cl.t+.5,cl.s+.5,cl.f+.5)[2]})).sort((a,b)=>a.d-b.d);
+ for(const{cl}of list){const x0=cl.t+gap,y0=cl.s+gap,z0=cl.f+gap;const col=cl.kind==='sound'?C.sound:UC[cl.u];
+  for(const fc of vis){ctx.beginPath();fc.v.forEach((v,i)=>{const p=R(x0+v[0]*sz,y0+v[1]*sz,z0+v[2]*sz);i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]);});ctx.closePath();
+   if(cl.kind==='pad'){ctx.fillStyle=rgba(col,.16,fc.sh);ctx.fill();ctx.strokeStyle=rgba(col,.55);ctx.lineWidth=.8;ctx.stroke();}
+   else{ctx.fillStyle=rgba(col,cl.kind==='sound'?.75:1,fc.sh);ctx.fill();ctx.strokeStyle=rgba(C.panel,.4);ctx.lineWidth=.6;ctx.stroke();}}}
+ ctx.font='11px "JetBrains Mono", monospace';ctx.fillStyle=C.dim;ctx.textAlign='center';
+ const lab=(txt,x,y,z)=>{const p=R(x,y,z);ctx.fillText(txt,Math.max(60,Math.min(w-60,p[0])),Math.max(12,Math.min(h-4,p[1])));};
+ const zf=RN(0,0,1)>0?F:0,xf=RN(1,0,0)>0?Tn:0;
+ lab(T('time (slots) →','tempo (slots) →'),Tn/2,-1.1,zf+(zf?1.4:-1.4));
+ if(g.pitch>0.15)lab(T('frequency (RUs) →','frequência (RUs) →'),xf+(xf?1.8:-1.8),-0.9,F/2);
+ if(g.pitch<1.35)lab(T('space (streams) ↑','espaço (fluxos) ↑'),xf?-0.8:Tn+0.8,S+0.6,zf);
+ if(Tn<=24){ctx.font='10px "JetBrains Mono", monospace';ctx.fillStyle=C.muted;for(let t=0;t<Tn;t++){const p=R(t+.5,-0.35,zf+(zf?0.5:-0.5));ctx.fillText(String(t+1),p[0],p[1]);}}}
+function cubeSegs(){seg($('#mx-seg-mode'),MODES,g.mode,v=>{g.mode=v;updCube();});
+ seg($('#mx-seg-traffic'),[{v:'small',label:()=>T('Small packets','Pacotes pequenos'),sub:()=>T('messaging, IoT','mensagens, IoT')},{v:'large',label:()=>T('Large packets','Pacotes grandes'),sub:()=>T('4K video, downloads','vídeo 4K, downloads')}],g.traffic,v=>{g.traffic=v;updCube();});}
+function setG(s){Object.assign(g,{mode:s.mode,traffic:s.traffic,n:s.n});cubeSegs();updCube();if(s.view)setView(s.view);}
+const CEXP=[
+ {t:['The old way','O jeito antigo'],set:{mode:'ofdm',traffic:'small',n:6,view:'3d'},txt:['OFDM with 6 clients sending short messages, as in Wi-Fi 5.','OFDM com 6 clientes enviando mensagens curtas, como no Wi-Fi 5.'],obs:['Each whole slot goes to a single client. Transparent cubes are padding: the channel is busy without carrying data. 6 slots, only 22% useful.','Cada slot inteiro vai para um só cliente. Os cubos transparentes são preenchimento: o canal fica ocupado sem levar dados. São 6 slots, com só 22% de aproveitamento.']},
+ {t:['Splitting frequency','Dividindo a frequência'],set:{mode:'ofdma',traffic:'small',n:6,view:'top'},txt:['The same 6 clients, now with OFDMA. Use the top view.','Os mesmos 6 clientes, agora com OFDMA. Use a vista de cima.'],obs:['In the same slot, each frequency column has a different colour: several clients in one transmission. Everything delivered in 2 slots, no padding.','No mesmo slot, cada coluna de frequência tem uma cor: vários clientes na mesma transmissão. Tudo entregue em 2 slots, sem preenchimento.']},
+ {t:['Large packets with OFDMA','Pacotes grandes no OFDMA'],set:{mode:'ofdma',traffic:'large',n:4,view:'3d'},txt:['4 clients watching 4K video. Each needs 18 RUs.','4 clientes assistindo a vídeo 4K. Cada um precisa de 18 RUs.'],obs:['Splitting frequency does not create a new channel: the 72 RUs still go through one channel, slot after slot. 8 slots.','Dividir a frequência não cria canal novo: os 72 RUs ainda passam por um único canal, um slot depois do outro. São 8 slots.']},
+ {t:['Splitting space','Dividindo o espaço'],set:{mode:'mumimo',traffic:'large',n:4,view:'front'},txt:['The same 4 video clients, now with MU-MIMO. Use the front view.','Os mesmos 4 clientes de vídeo, agora com MU-MIMO. Use a vista de frente.'],obs:['The 4 clients are stacked in spatial layers at the same instant. Even paying 1 sounding slot (grey), it finished in 3 slots instead of 8.','Os 4 clientes ficam empilhados em camadas espaciais, no mesmo instante. Mesmo pagando 1 slot de sondagem (cinza), terminou em 3 slots em vez de 8.']},
+ {t:['MU-MIMO with short messages','MU-MIMO com mensagens curtas'],set:{mode:'mumimo',traffic:'small',n:6,view:'front'},txt:['Back to the 6 messaging clients, but with MU-MIMO.','Volte aos 6 clientes de mensagens, mas com MU-MIMO.'],obs:['Now MU-MIMO wastes: each layer carries only 2 RUs of data and the rest is padding, plus sounding. In the table, OFDMA wins with small packets.','Agora o MU-MIMO desperdiça: cada camada leva só 2 RUs de dados e o resto é preenchimento, além da sondagem. Na tabela, o OFDMA vence com pacotes pequenos.']},
+ {t:['The best of both','O melhor dos dois'],set:{mode:'both',traffic:'large',n:8,view:'3d'},txt:['8 video clients with OFDMA and MU-MIMO together, as in Wi-Fi 6 and 7.','8 clientes de vídeo com OFDMA e MU-MIMO juntos, como no Wi-Fi 6 e 7.'],obs:['Two frequency slices × 4 spatial layers = 8 clients per transmission. The table shows 6 slots, against 16 for OFDM and for OFDMA alone.','Duas fatias de frequência × 4 camadas espaciais = 8 clientes por transmissão. A tabela mostra 6 slots, contra 16 do OFDM e do OFDMA sozinho.']}];
+const CTHINK=[
+ ['In an auditorium with 200 students sending messages, which technique helps most?','Num auditório com 200 alunos trocando mensagens, qual técnica ajuda mais?','OFDMA. Many small packets: splitting the channel into RUs serves several students in the same transmission, cutting everyone\'s wait.','OFDMA. São muitos pacotes pequenos: dividir o canal em RUs atende vários alunos na mesma transmissão, reduzindo a espera de cada um.'],
+ ['Why does MU-MIMO need channel sounding (grey cubes)?','Por que o MU-MIMO precisa da sondagem do canal (cubos cinza)?','To form beams the AP must know how the signal reaches each client. It sends a test frame (NDP) and clients reply with measurements. That costs airtime, which only pays off when there is a lot of data.','Para formar feixes, o AP precisa saber como o sinal chega a cada cliente. Ele envia um quadro de teste (NDP) e os clientes respondem com as medidas. Isso custa airtime, que só compensa com muitos dados.'],
+ ['If Wi-Fi 6 has both, which one does the AP use?','Se as duas técnicas existem no Wi-Fi 6, qual o AP usa?','The AP decides on every transmission, based on traffic and clients. It may use OFDMA, MU-MIMO or both together, as in the last experiment.','O AP decide a cada transmissão, conforme o tráfego e os clientes. Pode usar OFDMA, MU-MIMO ou as duas juntas, como no último experimento.']];
+
+/* ================= BEAMS ================= */
+const B={n:5,ant:4,gen:6,dir:'down',group:[],wait:[],last:[],tick:0,slotAt:0,drag:-1,
+ pos:[{x:.2,y:.34},{x:.36,y:.2},{x:.41,y:.23},{x:.64,y:.17},{x:.83,y:.4},{x:.1,y:.62},{x:.9,y:.68},{x:.55,y:.45}]};
+const AP={x:.5,y:.9};
+const PRESET={spread:[{x:.08,y:.5},{x:.3,y:.15},{x:.7,y:.15},{x:.92,y:.5},{x:.1,y:.7},{x:.9,y:.7},{x:.5,y:.3},{x:.3,y:.55}],
+ close:[{x:.2,y:.32},{x:.38,y:.22},{x:.82,y:.25},{x:.95,y:.6},{x:.1,y:.7},{x:.9,y:.7},{x:.5,y:.4},{x:.3,y:.55}]};
+function sepOf(){return{2:40,4:25,8:15}[B.ant];}
+function limOf(){if(B.gen===5&&B.dir==='up')return 1;return Math.min(B.ant,B.gen===5?4:8);}
+function angOf(u){const c=cvs['mx-beamcv'];const w=c?c.w:1,h=c?c.h:1;return Math.atan2((B.pos[u].x-AP.x)*w,-(B.pos[u].y-AP.y)*h)*180/Math.PI;}
+function regroup(advance){const N=B.n;for(let u=0;u<N;u++)if(B.last[u]===undefined)B.last[u]=0;
+ const order=[...Array(N).keys()].sort((a,b)=>B.last[a]-B.last[b]||a-b);const lim=limOf(),sep=sepOf();const grp=[];
+ for(const u of order){if(grp.length>=lim)break;if(grp.every(v=>Math.abs(angOf(u)-angOf(v))>=sep))grp.push(u);}
+ B.group=grp;B.wait=order.filter(u=>!grp.includes(u));if(advance){B.tick++;grp.forEach(u=>B.last[u]=B.tick);}updBeam();}
+function updBeam(){$('#mx-bn').value=B.n;$('#mx-bn-out').textContent=B.n;$('#mx-bm-now').textContent=B.group.length+' / '+B.n;$('#mx-bm-lim').textContent=limOf();$('#mx-bm-sep').textContent=sepOf()+'°';
+ const names=a=>a.map(u=>'C'+(u+1)).join(', ');let t;const up=B.dir==='up';
+ if(B.gen===5&&up)t=T('Wi-Fi 5 has no uplink MU-MIMO: clients transmit <b>one at a time</b>, taking turns. Now it is the turn of '+names(B.group)+'.','No Wi-Fi 5 não existe MU-MIMO no upload: os clientes transmitem <b>um por vez</b>, revezando o canal. Agora é a vez de '+names(B.group)+'.');
+ else{const many=B.group.length>1;t=T('Right now <b>'+names(B.group)+'</b>'+(many?(up?' send different streams to the AP':' receive different streams')+' on the same frequency at the same instant, each in its own beam.':(up?' transmits alone.':' is served alone.')),
+   'Neste instante, <b>'+names(B.group)+'</b>'+(many?(up?' enviam fluxos diferentes ao AP':' recebem fluxos diferentes')+' na mesma frequência e no mesmo instante, cada um no seu feixe.':(up?' transmite sozinho.':' recebe sozinho.')));}
+ const sep=sepOf();const why=B.wait.map(u=>{const near=B.group.find(v=>Math.abs(angOf(u)-angOf(v))<sep);
+  if(near!==undefined&&!(B.gen===5&&up)){const d=Math.round(Math.abs(angOf(u)-angOf(near)));return T('C'+(u+1)+' waits: only '+d+'° from C'+(near+1)+' (minimum '+sep+'°), the beams would overlap.','C'+(u+1)+' aguarda: está a só '+d+'° de C'+(near+1)+' (o mínimo é '+sep+'°), os feixes se sobreporiam.');}
+  return T('C'+(u+1)+' waits for the next slot: the AP is at its limit of '+limOf()+' simultaneous client'+(limOf()>1?'s':'')+'.','C'+(u+1)+' aguarda o próximo slot: o AP já atinge o limite de '+limOf()+' cliente'+(limOf()>1?'s':'')+' ao mesmo tempo.');});
+ $('#mx-b-read').innerHTML=t+(why.length?'<br>'+why.join('<br>'):'')+'<br><span style="color:var(--muted)">'+T('Every 2 seconds the AP moves to the next slot and gives priority to whoever waited.','A cada 2 segundos o AP passa para o próximo slot e dá prioridade a quem esperou.')+'</span>';}
+function drawBeam(now){const c=cvs['mx-beamcv'];if(!c)return;const{ctx,w,h}=c;ctx.clearRect(0,0,w,h);
+ if(now-B.slotAt>2000&&B.drag<0){B.slotAt=now;regroup(true);}
+ ctx.strokeStyle=C.grid;ctx.lineWidth=1;ctx.beginPath();const step=Math.max(32,w/14);for(let x=step/2;x<w;x+=step){ctx.moveTo(x,0);ctx.lineTo(x,h);}for(let y=step/2;y<h;y+=step){ctx.moveTo(0,y);ctx.lineTo(w,y);}ctx.stroke();
+ const ax=AP.x*w,ay=AP.y*h;const sep=sepOf();
+ for(const u of B.group){const ux=B.pos[u].x*w,uy=B.pos[u].y*h;const ang=Math.atan2(uy-ay,ux-ax);const dist=Math.hypot(ux-ax,uy-ay)*1.12;const hw=(B.gen===5&&B.dir==='up')?0.9:sep*0.42*Math.PI/180;
+  const gr=ctx.createLinearGradient(ax,ay,ax+Math.cos(ang)*dist,ay+Math.sin(ang)*dist);gr.addColorStop(0,rgba(UC[u],.5));gr.addColorStop(1,rgba(UC[u],.04));
+  ctx.fillStyle=gr;ctx.beginPath();ctx.moveTo(ax,ay);const p1=[ax+Math.cos(ang-hw)*dist,ay+Math.sin(ang-hw)*dist],p2=[ax+Math.cos(ang+hw)*dist,ay+Math.sin(ang+hw)*dist],tip=[ax+Math.cos(ang)*dist*1.08,ay+Math.sin(ang)*dist*1.08];
+  ctx.lineTo(p1[0],p1[1]);ctx.quadraticCurveTo(tip[0],tip[1],p2[0],p2[1]);ctx.closePath();ctx.fill();
+  for(let i=0;i<4;i++){let ph=((reduce?0:now/1100)+i/4)%1;if(B.dir==='up')ph=1-ph;ctx.fillStyle=UC[u];ctx.beginPath();ctx.arc(ax+(ux-ax)*ph,ay+(uy-ay)*ph,3.2,0,7);ctx.fill();}}
+ ctx.fillStyle=C.fg;ctx.strokeStyle=C.fg;const apw=Math.max(54,B.ant*9);ctx.fillRect(ax-apw/2,ay-8,apw,16);
+ ctx.lineWidth=2;for(let i=0;i<B.ant;i++){const x=ax-apw/2+apw*(i+.5)/B.ant;ctx.beginPath();ctx.moveTo(x,ay-8);ctx.lineTo(x,ay-17);ctx.stroke();}
+ ctx.fillStyle=C.dim;ctx.font='11px "JetBrains Mono", monospace';ctx.textAlign='center';ctx.fillText(T('access point ','ponto de acesso ')+B.ant+'×'+B.ant,ax,Math.min(h-3,ay+22));
+ for(let u=0;u<B.n;u++){const x=B.pos[u].x*w,y=B.pos[u].y*h;const on=B.group.includes(u);
+  ctx.beginPath();ctx.arc(x,y,14,0,7);if(on){ctx.fillStyle=UC[u];ctx.fill();}else{ctx.fillStyle=C.panel;ctx.fill();ctx.setLineDash([3,3]);ctx.strokeStyle=C.dim;ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([]);}
+  ctx.fillStyle=on?'#0c1422':C.dim;ctx.font='600 11px "JetBrains Mono", monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('C'+(u+1),x,y+.5);ctx.textBaseline='alphabetic';
+  if(!on){ctx.font='10px "JetBrains Mono", monospace';ctx.fillText(T('waits','aguarda'),x,y+26);}}}
+function beamSegs(){
+ seg($('#mx-seg-gen'),[{v:5,label:'Wi-Fi 5',sub:'802.11ac'},{v:6,label:'Wi-Fi 6',sub:'802.11ax'}],B.gen,v=>{B.gen=v;regroup(false);});
+ seg($('#mx-seg-dir'),[{v:'down',label:'Download',sub:()=>T('AP to clients','AP para clientes')},{v:'up',label:'Upload',sub:()=>T('clients to AP','clientes para AP')}],B.dir,v=>{B.dir=v;regroup(false);});
+ seg($('#mx-seg-ant'),[{v:2,label:'2×2'},{v:4,label:'4×4'},{v:8,label:'8×8'}],B.ant,v=>{B.ant=v;regroup(false);});}
+function setB(s){Object.assign(B,{gen:s.gen,dir:s.dir,ant:s.ant,n:s.n});B.pos=PRESET[s.preset].map(p=>({...p}));B.last=[];beamSegs();regroup(true);B.slotAt=performance.now();}
+const BEXP=[
+ {t:['Clients well spread out','Clientes bem espalhados'],set:{preset:'spread',n:4,ant:4,gen:6,dir:'down'},txt:['4×4 AP and 4 clients in clearly different directions.','AP 4×4 e 4 clientes em direções bem diferentes.'],obs:['All 4 receive at once, each in its own coloured beam, all on the same frequency. Nobody waits.','Os 4 recebem ao mesmo tempo, cada um no seu feixe colorido, todos na mesma frequência. Ninguém espera.']},
+ {t:['Two clients in the same direction','Dois clientes na mesma direção'],set:{preset:'close',n:4,ant:4,gen:6,dir:'down'},txt:['C1 and C2 are now almost aligned with the AP.','C1 e C2 agora estão quase alinhados com o AP.'],obs:['One of them turns dashed (waiting): the beams would overlap. Each slot the AP alternates between them. The live reading explains why.','Um deles fica tracejado (aguardando): os feixes se sobreporiam. A cada slot o AP alterna entre os dois. A leitura ao vivo explica o motivo.']},
+ {t:['More antennas, narrower beams','Mais antenas, feixes mais finos'],set:{preset:'close',n:4,ant:8,gen:6,dir:'down'},txt:['Same positions, but the AP now has 8 antennas.','Mesma posição, mas agora o AP tem 8 antenas.'],obs:['With 8 antennas the beams narrow (15° minimum) and C1 and C2 are served together.','Com 8 antenas os feixes ficam mais estreitos (mínimo de 15°) e C1 e C2 passam a ser atendidos juntos.']},
+ {t:['Wi-Fi 5 uplink','Wi-Fi 5 no upload'],set:{preset:'spread',n:4,ant:4,gen:5,dir:'up'},txt:['Same spread clients, but Wi-Fi 5 sending data to the AP.','Mesmos clientes espalhados, mas Wi-Fi 5 enviando dados ao AP.'],obs:['Only one client transmits at a time: Wi-Fi 5 has no uplink MU-MIMO. Switch to Wi-Fi 6 and watch them all send together.','Só um cliente transmite por vez, pois o Wi-Fi 5 não tem MU-MIMO no upload. Troque para Wi-Fi 6 e veja todos enviando juntos.']}];
+const BTHINK=[
+ ['Can two students sitting side by side, in the same direction from the AP, receive together by MU-MIMO?','Dois alunos lado a lado, na mesma direção do AP, recebem juntos por MU-MIMO?','Usually not. The beams would overlap, so the AP alternates between them in different slots. An AP with more antennas (narrower beams) tolerates closer clients.','Em geral não. Os feixes se sobreporiam, então o AP alterna entre eles em slots diferentes. Um AP com mais antenas (feixes mais estreitos) tolera clientes mais próximos.'],
+ ['What changed in MU-MIMO from Wi-Fi 5 to Wi-Fi 6?','O que mudou no MU-MIMO do Wi-Fi 5 para o Wi-Fi 6?','In Wi-Fi 5 MU-MIMO works only on the downlink and for up to 4 users. In Wi-Fi 6 it also works on the uplink and for up to 8 users.','No Wi-Fi 5 o MU-MIMO funciona só no download e para até 4 usuários. No Wi-Fi 6 funciona também no upload e para até 8 usuários.']];
+
+/* ================= QUIZ ================= */
+const QZ=[
+ {q:['How many bits does each 256-QAM symbol carry?','Quantos bits cada símbolo carrega no 256-QAM?'],o:[['4 bits','4 bits'],['6 bits','6 bits'],['8 bits','8 bits'],['256 bits','256 bits']],a:2,e:['log₂(256) = 8. It is the top modulation of Wi-Fi 5.','log₂(256) = 8. É a modulação máxima do Wi-Fi 5.']},
+ {q:['A laptop moves away from the router and SNR drops a lot. What does the device do?','Um notebook se afasta do roteador e a SNR cai bastante. O que o equipamento faz?'],o:[['Raises the modulation to compensate','Aumenta a modulação para compensar'],['Switches to a modulation with fewer points','Troca para uma modulação com menos pontos'],['Turns off OFDMA','Desliga o OFDMA'],['Moves from 2.4 GHz to 6 GHz by itself','Muda sozinho de 2,4 GHz para 6 GHz']],a:1,e:['With low SNR dense points get confused; the device lowers the MCS and speed drops, but the link holds.','Com pouca SNR os pontos densos se confundem; o equipamento reduz o MCS e a velocidade cai, mas a conexão se mantém.']},
+ {q:['What does OFDMA split the channel into?','O OFDMA divide o canal em quê?'],o:[['Spatial beams','Feixes espaciais'],['Frequency resource units (RUs)','Unidades de recurso (RUs) de frequência'],['Longer time slots','Intervalos de tempo maiores'],['160 MHz channels','Canais de 160 MHz']],a:1,e:['OFDMA groups subcarriers into RUs and gives each RU to one client in the same transmission.','O OFDMA agrupa subportadoras em RUs e entrega cada RU a um cliente na mesma transmissão.']},
+ {q:['Which scenario makes the best use of MU-MIMO?','Qual cenário aproveita melhor o MU-MIMO?'],o:[['IoT sensors sending a few bytes','Sensores IoT enviando poucos bytes'],['Short messages in an auditorium','Mensagens curtas em um auditório'],['Four TVs streaming 4K in different rooms','Quatro TVs transmitindo vídeo 4K em cômodos diferentes'],['A single phone sitting still','Um único celular parado']],a:2,e:['MU-MIMO pays off with large flows and clients in different directions. For many small packets OFDMA is better.','O MU-MIMO compensa com fluxos grandes e clientes em direções diferentes. Para muitos pacotes pequenos, o OFDMA é melhor.']},
+ {q:['Why can\'t two clients in the same direction receive together by MU-MIMO?','Por que dois clientes na mesma direção não recebem juntos por MU-MIMO?'],o:[['They use different channels','Porque usam canais diferentes'],['The beams would overlap and interfere','Porque os feixes se sobreporiam e haveria interferência'],['Wi-Fi 6 does not allow it','Porque o Wi-Fi 6 não permite'],['They are too far away','Porque estão longe demais']],a:1,e:['MU-MIMO separates clients in space. Without angular separation the beams mix.','O MU-MIMO separa clientes pelo espaço. Sem separação angular, os feixes se misturam.']},
+ {q:['Which statement about Wi-Fi 6 is correct?','Qual afirmação sobre o Wi-Fi 6 está correta?'],o:[['It has only OFDMA','Só tem OFDMA'],['It has MU-MIMO only on the downlink','Só tem MU-MIMO no download'],['It can combine OFDMA and MU-MIMO, and has uplink MU-MIMO','Pode combinar OFDMA e MU-MIMO, e tem MU-MIMO no upload'],['It uses at most 64-QAM','Usa no máximo 64-QAM']],a:2,e:['Wi-Fi 6 brought OFDMA, extended MU-MIMO to the uplink and allows combining both, with up to 1024-QAM.','O Wi-Fi 6 trouxe o OFDMA, estendeu o MU-MIMO ao upload e permite combinar as duas técnicas, com até 1024-QAM.']}];
+const QA={};
+function quiz(reset){if(reset)for(const k in QA)delete QA[k];const box=$('#mx-quizbox');box.innerHTML='';
+ const score=()=>{const n=Object.keys(QA).length,ok=Object.keys(QA).filter(k=>QA[k]===QZ[k].a).length;$('#mx-score').textContent=T(ok+' of '+QZ.length+' correct',ok+' de '+QZ.length+' corretas')+(n===QZ.length?T(' · done',' · concluído'):'');};
+ QZ.forEach((it,i)=>{const d=document.createElement('div');d.className='mx-qq';d.innerHTML='<h5>'+(i+1)+'. '+T(it.q[0],it.q[1])+'</h5><div class="mx-opts"></div><p class="mx-fb" hidden></p>';
+  const opts=d.querySelector('.mx-opts'),fb=d.querySelector('.mx-fb');
+  const show=j=>{[...opts.children].forEach((x,k)=>{if(k===it.a)x.classList.add('right');if(k===j&&j!==it.a)x.classList.add('wrong');});fb.hidden=false;fb.innerHTML=(j===it.a?'<b style="color:var(--green)">'+T('Correct.','Correto.')+'</b> ':'<b style="color:var(--red)">'+T('Not quite.','Não é essa.')+'</b> ')+T(it.e[0],it.e[1]);};
+  it.o.forEach((t,j)=>{const b=document.createElement('button');b.type='button';b.textContent=T(t[0],t[1]);b.addEventListener('click',()=>{if(QA[i]!==undefined)return;QA[i]=j;show(j);score();});opts.appendChild(b);});
+  if(QA[i]!==undefined)show(QA[i]);box.appendChild(d);});score();}
+
+/* ================= lifecycle ================= */
+function renderText(){orderSeg();cubeSegs();beamSegs();updQ();symInfo();updCube();updBeam();
+ buildExps('#mx-exps-qam',QEXP,setQ,'#mx-const');buildExps('#mx-exps-cube',CEXP,setG,'#mx-cubecv');buildExps('#mx-exps-beam',BEXP,setB,'#mx-beamcv');
+ buildThink('#mx-think-qam',QTHINK);buildThink('#mx-think-cube',CTHINK);buildThink('#mx-think-beam',BTHINK);quiz(false);
+ const pb=$('#mx-pause');if(pb)pb.textContent=q.paused?T('Resume','Continuar'):T('Pause','Pausar');}
+function loop(now){if(visible()){if(!q.paused&&now-q.last>1200)pushSym((Math.random()*q.pts.length)|0);if(!reduce)q.reveal=Math.min(1,(now-q.last)/650);
+ drawConst();drawWave();drawCube(now);drawBeam(now);}requestAnimationFrame(loop);}
+function init(){if(started)return;started=true;readColors();fitAll();
+ new ResizeObserver(()=>{if(visible())fitAll();}).observe(document.getElementById('tab-mod'));
+ build();simulate();for(let i=0;i<4;i++)pushSym((Math.random()*q.pts.length)|0);q.reveal=1;
+ $('#mx-snr').addEventListener('input',e=>setQ({snr:+e.target.value}));
+ $('#mx-pause').addEventListener('click',e=>{e.preventDefault();q.paused=!q.paused;e.currentTarget.textContent=q.paused?T('Resume','Continuar'):T('Pause','Pausar');});
+ $('#mx-const').addEventListener('pointerdown',e=>{const c=cvs['mx-const'];if(!c)return;const r=c.cv.getBoundingClientRect();const k=(Math.min(c.w,c.h)/2-22)/1.55;pushSym(decide((e.clientX-r.left-c.w/2)/k,-(e.clientY-r.top-c.h/2)/k));});
+ $('#mx-n').addEventListener('input',e=>{g.n=+e.target.value;updCube();});
+ document.querySelectorAll('[data-mxview]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.mxview)));
+ document.querySelectorAll('[data-mxgo]').forEach(b=>b.addEventListener('click',()=>{const el=document.getElementById(b.dataset.mxgo);if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});}));
+ const cc=$('#mx-cubecv');
+ cc.addEventListener('pointerdown',e=>{g.drag={x:e.clientX,y:e.clientY};g.auto=false;g.ty=null;cc.setPointerCapture(e.pointerId);});
+ cc.addEventListener('pointermove',e=>{if(!g.drag)return;g.yaw+=(e.clientX-g.drag.x)*0.01;g.pitch=Math.max(0,Math.min(Math.PI/2,g.pitch+(e.clientY-g.drag.y)*0.01));g.drag={x:e.clientX,y:e.clientY};});
+ const endDrag=()=>{g.drag=null;};cc.addEventListener('pointerup',endDrag);cc.addEventListener('pointercancel',endDrag);
+ $('#mx-bn').addEventListener('input',e=>{B.n=+e.target.value;regroup(false);});
+ const bc=$('#mx-beamcv');const bpos=e=>{const r=bc.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width,y:(e.clientY-r.top)/r.height};};
+ bc.addEventListener('pointerdown',e=>{const p=bpos(e);const c=cvs['mx-beamcv'];if(!c)return;let best=-1,bd=1e9;for(let u=0;u<B.n;u++){const d=Math.hypot((B.pos[u].x-p.x)*c.w,(B.pos[u].y-p.y)*c.h);if(d<bd){bd=d;best=u;}}if(bd<28){B.drag=best;bc.setPointerCapture(e.pointerId);}});
+ bc.addEventListener('pointermove',e=>{if(B.drag<0)return;const p=bpos(e);B.pos[B.drag]={x:Math.max(.04,Math.min(.96,p.x)),y:Math.max(.05,Math.min(.8,p.y))};regroup(false);});
+ const bEnd=()=>{if(B.drag>=0){B.drag=-1;regroup(false);}};bc.addEventListener('pointerup',bEnd);bc.addEventListener('pointercancel',bEnd);
+ $('#mx-quiz-reset').addEventListener('click',()=>quiz(true));
+ g.sched=schedule(g.mode,g.traffic,g.n);regroup(true);renderText();requestAnimationFrame(loop);}
+return{
+ show(){init();requestAnimationFrame(()=>{fitAll();regroup(false);});},
+ onLang(){if(started)renderText();},
+ openWithSnr(snr){const btn=document.querySelector('.tab-btn[onclick*="\'mod\'"]');if(btn)btn.click();init();setTimeout(()=>{setQ({snr});const el=document.getElementById('mx-qam');if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});},60);}
+};
+})();
 </script>
 
 <div class="about-overlay" id="about-overlay" onclick="if(event.target===this)toggleAbout()">
