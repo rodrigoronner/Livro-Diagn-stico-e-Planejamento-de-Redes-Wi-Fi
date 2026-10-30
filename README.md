@@ -12,7 +12,7 @@ O arquivo `campo-wifi.html` é uma aplicação web completa e autossuficiente. N
 Abrir campo-wifi.html diretamente no navegador
 ```
 
-A interface é organizada em **nove abas**, acessíveis pelo menu superior, com rolagem horizontal.
+A interface é organizada em **dez abas**, acessíveis pelo menu superior, com rolagem horizontal.
 
 ---
 
@@ -171,6 +171,25 @@ Registro estruturado de medições durante o trabalho de campo. Os dados são sa
 
 Campos disponíveis: local ou ponto de medição, RSSI (dBm), SNR (dB), canal e faixa, e observação livre. Cada entrada recebe automaticamente um carimbo de hora e uma classificação de qualidade com base na tabela de RSSI do livro. As anotações são exibidas em uma tabela, com exclusão individual. O botão **Exportar .txt** gera um arquivo de texto estruturado com todas as medições, pronto para inclusão no relatório de campo.
 
+### ◬ Modulações (Explorando as Modulações)
+
+Guia didático interativo sobre as técnicas que colocam mais dados no ar, pensado para uso em sala de aula e para estudo individual. Bilíngue (EN/PT), acompanha o seletor de idioma da ferramenta. Está organizado em seis etapas, com tempo sugerido para cada uma:
+
+| Etapa | Conteúdo | Simulador |
+|---|---|---|
+| 1 · Ideias de base | Portadora, modulação, canal compartilhado e airtime, com a analogia da estrada e dos caminhões | Não se aplica |
+| 2 · Modulação QAM | Leitura da constelação, log₂(N) bits por símbolo, ruído, SNR e código Gray | Constelação de BPSK a 4096-QAM com ruído simulado (20.000 símbolos), forma de onda da portadora e símbolo clicável |
+| 3 · OFDMA × MU-MIMO | Eixos frequência, tempo e espaço; RUs de 26 subportadoras; sondagem do canal (NDP) | Cubo 3D de recursos com OFDM, OFDMA, MU-MIMO e OFDMA + MU-MIMO, pacotes pequenos ou grandes, de 1 a 8 clientes, com vistas de cima e de frente |
+| 4 · Feixes no espaço | Beamforming, separação angular, número de antenas, Wi-Fi 5 × Wi-Fi 6 no upload | Mapa da sala com clientes arrastáveis e feixes animados |
+| 5 · Fechamento | Quadro comparativo OFDMA × MU-MIMO, glossário com 12 termos e quiz de 6 questões | Não se aplica |
+| 6 · A jornada do sinal em 3D | Síntese de todo o processo: mensagem → bits (ASCII) → símbolos 64-QAM → subportadoras OFDM → portadora na antena → onda eletromagnética (campos E e B) atravessando duas paredes, com reflexão e ruído → recepção, decisão e remontagem da mensagem → ACK | Animação 3D em 8 cenas, com tour automático, controle de velocidade, câmera orbital, texto explicativo e números do cenário em cada cena |
+
+Cada simulador tem um quadro de **leitura ao vivo** que descreve, em linguagem simples, o que está na tela. São 15 **experimentos guiados** com o botão *Montar este cenário* (o texto "O que observar" aparece só depois do clique, para que o aluno possa prever o resultado) e perguntas **Pare e pense** com resposta oculta.
+
+**Integração com o restante da ferramenta:** os limiares de SNR e as taxas máximas por modulação vêm da tabela `MCS_DATA` (aba Referências), de modo que a constelação e a tabela SNR × MCS usam sempre os mesmos números. O 4096-QAM (Wi-Fi 7, MCS 12 e 13) não está na tabela e usa valores estimados, sinalizados com "≈". Na etapa 6, os números do cenário (25 m, 2,437 GHz, duas paredes de alvenaria de 8 dB, celular com 16 dBm, AP com 4 dBi e ruído de −91 dBm) são calculados com as mesmas fórmulas das Calculadoras (Friis e orçamento de enlace): perda total ≈ 84,2 dB, RSSI ≈ −64,1 dBm e SNR ≈ 26,9 dB, o que leva ao MCS 5 (64-QAM 2/3) da tabela. A animação usa a biblioteca Three.js (r128), carregada sob demanda do cdnjs apenas quando a aba Modulações é aberta; sem conexão, as demais etapas continuam funcionando normalmente.
+
+O card **SNR e MCS Estimado** (Calculadoras) ganhou o botão *Ver esta SNR na constelação QAM*, que abre esta aba com a SNR calculada já aplicada.
+
 ---
 
 ## Precisão dos cálculos
@@ -189,7 +208,7 @@ Todos os valores numéricos foram verificados contra os exemplos do livro:
 
 Testado nos navegadores modernos baseados em Chromium (Chrome, Edge, Brave) e em Firefox. As abas Site Survey e Posição do AP utilizam a Canvas API do HTML5, disponível em todos os navegadores modernos. Funciona em dispositivos móveis — interface adaptada a telas estreitas, com rolagem horizontal nas tabelas. Para uso em campo, recomenda-se salvar o arquivo no dispositivo para acesso offline.
 
-As abas com canvas (Site Survey e Posição do AP) são inicializadas sob demanda, apenas quando acessadas pela primeira vez, para não impactar o desempenho das demais funcionalidades.
+As abas com canvas (Site Survey, Posição do AP e Modulações) são inicializadas sob demanda, apenas quando acessadas pela primeira vez, para não impactar o desempenho das demais funcionalidades.
 
 ---
 
