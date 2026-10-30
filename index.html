@@ -371,6 +371,32 @@ select option{background:var(--surf2)}
 .mx-fb{font-size:.78rem;color:var(--dim)}
 .mx-score{font-family:var(--mono);font-size:.78rem;color:var(--accent)}
 #mx-quiz-reset{width:fit-content}
+/* 3D journey */
+.mx-3d-card{display:flex;flex-direction:column;gap:.8rem}
+.mx-3d-steps{display:flex;flex-wrap:wrap;gap:.35rem}
+.mx-3d-steps button{font-family:var(--sans);font-size:.7rem;font-weight:600;color:var(--dim);background:var(--surf2);border:1px solid var(--border2);border-radius:999px;padding:.35rem .7rem;cursor:pointer}
+.mx-3d-steps button .i{font-family:var(--mono);color:var(--muted);margin-right:.35rem}
+.mx-3d-steps button.done{color:var(--text)}
+.mx-3d-steps button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.mx-3d-steps button.on .i{color:#fff}
+.mx-3d-stage{position:relative;border-radius:10px;overflow:hidden;background:var(--bg);border:1px solid var(--border)}
+.mx-3d-stage canvas{display:block;width:100%;cursor:grab;touch-action:none}
+.mx-3d-stage canvas:active{cursor:grabbing}
+.mx-3d-cap{position:absolute;left:.8rem;top:.7rem;right:.8rem;pointer-events:none;font-size:.95rem;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,.8)}
+.mx-3d-cap small{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.mx-3d-msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:1.5rem;font-size:.82rem;color:var(--dim)}
+.mx-3d-bar{height:4px;background:var(--surf3);border-radius:2px;overflow:hidden}
+.mx-3d-bar div{height:100%;width:0;background:var(--accent)}
+.mx-3d-ctrl{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center}
+.mx-3d-ctrl .ex-btn{margin-top:0}
+.mx-3d-play{color:var(--accent);border-color:var(--accent)}
+.mx-3d-sp{display:inline-flex;align-items:center;gap:.4rem}
+.mx-3d-sp .mx-seg button{padding:.3rem .5rem}
+.mx-3d-auto{display:inline-flex;align-items:center;gap:.35rem;font-size:.74rem;color:var(--dim);cursor:pointer}
+.mx-3d-auto input{accent-color:var(--accent)}
+#mx-3d-links{margin-top:.3rem}
+#mx-3d-links .ex-btn{margin-top:0;font-size:.68rem}
+
 </style>
 </head>
 <body>
@@ -1307,6 +1333,7 @@ select option{background:var(--surf2)}
   <button type="button" data-mxgo="mx-cube"><span class="mx-s" data-pt="Etapa 3 · 15 min">Step 3 · 15 min</span><strong>OFDMA × MU-MIMO</strong><span class="mx-d" data-pt="6 experimentos com o cubo de recursos">6 resource-cube experiments</span></button>
   <button type="button" data-mxgo="mx-beam"><span class="mx-s" data-pt="Etapa 4 · 10 min">Step 4 · 10 min</span><strong data-pt="Feixes no espaço">Beams in space</strong><span class="mx-d" data-pt="4 experimentos na sala virtual">4 virtual-room experiments</span></button>
   <button type="button" data-mxgo="mx-quiz"><span class="mx-s" data-pt="Etapa 5 · 10 min">Step 5 · 10 min</span><strong data-pt="Verifique o que aprendeu">Check what you learned</strong><span class="mx-d" data-pt="Resumo, glossário e quiz">Summary, glossary and quiz</span></button>
+  <button type="button" data-mxgo="mx-3d"><span class="mx-s" data-pt="Etapa 6 · 10 min">Step 6 · 10 min</span><strong data-pt="A jornada do sinal em 3D">The signal journey in 3D</strong><span class="mx-d" data-pt="Do celular ao roteador, passo a passo">From phone to router, step by step</span></button>
 </div>
 
 <!-- STEP 1 -->
@@ -1465,6 +1492,34 @@ select option{background:var(--surf2)}
   <div class="mx-quiz" id="mx-quizbox"></div>
   <button type="button" class="ex-btn" id="mx-quiz-reset" data-pt="Recomeçar o quiz">Restart quiz</button>
 </div>
+
+<!-- STEP 6: 3D signal journey -->
+<div class="mx-part" id="mx-3d">
+  <div class="mx-head"><span class="mx-n" data-pt="Etapa 6 · Síntese">Step 6 · Putting it together</span><h3 class="mx-h" data-pt="A jornada do sinal em 3D: do celular ao roteador">The signal's journey in 3D: from phone to router</h3></div>
+  <p class="mx-lede" style="margin:0" data-pt="Tudo o que foi visto nas etapas anteriores, em sequência: a mensagem vira bits, os bits viram símbolos QAM, os símbolos ocupam subportadoras, a portadora sai pela antena como onda eletromagnética, atravessa paredes, chega fraca ao roteador e é decodificada. Os números vêm das mesmas fórmulas das Calculadoras.">Everything from the previous steps, in sequence: the message becomes bits, bits become QAM symbols, symbols fill subcarriers, the carrier leaves the antenna as an electromagnetic wave, crosses walls, reaches the router weakened and is decoded. The numbers come from the same formulas as the Calculators.</p>
+  <div class="card mx-3d-card">
+    <div class="mx-3d-steps" id="mx-3d-steps"></div>
+    <div class="mx-3d-stage" id="mx-3d-stage">
+      <canvas id="mx-3dcv" aria-label="3D animation of a Wi-Fi transmission"></canvas>
+      <div class="mx-3d-cap" id="mx-3d-cap"></div>
+      <div class="mx-3d-msg" id="mx-3d-msg" data-pt="Carregando a cena 3D...">Loading the 3D scene...</div>
+    </div>
+    <div class="mx-3d-bar"><div id="mx-3d-prog"></div></div>
+    <div class="mx-3d-ctrl">
+      <button type="button" class="ex-btn" id="mx-3d-prev" data-pt="◀ Anterior">◀ Previous</button>
+      <button type="button" class="ex-btn mx-3d-play" id="mx-3d-play">❚❚ Pause</button>
+      <button type="button" class="ex-btn" id="mx-3d-next" data-pt="Próxima ▶">Next ▶</button>
+      <button type="button" class="ex-btn" id="mx-3d-replay" data-pt="↺ Repetir etapa">↺ Replay step</button>
+      <span class="mx-3d-sp"><span class="mx-k" data-pt="Velocidade">Speed</span><span class="mx-seg" id="mx-3d-speed"></span></span>
+      <label class="mx-3d-auto"><input type="checkbox" id="mx-3d-auto" checked> <span data-pt="Tour automático">Auto tour</span></label>
+    </div>
+    <div class="mx-grid2" style="gap:1rem">
+      <div class="mx-reading"><span class="mx-k" id="mx-3d-kicker"></span><p id="mx-3d-text"></p><div id="mx-3d-links" class="mx-views"></div></div>
+      <div><table class="mx-cmp" id="mx-3d-nums"></table></div>
+    </div>
+    <p class="mx-how" data-pt="Arraste a cena para girar a câmera; ela volta ao enquadramento ao mudar de etapa. Escala visual fora de proporção: na realidade λ = 12,3 cm e a onda percorre os 25 m em 83 ns.">Drag the scene to orbit the camera; it returns to framing when the step changes. Visual scale is not to proportion: in reality λ = 12.3 cm and the wave covers the 25 m in 83 ns.</p>
+  </div>
+</div>
 </section>
 
 </main>
@@ -1583,7 +1638,7 @@ function showTab(name){
   if(name==='appos'){
     if(!apposAnimId){initAppos();}
   }
-  if(name==='mod'&&window.MODX){MODX.show();}
+  if(name==='mod'&&window.MODX){MODX.show();if(window.MODX3D)MODX3D.init();}
 }
 
 // ══════════════════════════════════════════════
@@ -1766,6 +1821,7 @@ const LANG = {
     if(typeof symptomTool === 'function') { var s=document.getElementById('sym_sel'); if(s) { s.selectedIndex=0; document.getElementById('sym_result').style.display='none'; }}
     
     if(window.MODX) MODX.onLang();
+    if(window.MODX3D) MODX3D.onLang();
     localStorage.setItem('wifi-lang', code);
   }
 };
@@ -2811,6 +2867,267 @@ return{
  onLang(){if(started)renderText();},
  openWithSnr(snr){const btn=document.querySelector('.tab-btn[onclick*="\'mod\'"]');if(btn)btn.click();init();setTimeout(()=>{setQ({snr});const el=document.getElementById('mx-qam');if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});},60);}
 };
+})();
+
+// ══════════════════════════════════════════════
+// 3D SIGNAL JOURNEY (Three.js r128, lazy-loaded)
+// ══════════════════════════════════════════════
+window.MODX3D=(function(){
+const T=(en,pt)=>(typeof LANG!=='undefined'&&LANG.current==='pt')?pt:en;
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt=(v,d=1)=>{const s=v.toFixed(d);return T(s,s.replace('.',','));};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const seg=(p,a,b)=>clamp((p-a)/(b-a),0,1);
+const ease=u=>u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+const lerp=(a,b,u)=>a+(b-a)*u;
+
+/* ---- scenario (same formulas as the Calculators) ---- */
+const LB={f:2437,d:25,ptx:16,gtx:0,grx:4,walls:2,wallDb:8,nf:-91};
+LB.fspl=20*Math.log10(LB.d)+20*Math.log10(LB.f)-27.55;
+LB.path=LB.fspl+LB.walls*LB.wallDb;
+LB.rssi=LB.ptx+LB.gtx+LB.grx-LB.path;
+LB.snr=LB.rssi-LB.nf;
+LB.lambda=299792458/(LB.f*1e6)*100; // cm
+LB.tof=LB.d/299792458*1e9; // ns
+(function(){const rows=(typeof MCS_DATA!=='undefined'?MCS_DATA:[]).filter(r=>r.snr<=LB.snr);LB.mcs=rows.length?rows[rows.length-1]:{mcs:5,mod:'64-QAM',code:'2/3',mbps:57.8};})();
+
+/* ---- message → bits → 64-QAM symbols ---- */
+const MSG='Oi!';
+const BYTES=[...MSG].map(c=>c.charCodeAt(0).toString(2).padStart(8,'0'));
+const BITS=BYTES.join('').split('').map(Number);
+const SYMS=[];for(let k=0;k<4;k++){const b=BITS.slice(6*k,6*k+6);const gi=parseInt(b.slice(0,3).join(''),2),gq=parseInt(b.slice(3).join(''),2);
+ const dec=g=>{let x=g;x^=x>>1;x^=x>>2;return x;};SYMS.push({bits:b.join(''),I:2*dec(gi)-7,Q:2*dec(gq)-7});}
+
+/* ---- stages ---- */
+const ST=[
+ {dur:7,cam:{t:[0,1,0],d:18,y:0,p:.42},k:['Overview','Visão geral'],
+  txt:['We follow the message "Oi!" from a phone to the router, 25 m away, with two masonry walls in between. Use the buttons or the auto tour; drag the scene to orbit.','Vamos acompanhar a mensagem "Oi!" saindo de um celular até o roteador, a 25 m de distância e com duas paredes de alvenaria no caminho. Use os botões ou o tour automático; arraste a cena para girar.'],
+  nums:()=>[[T('Distance','Distância'),LB.d+' m'],[T('Frequency','Frequência'),fmt(LB.f/1000,3)+' GHz ('+T('channel','canal')+' 6)'],[T('Walls','Paredes'),'2 × '+T('masonry','alvenaria')+' ('+LB.wallDb+' dB)'],[T('Phone power','Potência do celular'),LB.ptx+' dBm']]},
+ {dur:9,cam:{t:[-6.6,2.8,0],d:9,y:-.15,p:.16},k:['1 · Data becomes bits','1 · Os dados viram bits'],
+  txt:['The app hands the text "Oi!" to the Wi-Fi interface. Each character becomes 1 byte (8 bits) through the ASCII code: O = 01001111, i = 01101001, ! = 00100001. That is 24 bits. In a real frame, headers and WPA encryption are added too.','O aplicativo entrega ao Wi-Fi o texto "Oi!". Cada caractere vira 1 byte (8 bits) pelo código ASCII: O = 01001111, i = 01101001, ! = 00100001. São 24 bits. Num quadro real também entram cabeçalhos e a criptografia WPA.'],
+  nums:()=>[[T('Message','Mensagem'),'"'+MSG+'"'],['Bytes','3'],['Bits','24']]},
+ {dur:11,cam:{t:[-5.4,2.6,0],d:7.2,y:-.05,p:.12},k:['2 · Bits become QAM symbols','2 · Os bits viram símbolos QAM'],
+  txt:['This link has about '+'{snr}'+' dB of SNR, enough for 64-QAM (MCS {mcs}). So bits are grouped 6 at a time (2⁶ = 64 points) and each group becomes one constellation point: one amplitude and one phase. 24 bits = 4 symbols.','Este enlace tem cerca de {snr} dB de SNR, suficiente para 64-QAM (MCS {mcs}). Então os bits são agrupados de 6 em 6 (2⁶ = 64 pontos) e cada grupo vira um ponto da constelação: uma amplitude e uma fase. 24 bits = 4 símbolos.'],
+  nums:()=>[[T('Modulation','Modulação'),LB.mcs.mod+' '+LB.mcs.code],['MCS',String(LB.mcs.mcs)],[T('Bits per symbol','Bits por símbolo'),'6'],[T('Symbols','Símbolos'),'4']],links:[['SNR × MCS table','Tabela SNR × MCS','ref']]},
+ {dur:10,cam:{t:[-3.9,1.2,0],d:7.5,y:.85,p:.28},k:['3 · Symbols on subcarriers (OFDM)','3 · Símbolos nas subportadoras (OFDM)'],
+  txt:['Wi-Fi does not send one symbol at a time on a single frequency. The 20 MHz channel is split into 256 subcarriers of 78.125 kHz (Wi-Fi 6), each carrying one symbol at the same time. Each subcarrier peak falls on the zeros of its neighbours, so they do not interfere (orthogonality). Green ones are pilots that help the receiver stay in sync.','O Wi-Fi não envia um símbolo de cada vez numa única frequência. O canal de 20 MHz é dividido em 256 subportadoras de 78,125 kHz (Wi-Fi 6), e cada uma leva um símbolo ao mesmo tempo. O pico de cada subportadora cai nos zeros das vizinhas, por isso elas não se atrapalham (ortogonalidade). As verdes são pilotos, que ajudam o receptor a se sincronizar.'],
+  nums:()=>[[T('Subcarriers','Subportadoras'),'256 ('+T('242 usable','242 úteis')+')'],[T('Spacing','Espaçamento'),fmt(78.125,3)+' kHz'],[T('OFDM symbol','Símbolo OFDM'),fmt(13.6,1)+' µs'],[T('Light travels in 1 symbol','Luz percorre em 1 símbolo'),'≈ 4 km']]},
+ {dur:9,cam:{t:[-5.2,1.7,0],d:7.6,y:.15,p:.22},k:['4 · The carrier leaves the antenna','4 · A portadora sai pela antena'],
+  txt:['The symbols modulate the {f} GHz carrier (channel 6). For each symbol the wave changes height (amplitude) and shift (phase). The antenna turns this electric current into an electromagnetic wave that spreads in every direction on the horizontal plane.','Os símbolos modulam a portadora de {f} GHz (canal 6). A cada símbolo a onda muda de altura (amplitude) e de deslocamento (fase). A antena transforma essa corrente elétrica em onda eletromagnética, que se espalha em todas as direções no plano horizontal.'],
+  nums:()=>[[T('Frequency','Frequência'),fmt(LB.f/1000,3)+' GHz'],[T('Period','Período'),'≈ '+fmt(1e3/LB.f,2)+' ns'],['λ = c / f','≈ '+fmt(LB.lambda,1)+' cm']],links:[['Wavelength calculator','Calculadora de λ','calc']]},
+ {dur:13,cam:{t:[0,1.6,0],d:13.5,y:.5,p:.3},k:['5 · The wave crosses air and walls','5 · A onda atravessa o ar e as paredes'],
+  txt:['The wave travels at the speed of light, with electric (E) and magnetic (B) fields perpendicular to each other. Over 25 m the free-space loss is about {fspl} dB, and each masonry wall takes another 8 dB (amplitude drops to 40%). Part of the energy is reflected back by the wall. Near the router, noise is waiting.','A onda viaja à velocidade da luz, com campo elétrico (E) e magnético (B) perpendiculares entre si. Em 25 m a perda em espaço livre é de cerca de {fspl} dB, e cada parede de alvenaria tira mais 8 dB (a amplitude cai para 40%). Parte da energia é refletida pela parede. Perto do roteador, o ruído está esperando.'],
+  nums:()=>[[T('Travel time (25 m)','Tempo de viagem (25 m)'),'≈ '+fmt(LB.tof,0)+' ns'],['FSPL (Friis)','≈ '+fmt(LB.fspl,1)+' dB'],[T('Walls','Paredes'),(LB.walls*LB.wallDb)+' dB'],[T('Total loss','Perda total'),'≈ '+fmt(LB.path,1)+' dB']],links:[['Friis calculator','Calculadora de Friis','calc'],['Material attenuation','Atenuação por material','ref']]},
+ {dur:12,cam:{t:[5.3,2.5,0],d:9,y:-.12,p:.12},k:['6 · The router receives and decodes','6 · O roteador recebe e decodifica'],
+  txt:['The AP antenna picks up a very weak signal: RSSI ≈ {rssi} dBm, only about {snr} dB above the noise ({nf} dBm). That is why the points arrive spread in clouds. The receiver picks the nearest ideal point of each cloud, recovers 6 bits per symbol and rebuilds "Oi!".','A antena do AP capta um sinal muito fraco: RSSI ≈ {rssi} dBm, só cerca de {snr} dB acima do ruído ({nf} dBm). Por isso os pontos chegam espalhados em nuvens. O receptor escolhe o ponto ideal mais próximo de cada nuvem, recupera os 6 bits de cada símbolo e remonta "Oi!".'],
+  nums:()=>[['RSSI','≈ '+fmt(LB.rssi,1)+' dBm'],[T('Noise floor','Piso de ruído'),LB.nf+' dBm'],['SNR','≈ '+fmt(LB.snr,1)+' dB'],[T('Rate','Taxa')+' (MCS '+LB.mcs.mcs+')',fmt(LB.mcs.mbps,1)+' Mbps']],links:[['Link budget','Orçamento de enlace','calc'],['SNR and MCS','SNR e MCS','calc']]},
+ {dur:8,cam:{t:[0,1.4,0],d:16,y:-.25,p:.36},k:['7 · Acknowledgement (ACK)','7 · Confirmação (ACK)'],
+  txt:['If the frame arrived intact, the AP answers with a short ACK, sent with a robust modulation, after waiting only a SIFS (10 µs at 2.4 GHz). If the ACK does not arrive, the phone retransmits. The whole cycle takes microseconds and repeats thousands of times per second.','Se o quadro chegou íntegro, o AP responde com um ACK curto, numa modulação robusta, depois de esperar só um SIFS (10 µs em 2,4 GHz). Se o ACK não chegar, o celular retransmite. O ciclo inteiro leva microssegundos e se repete milhares de vezes por segundo.'],
+  nums:()=>[['SIFS (2,4 GHz)','10 µs'],[T('If ACK is lost','Se o ACK se perder'),T('retransmission','retransmissão')],[T('Cycle','Ciclo'),T('microseconds','microssegundos')]]}];
+const fill=s=>s.replace('{snr}',fmt(LB.snr,0)).replace('{mcs}',LB.mcs.mcs).replace('{f}',fmt(LB.f/1000,3)).replace('{fspl}',fmt(LB.fspl,0)).replace('{rssi}',fmt(LB.rssi,0)).replace('{snr}',fmt(LB.snr,0)).replace('{nf}',LB.nf);
+
+/* ---- state ---- */
+let started=false,ready=false,inView=false,R,scene,cam,cv,W=600,H=340,last=0;
+let stage=0,pt=0,playing=!reduce,speed=1,auto=true,userYaw=0,userPitch=0,drag=null;
+const camCur={t:null,d:18,y:0,p:.4};
+const O={};const labels=[];
+const PH={x:-7,y:1,z:0},ANT_TX={x:-6.85,y:1.95,z:0},ANT_RX={x:7,y:1.35,z:0},WALLS=[-1.5,2.5];
+const CTX={x:-3.9,y:2.25,z:0},CRX={x:4.95,y:2.25,z:0},CS=2.2;
+const SUBS=16,OUR=[3,6,9,12],PILOT=[1,14];
+
+/* ---- helpers ---- */
+function V(x,y,z){return new THREE.Vector3(x,y,z);}
+function makeLabel(en,pt,opt={}){const spr=new THREE.Sprite(new THREE.SpriteMaterial({transparent:true,depthTest:false,depthWrite:false}));spr.renderOrder=20;const L={spr,en,pt,opt};drawLabel(L);labels.push(L);return spr;}
+function drawLabel(L){const txt=T(L.en,L.pt);const o=L.opt;const fs=44;const c=document.createElement('canvas');const x=c.getContext('2d');const font=(o.bold?'700 ':'500 ')+fs+'px "JetBrains Mono", monospace';x.font=font;
+ const w=Math.ceil(x.measureText(txt).width)+36;c.width=w;c.height=fs+26;x.font=font;
+ if(o.bg!==false){x.fillStyle=o.bg||'rgba(17,29,46,.88)';const r=12;x.beginPath();x.moveTo(r,0);x.lineTo(w-r,0);x.quadraticCurveTo(w,0,w,r);x.lineTo(w,c.height-r);x.quadraticCurveTo(w,c.height,w-r,c.height);x.lineTo(r,c.height);x.quadraticCurveTo(0,c.height,0,c.height-r);x.lineTo(0,r);x.quadraticCurveTo(0,0,r,0);x.fill();
+  if(o.border){x.strokeStyle=o.border;x.lineWidth=3;x.stroke();}}
+ x.fillStyle=o.color||'#dde4f0';x.textBaseline='middle';x.fillText(txt,18,c.height/2+2);
+ const tex=new THREE.CanvasTexture(c);tex.minFilter=THREE.LinearFilter;if(L.spr.material.map)L.spr.material.map.dispose();L.spr.material.map=tex;L.spr.material.needsUpdate=true;
+ const h=o.size||.32;L.spr.scale.set(h*c.width/c.height,h,1);}
+function line(n,color,opacity=1){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(n*3),3));const m=new THREE.LineBasicMaterial({color,transparent:opacity<1,opacity});const l=new THREE.Line(g,m);l.frustumCulled=false;return l;}
+function segs(n,color,opacity=1){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(n*6),3));const l=new THREE.LineSegments(g,new THREE.LineBasicMaterial({color,transparent:true,opacity}));l.frustumCulled=false;return l;}
+function setPts(l,arr){const a=l.geometry.attributes.position.array;for(let i=0;i<arr.length;i++)a[i]=arr[i];l.geometry.setDrawRange(0,arr.length/3);l.geometry.attributes.position.needsUpdate=true;}
+function gauss(){let u=0;while(!u)u=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*Math.random());}
+const lv=(c,I,Q)=>V(c.x+I/8*CS/2,c.y+Q/8*CS/2,c.z+.01);
+function bitMat(b){return new THREE.MeshStandardMaterial({color:b?0xf77f1a:0x3b6fb8,emissive:b?0x5a2a05:0x0a1a33,roughness:.4});}
+
+function makeConst(c,titleEn,titlePt){const g=new THREE.Group();
+ const frame=new THREE.Mesh(new THREE.PlaneGeometry(CS+.3,CS+.3),new THREE.MeshBasicMaterial({color:0x111d2e,transparent:true,opacity:.82,side:THREE.DoubleSide}));frame.position.set(c.x,c.y,c.z-.02);g.add(frame);
+ const ax=segs(2,0x6b7fa3,.9);setPts(ax,[c.x-CS/2-.1,c.y,c.z,c.x+CS/2+.1,c.y,c.z,c.x,c.y-CS/2-.1,c.z,c.x,c.y+CS/2+.1,c.z]);g.add(ax);
+ const dg=new THREE.SphereGeometry(.03,8,8),dm=new THREE.MeshBasicMaterial({color:0x94a3b8});
+ for(let I=-7;I<=7;I+=2)for(let Q=-7;Q<=7;Q+=2){const d=new THREE.Mesh(dg,dm);d.position.copy(lv(c,I,Q));g.add(d);}
+ const t=makeLabel(titleEn,titlePt,{size:.24,color:'#94a3b8',bg:false});t.position.set(c.x,c.y+CS/2+.35,c.z);g.add(t);
+ const li=makeLabel('I','I',{size:.2,bg:false,color:'#6b7fa3'});li.position.set(c.x+CS/2+.25,c.y,c.z);g.add(li);
+ const lq=makeLabel('Q','Q',{size:.2,bg:false,color:'#6b7fa3'});lq.position.set(c.x,c.y+CS/2+.12,c.z+.05);lq.position.x+= .15;g.add(lq);
+ scene.add(g);return g;}
+
+/* ---- scene ---- */
+function build(){
+ scene=new THREE.Scene();scene.background=new THREE.Color(0x0c1422);scene.fog=new THREE.Fog(0x0c1422,26,48);
+ cam=new THREE.PerspectiveCamera(42,W/H,.1,120);camCur.t=V(0,1,0);
+ scene.add(new THREE.AmbientLight(0xffffff,.7));const dl=new THREE.DirectionalLight(0xffffff,.65);dl.position.set(4,9,7);scene.add(dl);
+ const grid=new THREE.GridHelper(34,34,0x253d63,0x15233a);scene.add(grid);
+ // phone
+ const ph=new THREE.Group();ph.add(new THREE.Mesh(new THREE.BoxGeometry(.9,1.7,.12),new THREE.MeshStandardMaterial({color:0x1a2a42,roughness:.45})));
+ const scr=new THREE.Mesh(new THREE.PlaneGeometry(.78,1.5),new THREE.MeshBasicMaterial({color:0x1d6ef5}));scr.position.z=.065;ph.add(scr);O.scr=scr;
+ ph.position.set(PH.x,PH.y,PH.z);ph.rotation.y=.35;scene.add(ph);
+ const lc=makeLabel('Client (phone)','Cliente (celular)',{size:.3});lc.position.set(PH.x,-.15+.05,0);lc.position.y=.12;scene.add(lc);
+ // router
+ const rt=new THREE.Group();rt.add(new THREE.Mesh(new THREE.BoxGeometry(1.8,.32,1.1),new THREE.MeshStandardMaterial({color:0x162236,roughness:.5})));
+ O.ants=[];[-.7,-.25,.25,.7].forEach((x,i)=>{const a=new THREE.Mesh(new THREE.CylinderGeometry(.045,.045,1.05,10),new THREE.MeshStandardMaterial({color:0x94a3b8,emissive:0x000000}));a.position.set(x,.68,-.45);a.rotation.z=(i-1.5)*.12;rt.add(a);O.ants.push(a);});
+ [-.5,-.3,-.1].forEach(x=>{const l=new THREE.Mesh(new THREE.SphereGeometry(.035,8,8),new THREE.MeshBasicMaterial({color:0x12d580}));l.position.set(x,.05,.56);rt.add(l);});
+ rt.position.set(7,.3,0);rt.rotation.y=-.3;scene.add(rt);
+ const lr=makeLabel('Router (AP 4×4)','Roteador (AP 4×4)',{size:.3});lr.position.set(7,.12,1.1);scene.add(lr);
+ // walls
+ O.walls=[];WALLS.forEach(x=>{const w=new THREE.Mesh(new THREE.BoxGeometry(.3,3.4,5.2),new THREE.MeshStandardMaterial({color:0x9a6b4f,transparent:true,opacity:.22,depthWrite:false}));w.position.set(x,1.7,0);scene.add(w);
+  const e=new THREE.LineSegments(new THREE.EdgesGeometry(w.geometry),new THREE.LineBasicMaterial({color:0xb98462,transparent:true,opacity:.5}));e.position.copy(w.position);scene.add(e);O.walls.push(w);});
+ O.wallLabels=WALLS.map(x=>{const l=makeLabel('Masonry: −8 dB','Alvenaria: −8 dB',{size:.26,color:'#e0b090'});l.position.set(x,3.65,0);scene.add(l);return l;});
+ // distance
+ O.dist=segs(3,0x6b7fa3,.8);setPts(O.dist,[-7,.02,2.2,7,.02,2.2,-7,.02,2.0,-7,.02,2.4,7,.02,2.0,7,.02,2.4]);scene.add(O.dist);
+ O.distL=makeLabel('25 m','25 m',{size:.3,color:'#ffb020'});O.distL.position.set(0,.25,2.2);scene.add(O.distL);
+ // message labels
+ O.msgTx=makeLabel('"Oi!"','"Oi!"',{size:.42,bold:true,color:'#ffffff',border:'#f77f1a'});O.msgTx.position.set(PH.x,2.45,.2);scene.add(O.msgTx);
+ O.msgRx=makeLabel('"Oi!" ✓','"Oi!" ✓',{size:.42,bold:true,color:'#ffffff',border:'#12d580'});O.msgRx.position.set(7,4.55,0);scene.add(O.msgRx);
+ // TX bits
+ const bg=new THREE.BoxGeometry(.15,.15,.15);O.tx=BITS.map(b=>{const m=new THREE.Mesh(bg,bitMat(b));scene.add(m);return m;});
+ O.rx=BITS.map(b=>{const m=new THREE.Mesh(bg,bitMat(b));scene.add(m);return m;});
+ O.byteL=BYTES.map((b,k)=>{const l=makeLabel(MSG[k]+' = '+b,MSG[k]+' = '+b,{size:.22,color:'#dde4f0'});scene.add(l);return l;});
+ // constellations
+ O.cTx=makeConst(CTX,'64-QAM (transmitter)','64-QAM (transmissor)');
+ O.cRx=makeConst(CRX,'64-QAM (receiver)','64-QAM (receptor)');
+ const mg=new THREE.SphereGeometry(.075,14,14),rg=new THREE.TorusGeometry(.14,.018,8,32);
+ O.mk=SYMS.map(s=>{const g=new THREE.Group();g.add(new THREE.Mesh(mg,new THREE.MeshBasicMaterial({color:0xf77f1a})));g.add(new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0xf77f1a})));g.position.copy(lv(CTX,s.I,s.Q));scene.add(g);return g;});
+ O.mkL=SYMS.map(s=>{const l=makeLabel(s.bits,s.bits,{size:.18,color:'#f77f1a'});const p=lv(CTX,s.I,s.Q);l.position.set(p.x,p.y+.2,p.z+.05);scene.add(l);return l;});
+ O.phasor=line(2,0xf77f1a);scene.add(O.phasor);
+ O.rmk=SYMS.map(s=>{const r=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0x12d580}));r.position.copy(lv(CRX,s.I,s.Q));scene.add(r);return r;});
+ // RX noisy cloud
+ const sig=Math.sqrt(42/Math.pow(10,LB.snr/10)/2);const pa=[];
+ for(let n=0;n<45;n++)SYMS.forEach(s=>{const p=lv(CRX,s.I+gauss()*sig,s.Q+gauss()*sig);pa.push(p.x,p.y,p.z+.02);});
+ const cg=new THREE.BufferGeometry();cg.setAttribute('position',new THREE.BufferAttribute(new Float32Array(pa),3));
+ O.cloud=new THREE.Points(cg,new THREE.PointsMaterial({color:0xf77f1a,size:.05,transparent:true,opacity:.85}));scene.add(O.cloud);
+ // OFDM spectrum
+ O.bars=[];O.barH=[];const bgeo=new THREE.BoxGeometry(.12,1,.12);
+ for(let i=0;i<SUBS;i++){const our=OUR.indexOf(i),pil=PILOT.includes(i);const col=our>=0?0xf77f1a:pil?0x12d580:0x3b5b8c;
+  const b=new THREE.Mesh(bgeo,new THREE.MeshStandardMaterial({color:col,emissive:our>=0?0x4a2205:0x000000,transparent:true,opacity:our>=0||pil?1:.7}));b.position.set(CTX.x,0,zOf(i));scene.add(b);O.bars.push(b);
+  O.barH.push(our>=0?amp(SYMS[our])*.95:pil?.55:.25+.6*((i*37%11)/11));}
+ O.sinc=[];for(let i=0;i<SUBS;i++){const l=line(90,OUR.includes(i)?0xf77f1a:PILOT.includes(i)?0x12d580:0x3b6fb8,OUR.includes(i)?.95:.45);scene.add(l);O.sinc.push(l);}
+ O.fly=SYMS.map(()=>{const m=new THREE.Mesh(new THREE.SphereGeometry(.07,12,12),new THREE.MeshBasicMaterial({color:0xf77f1a}));scene.add(m);return m;});
+ O.specL=makeLabel('20 MHz channel: 256 subcarriers (16 shown)','Canal de 20 MHz: 256 subportadoras (16 mostradas)',{size:.22,color:'#94a3b8'});O.specL.position.set(CTX.x,-.25+.05,0);O.specL.position.y=1.15;O.specL.position.z=-2.9;scene.add(O.specL);
+ O.pilL=makeLabel('pilot','piloto',{size:.18,color:'#12d580',bg:false});scene.add(O.pilL);
+ // carrier
+ O.carrier=line(420,0xf77f1a);scene.add(O.carrier);
+ O.rings=[0,1,2,3].map(()=>{const r=new THREE.Mesh(new THREE.RingGeometry(.97,1,96),new THREE.MeshBasicMaterial({color:0xf77f1a,transparent:true,opacity:.4,side:THREE.DoubleSide,depthWrite:false}));r.rotation.x=-Math.PI/2;r.position.set(ANT_TX.x,ANT_TX.y,ANT_TX.z);scene.add(r);return r;});
+ O.carL=makeLabel('each stretch = 1 symbol (amplitude + phase)','cada trecho = 1 símbolo (amplitude + fase)',{size:.22,color:'#f77f1a'});O.carL.position.set(-4,3.05,0);scene.add(O.carL);
+ O.antL=makeLabel('antenna: current → EM wave','antena: corrente → onda EM',{size:.22});O.antL.position.set(ANT_TX.x,ANT_TX.y+.45,.1);scene.add(O.antL);
+ // EM wave
+ O.E=line(520,0xf77f1a);O.B=line(520,0x3b8cff);O.Ea=segs(110,0xf77f1a,.45);O.Ba=segs(110,0x3b8cff,.45);O.Er=line(240,0xf77f1a,.4);O.axis=line(2,0x6b7fa3,.6);
+ [O.E,O.B,O.Ea,O.Ba,O.Er,O.axis].forEach(o=>scene.add(o));
+ O.EL=makeLabel('E (electric field)','E (campo elétrico)',{size:.22,color:'#f77f1a'});O.BL=makeLabel('B (magnetic field)','B (campo magnético)',{size:.22,color:'#7fb2ff'});
+ O.lamL=makeLabel('λ ≈ 12.3 cm · c = 300,000 km/s','λ ≈ 12,3 cm · c = 300.000 km/s',{size:.24});O.refL=makeLabel('reflection','reflexão',{size:.2,color:'#e0b090',bg:false});
+ O.noiseL=makeLabel('noise: −91 dBm','ruído: −91 dBm',{size:.22,color:'#ff6a6a'});
+ [O.EL,O.BL,O.lamL,O.refL,O.noiseL].forEach(o=>scene.add(o));
+ const np=new Float32Array(150*3);const ng=new THREE.BufferGeometry();ng.setAttribute('position',new THREE.BufferAttribute(np,3));O.noise=new THREE.Points(ng,new THREE.PointsMaterial({color:0xff4040,size:.05,transparent:true,opacity:.7}));scene.add(O.noise);
+ O.rssiL=makeLabel('RSSI ≈ '+LB.rssi.toFixed(1)+' dBm · SNR ≈ '+LB.snr.toFixed(1)+' dB','RSSI ≈ '+LB.rssi.toFixed(1).replace('.',',')+' dBm · SNR ≈ '+LB.snr.toFixed(1).replace('.',',')+' dB',{size:.24,color:'#12d580'});O.rssiL.position.set(7,2.1,.9);scene.add(O.rssiL);
+ // ACK
+ O.ack=new THREE.Mesh(new THREE.SphereGeometry(.16,16,16),new THREE.MeshBasicMaterial({color:0x12d580}));scene.add(O.ack);
+ O.ackR=new THREE.Mesh(new THREE.TorusGeometry(.32,.02,8,40),new THREE.MeshBasicMaterial({color:0x12d580,transparent:true,opacity:.6}));scene.add(O.ackR);
+ O.ackL=makeLabel('ACK','ACK',{size:.26,color:'#12d580',bold:true});scene.add(O.ackL);
+ O.okL=makeLabel('✓ delivered','✓ entregue',{size:.3,color:'#12d580',border:'#12d580',bold:true});O.okL.position.set(PH.x,2.55,.2);scene.add(O.okL);
+}
+function zOf(i){return -2.25+i*.3;}
+function amp(s){return Math.hypot(s.I,s.Q)/Math.hypot(7,7);}
+const txRow=i=>V(PH.x-2.45+i*.19+Math.floor(i/8)*.18,3.95,0);
+const txGrp=i=>V(PH.x-2.62+i*.19+Math.floor(i/6)*.26,3.95,0);
+const rxRow=i=>V(7-2.45+i*.19+Math.floor(i/8)*.18,3.95,0);
+
+/* ---- per-frame stage update (stateless: depends only on stage & progress) ---- */
+function hideAll(){Object.keys(O).forEach(k=>{const o=O[k];const set=x=>{if(x&&x.isObject3D)x.visible=false;};Array.isArray(o)?o.forEach(set):set(o);});
+ O.walls.forEach(w=>w.visible=true);O.ants.forEach(a=>a.visible=true);O.scr.visible=true;}
+function update(time){const s=stage,p=pt;hideAll();O.ants.forEach(a=>a.material.emissive.setHex(0));O.walls.forEach(w=>{w.material.opacity=(s===0||s===5||s===7)?.22:.07;});
+ if(s===0||s===5){O.dist.visible=O.distL.visible=true;O.wallLabels.forEach(l=>l.visible=true);}
+ if(s===0){O.msgTx.visible=true;}
+ if(s===1){O.msgTx.visible=true;
+  O.tx.forEach((m,i)=>{const a=.05+i*.025,u=ease(seg(p,a,a+.12));m.visible=p>=a;const src=V(PH.x,PH.y+.3,.2);m.position.lerpVectors(src,txRow(i),u);m.scale.setScalar(.3+.7*u);m.rotation.set(0,0,0);});
+  O.byteL.forEach((l,k)=>{l.visible=p>.05+(8*k+7)*.025+.12;l.position.set(txRow(8*k+3.5).x,4.35,0);});}
+ if(s===2){O.msgTx.visible=true;O.cTx.visible=true;const u0=ease(seg(p,0,.15));let curK=-1;
+  O.tx.forEach((m,i)=>{const k=Math.floor(i/6),a=.2+.17*k,b=a+.12,u=ease(seg(p,a,b));const base=V(0,0,0).lerpVectors(txRow(i),txGrp(i),u0);m.position.lerpVectors(base,lv(CTX,SYMS[k].I,SYMS[k].Q),u);m.scale.setScalar(1-.85*u);m.visible=u<1;});
+  O.mk.forEach((g,k)=>{const b=.2+.17*k+.12;const v=p>=b;g.visible=v;O.mkL[k].visible=v;if(v){curK=k;const pop=1+.6*Math.max(0,1-(p-b)*8);g.scale.setScalar(pop);}});
+  if(curK>=0){O.phasor.visible=true;const q=lv(CTX,SYMS[curK].I,SYMS[curK].Q);setPts(O.phasor,[CTX.x,CTX.y,CTX.z+.02,q.x,q.y,q.z+.02]);}}
+ if(s===3){O.cTx.visible=true;O.mk.forEach(g=>{g.visible=true;g.scale.setScalar(1);});O.mkL.forEach(l=>l.visible=true);O.specL.visible=O.pilL.visible=true;O.pilL.position.set(CTX.x,O.barH[PILOT[0]]+.25,zOf(PILOT[0]));
+  const grow=[];OUR.forEach((sub,k)=>{const a=.12+.13*k,b=a+.12,u=ease(seg(p,a,b));const f=O.fly[k];f.visible=u>0&&u<1;const from=lv(CTX,SYMS[k].I,SYMS[k].Q),to=V(CTX.x,O.barH[sub]+.08,zOf(sub));f.position.lerpVectors(from,to,u);f.position.y+=Math.sin(u*Math.PI)*.6;grow[sub]=seg(p,b,b+.08);});
+  const pulse=reduce?1:1+.04*Math.sin(time*3);
+  O.bars.forEach((b,i)=>{const our=OUR.includes(i);const hh=Math.max(.001,O.barH[i]*(our?grow[i]:1)*pulse);b.visible=true;b.scale.y=hh;b.position.y=hh/2;
+   const l=O.sinc[i];l.visible=true;const arr=[];for(let j=0;j<90;j++){const z=-2.7+j*(5.4/89);const xx=(z-zOf(i))/.3;const sv=Math.abs(xx)<1e-6?1:Math.sin(Math.PI*xx)/(Math.PI*xx);arr.push(CTX.x+.12,Math.max(0,hh*sv)+.005,z);}setPts(l,arr);});}
+ if(s===4){O.antL.visible=O.carL.visible=true;const x0=ANT_TX.x+.25,x1=-1.75,N=420;const L=1.15,v=reduce?0:.9;const arr=[];
+  for(let j=0;j<N;j++){const x=x0+(x1-x0)*j/(N-1);const d=x-x0-time*v*speed;const k=((Math.floor(d/L)%4)+4)%4;const sy=SYMS[k];const A=amp(sy)*.75,ph=Math.atan2(sy.Q,sy.I);const env=Math.min(1,(x-x0)/.4);
+   arr.push(x,ANT_TX.y+env*A*Math.cos(2*Math.PI*2.5*d/L+ph),0);}setPts(O.carrier,arr);O.carrier.visible=true;
+  O.rings.forEach((r,i)=>{const ph=((time*.35*speed)+i/4)%1;r.visible=true;r.scale.setScalar(.3+ph*6.5);r.material.opacity=.45*(1-ph);});}
+ if(s===5){const xs=ANT_TX.x+.2,xe=ANT_RX.x-.1,xf=xs+(xe-xs)*seg(p,.02,.62)*1.0;const k=2*Math.PI/1.25,w=reduce?0:3.2*speed;const y0=1.55;
+  const A=x=>{let a=.85/(1+.06*(x-xs));WALLS.forEach(wx=>{if(x>wx+.15)a*=.4;});return a;};
+  const E=[],Bv=[],Ea=[],Ba=[];const N=520;
+  for(let j=0;j<N;j++){const x=xs+(xe-xs)*j/(N-1);if(x>xf)break;const fr=Math.min(1,(xf-x)/.6);const v=A(x)*fr*Math.sin(k*x-w*time);E.push(x,y0+v,0);Bv.push(x,y0,v);}
+  for(let x=xs;x<=xf;x+=.12){const fr=Math.min(1,(xf-x)/.6);const v=A(x)*fr*Math.sin(k*x-w*time);Ea.push(x,y0,0,x,y0+v,0);Ba.push(x,y0,0,x,y0,v);}
+  setPts(O.E,E);setPts(O.B,Bv);setPts(O.Ea,Ea);setPts(O.Ba,Ba);O.E.visible=O.B.visible=O.Ea.visible=O.Ba.visible=E.length>0;
+  O.axis.visible=true;setPts(O.axis,[xs,y0,0,xf,y0,0]);
+  if(xf>WALLS[0]){const back=Math.min(xf-WALLS[0],WALLS[0]-xs);const Er=[];for(let j=0;j<240;j++){const x=WALLS[0]-.15-back*j/239;const v=.32*A(WALLS[0]-.2)*Math.sin(-k*x-w*time+Math.PI);Er.push(x,y0+v,-.35);}setPts(O.Er,Er);O.Er.visible=true;O.refL.visible=true;O.refL.position.set(WALLS[0]-1.2,y0+.75,-.35);}
+  O.EL.visible=O.BL.visible=p>.08;O.EL.position.set(xs+1.3,y0+1.15,0);O.BL.position.set(xs+1.4,y0-.25,1.15);O.lamL.visible=p>.15;O.lamL.position.set(-4.2,3.3,0);
+  if(p>.45){O.noise.visible=O.noiseL.visible=true;const a=O.noise.geometry.attributes.position.array;for(let i=0;i<150;i++){a[i*3]=3.6+Math.random()*3.2;a[i*3+1]=.6+Math.random()*2.2;a[i*3+2]=-1.2+Math.random()*2.4;}O.noise.geometry.attributes.position.needsUpdate=true;O.noiseL.position.set(5.2,3.1,0);}
+  if(xf>=xe-.05){O.ants.forEach(a=>a.material.emissive.setHex(0x7a3a08));}}
+ if(s===6){O.cRx.visible=true;O.rssiL.visible=true;if(p<.25)O.ants.forEach(a=>a.material.emissive.setHex(0x7a3a08));
+  const n=Math.floor(180*seg(p,.05,.4));O.cloud.visible=n>0;O.cloud.geometry.setDrawRange(0,n);
+  O.rmk.forEach((r,k)=>{const u=seg(p,.4+.04*k,.5+.04*k);r.visible=u>0;r.scale.setScalar(.5+.5*ease(u)+(u<1?.3*Math.sin(u*Math.PI):0));});
+  O.rx.forEach((m,i)=>{const k=Math.floor(i/6);const a=.58+.04*k+(i%6)*.006,u=ease(seg(p,a,a+.14));m.visible=u>0;m.position.lerpVectors(lv(CRX,SYMS[k].I,SYMS[k].Q),rxRow(i),u);m.scale.setScalar(.2+.8*u);});
+  O.msgRx.visible=p>.85;}
+ if(s===7){O.msgRx.visible=true;O.dist.visible=true;const u=ease(seg(p,.08,.7));const from=V(ANT_RX.x,ANT_RX.y,0),to=V(ANT_TX.x,ANT_TX.y,0);const pos=V(0,0,0).lerpVectors(from,to,u);pos.y+=Math.sin(u*Math.PI)*.6;
+  O.ack.visible=O.ackR.visible=O.ackL.visible=u>0&&u<1;O.ack.position.copy(pos);O.ackR.position.copy(pos);O.ackR.rotation.y=Math.PI/2;O.ackR.scale.setScalar(1+.25*Math.sin(time*8));O.ackL.position.set(pos.x,pos.y+.45,pos.z);
+  O.okL.visible=p>.72;}
+ O.scr.material.color.setHex(s===7&&p>.72?0x12d580:(s>=1&&s<=4?0xf77f1a:0x1d6ef5));}
+
+/* ---- camera ---- */
+function camUpdate(dt){const c=ST[stage].cam;const tt=V(...c.t);const k=1-Math.pow(.02,dt);
+ camCur.t.lerp(tt,k);camCur.d=lerp(camCur.d,c.d*(W<520?1.35:1),k);camCur.y=lerp(camCur.y,c.y,k);camCur.p=lerp(camCur.p,c.p,k);
+ const y=camCur.y+userYaw,p=clamp(camCur.p+userPitch,-.05,1.35);
+ cam.position.set(camCur.t.x+camCur.d*Math.sin(y)*Math.cos(p),camCur.t.y+camCur.d*Math.sin(p),camCur.t.z+camCur.d*Math.cos(y)*Math.cos(p));cam.lookAt(camCur.t);}
+
+/* ---- UI ---- */
+function renderUI(){const st=ST[stage];
+ $('#mx-3d-cap').innerHTML='<small>'+T('Step','Etapa')+' '+stage+' / '+(ST.length-1)+'</small>'+T(st.k[0],st.k[1]);
+ $('#mx-3d-kicker').textContent=T(st.k[0],st.k[1]);$('#mx-3d-text').textContent=fill(T(st.txt[0],st.txt[1]));
+ $('#mx-3d-nums').innerHTML='<thead><tr><th>'+T('This scenario','Este cenário')+'</th><th></th></tr></thead><tbody>'+st.nums().map(r=>'<tr><td>'+r[0]+'</td><td class="num">'+r[1]+'</td></tr>').join('')+'</tbody>';
+ $('#mx-3d-links').innerHTML=(st.links||[]).map(l=>'<button type="button" class="ex-btn" data-goto="'+l[2]+'">↗ '+T(l[0],l[1])+'</button>').join('');
+ $('#mx-3d-links').querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>{const t=document.querySelector('.tab-btn[onclick*="\''+b.dataset.goto+'\'"]');if(t){t.click();window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});}}));
+ const box=$('#mx-3d-steps');box.innerHTML='';ST.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.className=(i===stage?'on':i<stage?'done':'');b.innerHTML='<span class="i">'+i+'</span>'+T(s.k[0],s.k[1]).replace(/^\d · /,'');b.addEventListener('click',()=>go(i));box.appendChild(b);});
+ $('#mx-3d-play').textContent=playing?T('❚❚ Pause','❚❚ Pausar'):T('▶ Play','▶ Reproduzir');
+ seg3d();}
+function seg3d(){const el=$('#mx-3d-speed');el.innerHTML='';[[.5,'0,5×','0.5×'],[1,'1×','1×'],[2,'2×','2×']].forEach(([v,pt,en])=>{const b=document.createElement('button');b.type='button';b.textContent=T(en,pt);b.setAttribute('aria-pressed',String(v===speed));b.addEventListener('click',()=>{speed=v;seg3d();});el.appendChild(b);});}
+function go(i){stage=(i+ST.length)%ST.length;pt=0;userYaw=0;userPitch=0;renderUI();}
+
+/* ---- loop ---- */
+function resize(){const st=$('#mx-3d-stage');if(!st||!R)return;W=st.clientWidth||600;H=Math.round(clamp(W*.56,300,540));R.setSize(W,H,false);cv.style.height=H+'px';cam.aspect=W/H;cam.updateProjectionMatrix();}
+function frame(now){requestAnimationFrame(frame);const tab=document.getElementById('tab-mod');if(!ready||!inView||!tab||!tab.classList.contains('active')){last=now;return;}
+ const dt=Math.min(.1,(now-last)/1000||0);last=now;
+ if(playing){pt+=dt*speed/ST[stage].dur;if(pt>=1){if(auto&&stage<ST.length-1){go(stage+1);}else{pt=1;if(!auto||stage===ST.length-1){playing=false;renderUI();}}}}
+ $('#mx-3d-prog').style.width=(pt*100)+'%';
+ update(now/1000);camUpdate(dt);R.render(scene,cam);}
+function loadThree(cb){if(window.THREE)return cb();const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';s.onload=cb;
+ s.onerror=()=>{$('#mx-3d-msg').textContent=T('Could not load the 3D library. Check the internet connection and reload the page.','Não foi possível carregar a biblioteca 3D. Verifique a conexão com a internet e recarregue a página.');};document.head.appendChild(s);}
+function init(){if(started)return;started=true;
+ const st=$('#mx-3d-stage');new IntersectionObserver(es=>{inView=es[0].isIntersecting;},{threshold:.05}).observe(st);
+ $('#mx-3d-prev').addEventListener('click',()=>go(stage-1));$('#mx-3d-next').addEventListener('click',()=>go(stage+1));
+ $('#mx-3d-replay').addEventListener('click',()=>{pt=0;playing=true;renderUI();});
+ $('#mx-3d-play').addEventListener('click',()=>{if(pt>=1&&!playing)pt=0;playing=!playing;renderUI();});
+ $('#mx-3d-auto').addEventListener('change',e=>{auto=e.target.checked;});
+ renderUI();
+ loadThree(()=>{try{cv=$('#mx-3dcv');R=new THREE.WebGLRenderer({canvas:cv,antialias:true});R.setPixelRatio(Math.min(window.devicePixelRatio||1,2));build();resize();
+   new ResizeObserver(resize).observe(st);
+   cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};cv.setPointerCapture(e.pointerId);});
+   cv.addEventListener('pointermove',e=>{if(!drag)return;userYaw-=(e.clientX-drag.x)*.006;userPitch+=(e.clientY-drag.y)*.004;drag={x:e.clientX,y:e.clientY};});
+   const end=()=>{drag=null;};cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+   $('#mx-3d-msg').style.display='none';ready=true;requestAnimationFrame(frame);}
+  catch(err){$('#mx-3d-msg').textContent=T('This browser could not start 3D graphics (WebGL).','Este navegador não conseguiu iniciar os gráficos 3D (WebGL).');}});}
+return{init,onLang(){if(!started)return;labels.forEach(drawLabel);renderUI();}};
 })();
 </script>
 
